@@ -19,6 +19,8 @@ dependencies {
         // Define dependency versions as constraints
         implementation("org.apache.commons:commons-text:1.10.0")
     }
+
+    testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26.1")
 }
 
 testing {

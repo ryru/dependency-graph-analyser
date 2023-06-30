@@ -19,4 +19,4 @@ plugins {
 }
 
 rootProject.name = "module-dependency-graph"
-include("app", "list", "utilities")
+include("app", "list", "utilities", "graph", "export")
