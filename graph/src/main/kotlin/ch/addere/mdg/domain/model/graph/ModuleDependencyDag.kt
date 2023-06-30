@@ -13,6 +13,10 @@ class ModuleDependencyDag {
         resolve(module)
     }
 
+    fun addAllModule(vararg modules: Module) {
+        modules.forEach { addModule(it) }
+    }
+
     fun addDependency(dependency: Dependency) {
         val origin = resolve(dependency.origin)
         val destination = resolve(dependency.destination)
@@ -27,6 +31,10 @@ class ModuleDependencyDag {
 
         origin.addOutgoing(destination, dependencyEdge)
         destination.addIncoming(origin, dependencyEdge)
+    }
+
+    fun addAllDependency(vararg dependencies: Dependency) {
+        dependencies.forEach { addDependency(it) }
     }
 
     private fun resolve(module: Module): ModuleVertex {
@@ -47,11 +55,11 @@ class ModuleDependencyDag {
         return dependencies.size
     }
 
-    fun modules(): Iterable<ModuleVertex> {
+    fun modules(): Set<ModuleVertex> {
         return modules
     }
 
-    fun dependencies(): Iterable<DependencyEdge> {
+    fun dependencies(): Set<DependencyEdge> {
         return dependencies
     }
 }
