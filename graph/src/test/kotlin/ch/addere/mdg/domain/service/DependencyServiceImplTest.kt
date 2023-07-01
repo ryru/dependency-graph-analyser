@@ -10,7 +10,7 @@ import ch.addere.mdg.domain.model.Module
 import ch.addere.mdg.domain.model.graph.ModuleDependencyDag
 import org.junit.jupiter.api.Test
 
-class DependencyServiceTest {
+class DependencyServiceImplTest {
 
     /**
      * Diagram of the test DAG.
@@ -63,7 +63,7 @@ class DependencyServiceTest {
 
     @Test
     fun `test get all modules`() {
-        val service = DependencyService(dag())
+        val service = DependencyServiceImpl(dag())
 
         val modules = service.allModules()
 
@@ -72,7 +72,7 @@ class DependencyServiceTest {
 
     @Test
     fun `test get all dependencies`() {
-        val service = DependencyService(dag())
+        val service = DependencyServiceImpl(dag())
 
         val dependencies = service.allDependencies()
 
@@ -82,7 +82,7 @@ class DependencyServiceTest {
 
     @Test
     fun `test direct dependencies`() {
-        val service = DependencyService(dag())
+        val service = DependencyServiceImpl(dag())
 
         assertThat(service.directDependencies(m0)).isEmpty()
         assertThat(service.directDependencies(m1)).containsExactlyInAnyOrder(d10, d18)
@@ -98,7 +98,7 @@ class DependencyServiceTest {
 
     @Test
     fun `test non-direct dependencies`() {
-        val service = DependencyService(dag())
+        val service = DependencyServiceImpl(dag())
 
         assertThat(service.nonDirectDependencies(m0)).isEmpty()
         assertThat(service.nonDirectDependencies(m1)).isEmpty()
@@ -115,7 +115,7 @@ class DependencyServiceTest {
 
     @Test
     fun `test all dependencies`() {
-        val service = DependencyService(dag())
+        val service = DependencyServiceImpl(dag())
 
         assertThat(service.dependencies(m0)).isEmpty()
         assertThat(service.dependencies(m1)).containsExactlyInAnyOrder(d10, d18)
