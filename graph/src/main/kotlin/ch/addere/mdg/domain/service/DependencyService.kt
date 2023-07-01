@@ -5,6 +5,7 @@ import ch.addere.mdg.domain.model.Module
 import ch.addere.mdg.domain.model.graph.DependencyEdge
 import ch.addere.mdg.domain.model.graph.ModuleDependencyDag
 import ch.addere.mdg.domain.model.graph.ModuleVertex
+import java.util.*
 
 class DependencyService(private val dag: ModuleDependencyDag) {
 
@@ -20,29 +21,30 @@ class DependencyService(private val dag: ModuleDependencyDag) {
     /**
      * All dependencies of the graph sorted by origin, destination and configuration.
      */
-    fun allDependencies(): Set<Dependency> {
-        return dag.dependencies().map(::toDependency).sorted().toSet()
+    fun allDependencies(): SortedSet<Dependency> {
+        return dag.dependencies().map(::toDependency).sorted().toSortedSet()
     }
 
     /**
      * All direct dependencies of a given module within the graph.
      */
-    fun directDependencies(module: Module): Set<Dependency> {
-        return dag.modules().filter { it.module == module }.flatMap { toDependencies(it) }.toSet()
+    fun directDependencies(module: Module): SortedSet<Dependency> {
+        return dag.modules().filter { it.module == module }.flatMap { toDependencies(it) }
+            .toSortedSet()
     }
 
     /**
      * All non-direct dependencies of a given module within the graph.
      */
-    fun nonDirectDependencies(module: Module): Set<Dependency> {
-        return directDependencies(module).flatMap { dependencies(it.destination) }.toSet()
+    fun nonDirectDependencies(module: Module): SortedSet<Dependency> {
+        return directDependencies(module).flatMap { dependencies(it.destination) }.toSortedSet()
     }
 
     /**
      * All dependencies of a given module within the graph.
      */
-    fun dependencies(module: Module): Set<Dependency> {
-        return nonDirectDependencies(module).plus(directDependencies(module))
+    fun dependencies(module: Module): SortedSet<Dependency> {
+        return nonDirectDependencies(module).plus(directDependencies(module)).toSortedSet()
     }
 
     private fun toDependencies(vertex: ModuleVertex): List<Dependency> =

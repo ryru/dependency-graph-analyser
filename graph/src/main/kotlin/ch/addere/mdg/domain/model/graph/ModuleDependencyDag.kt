@@ -38,13 +38,14 @@ class ModuleDependencyDag {
     }
 
     private fun resolve(module: Module): ModuleVertex {
-        val vertex = Optional.ofNullable(modules.firstOrNull { it.module == module })
-        if (vertex.isEmpty) {
-            val newVertex = ModuleVertex(module)
-            modules.add(newVertex)
-            return newVertex
-        }
-        return vertex.get()
+        return Optional.ofNullable(modules.firstOrNull { it.module == module })
+            .orElseGet { createAndInsertVertex(module) }
+    }
+
+    private fun createAndInsertVertex(module: Module): ModuleVertex {
+        val newVertex = ModuleVertex(module)
+        modules.add(newVertex)
+        return newVertex
     }
 
     fun nofModules(): Int {
