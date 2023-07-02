@@ -23,9 +23,22 @@ interface DependencyService {
     fun allDependencies(): SortedSet<Dependency>
 
     /**
+     * All dependencies with given configurations of the graph sorted by origin, destination and configuration.
+     */
+    fun allDependencies(vararg configurations: Configuration): SortedSet<Dependency>
+
+    /**
      * All sorted direct dependencies of a given module within the graph.
      */
     fun directDependenciesOf(module: Module): SortedSet<Dependency>
+
+    /**
+     * All sorted direct dependencies with given configurations of a given module within the graph.
+     */
+    fun directDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency>
 
     /**
      * All sorted non-direct dependencies of a given module within the graph.
@@ -33,7 +46,23 @@ interface DependencyService {
     fun nonDirectDependenciesOf(module: Module): SortedSet<Dependency>
 
     /**
+     * All sorted non-direct dependencies with given configurations of a given module within the graph.
+     */
+    fun nonDirectDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency>
+
+    /**
      * All sorted dependencies of a given module within the graph.
      */
     fun allDependenciesOf(module: Module): SortedSet<Dependency>
+
+    /**
+     * All sorted dependencies with given configurations of a given module within the graph.
+     */
+    fun allDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency>
 }

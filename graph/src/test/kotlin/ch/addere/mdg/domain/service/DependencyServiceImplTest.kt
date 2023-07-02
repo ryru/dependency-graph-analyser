@@ -99,6 +99,36 @@ class DependencyServiceImplTest {
     }
 
     @Test
+    fun `test get all dependencies with configuration c1`() {
+        val service = DependencyServiceImpl(dag())
+
+        val dependencies = service.allDependencies(c1)
+
+        assertThat(dependencies)
+            .containsExactlyInAnyOrder(d10, d21, d31, d40, d53, d54)
+    }
+
+    @Test
+    fun `test get all dependencies with configuration c2`() {
+        val service = DependencyServiceImpl(dag())
+
+        val dependencies = service.allDependencies(c2)
+
+        assertThat(dependencies)
+            .containsExactlyInAnyOrder(d18, d28, d49, d57, d62, d79)
+    }
+
+    @Test
+    fun `test get all dependencies with both configurations`() {
+        val service = DependencyServiceImpl(dag())
+
+        val dependencies = service.allDependencies(c1, c2)
+
+        assertThat(dependencies)
+            .containsExactlyInAnyOrder(d10, d18, d21, d28, d31, d40, d49, d53, d54, d57, d62, d79)
+    }
+
+    @Test
     fun `test direct dependencies`() {
         val service = DependencyServiceImpl(dag())
 
@@ -112,6 +142,55 @@ class DependencyServiceImplTest {
         assertThat(service.directDependenciesOf(m7)).contains(d79)
         assertThat(service.directDependenciesOf(m8)).isEmpty()
         assertThat(service.directDependenciesOf(m9)).isEmpty()
+    }
+
+    @Test
+    fun `test direct dependencies with configuration c1`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.directDependenciesOf(m0, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m1, c1)).contains(d10)
+        assertThat(service.directDependenciesOf(m2, c1)).contains(d21)
+        assertThat(service.directDependenciesOf(m3, c1)).contains(d31)
+        assertThat(service.directDependenciesOf(m4, c1)).contains(d40)
+        assertThat(service.directDependenciesOf(m5, c1)).containsExactlyInAnyOrder(d53, d54)
+        assertThat(service.directDependenciesOf(m6, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m7, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m8, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m9, c1)).isEmpty()
+    }
+
+    @Test
+    fun `test direct dependencies with configuration c2`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.directDependenciesOf(m0, c2)).isEmpty()
+        assertThat(service.directDependenciesOf(m1, c2)).contains(d18)
+        assertThat(service.directDependenciesOf(m2, c2)).contains(d28)
+        assertThat(service.directDependenciesOf(m3, c2)).isEmpty()
+        assertThat(service.directDependenciesOf(m4, c2)).contains(d49)
+        assertThat(service.directDependenciesOf(m5, c2)).contains(d57)
+        assertThat(service.directDependenciesOf(m6, c2)).contains(d62)
+        assertThat(service.directDependenciesOf(m7, c2)).contains(d79)
+        assertThat(service.directDependenciesOf(m8, c2)).isEmpty()
+        assertThat(service.directDependenciesOf(m9, c2)).isEmpty()
+    }
+
+    @Test
+    fun `test direct dependencies with both configurations`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.directDependenciesOf(m0, c2, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m1, c2, c1)).containsExactlyInAnyOrder(d10, d18)
+        assertThat(service.directDependenciesOf(m2, c2, c1)).containsExactlyInAnyOrder(d21, d28)
+        assertThat(service.directDependenciesOf(m3, c2, c1)).contains(d31)
+        assertThat(service.directDependenciesOf(m4, c2, c1)).containsExactlyInAnyOrder(d40, d49)
+        assertThat(service.directDependenciesOf(m5, c2, c1))
+            .containsExactlyInAnyOrder(d53, d54, d57)
+        assertThat(service.directDependenciesOf(m6, c2, c1)).contains(d62)
+        assertThat(service.directDependenciesOf(m7, c2, c1)).contains(d79)
+        assertThat(service.directDependenciesOf(m8, c2, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m9, c2, c1)).isEmpty()
     }
 
     @Test
@@ -133,6 +212,56 @@ class DependencyServiceImplTest {
     }
 
     @Test
+    fun `test non-direct dependencies with configuration c1`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.nonDirectDependenciesOf(m0, c1)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m1, c1)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m2, c1)).contains(d10)
+        assertThat(service.nonDirectDependenciesOf(m3, c1)).contains(d10)
+        assertThat(service.nonDirectDependenciesOf(m4, c1)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m5, c1)).containsExactlyInAnyOrder(d10, d31, d40)
+        assertThat(service.nonDirectDependenciesOf(m6, c1)).containsExactlyInAnyOrder(d10, d21)
+        assertThat(service.nonDirectDependenciesOf(m7, c1)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m8, c1)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m9, c1)).isEmpty()
+    }
+
+    @Test
+    fun `test non-direct dependencies with configuration c2`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.nonDirectDependenciesOf(m0, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m2, c2)).contains(d18)
+        assertThat(service.nonDirectDependenciesOf(m3, c2)).contains(d18)
+        assertThat(service.nonDirectDependenciesOf(m4, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m5, c2)).containsExactlyInAnyOrder(d18, d49, d79)
+        assertThat(service.nonDirectDependenciesOf(m6, c2)).containsExactlyInAnyOrder(d18, d28)
+        assertThat(service.nonDirectDependenciesOf(m7, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m8, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m9, c2)).isEmpty()
+    }
+
+    @Test
+    fun `test non-direct dependencies with both configurations`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.nonDirectDependenciesOf(m0, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m1, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m2, c1, c2)).contains(d10)
+        assertThat(service.nonDirectDependenciesOf(m3, c1, c2)).containsExactlyInAnyOrder(d10, d18)
+        assertThat(service.nonDirectDependenciesOf(m4, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m5, c1, c2))
+            .containsExactlyInAnyOrder(d10, d18, d31, d40, d49, d79)
+        assertThat(service.nonDirectDependenciesOf(m6, c1, c2))
+            .containsExactlyInAnyOrder(d10, d18, d21, d28)
+        assertThat(service.nonDirectDependenciesOf(m7, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m8, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m9, c1, c2)).isEmpty()
+    }
+
+    @Test
     fun `test all dependencies`() {
         val service = DependencyServiceImpl(dag())
 
@@ -147,6 +276,39 @@ class DependencyServiceImplTest {
         assertThat(service.allDependenciesOf(m7)).contains(d79)
         assertThat(service.allDependenciesOf(m8)).isEmpty()
         assertThat(service.allDependenciesOf(m9)).isEmpty()
+    }
+
+    @Test
+    fun `test all dependencies with configuration c1`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.allDependenciesOf(m0, c1)).isEmpty()
+        assertThat(service.allDependenciesOf(m1, c1)).contains(d10)
+        assertThat(service.allDependenciesOf(m2, c1)).containsExactlyInAnyOrder(d10, d21)
+        assertThat(service.allDependenciesOf(m3, c1)).containsExactlyInAnyOrder(d10, d31)
+        assertThat(service.allDependenciesOf(m4, c1)).contains(d40)
+        assertThat(service.allDependenciesOf(m5, c1))
+            .containsExactlyInAnyOrder(d10, d31, d40, d53, d54)
+        assertThat(service.allDependenciesOf(m6, c1)).containsExactlyInAnyOrder(d21, d10)
+        assertThat(service.allDependenciesOf(m7, c1)).isEmpty()
+        assertThat(service.allDependenciesOf(m8, c1)).isEmpty()
+        assertThat(service.allDependenciesOf(m9, c1)).isEmpty()
+    }
+
+    @Test
+    fun `test all dependencies with configuration c2`() {
+        val service = DependencyServiceImpl(dag())
+
+        assertThat(service.allDependenciesOf(m0, c2)).isEmpty()
+        assertThat(service.allDependenciesOf(m1, c2)).containsExactlyInAnyOrder(d18)
+        assertThat(service.allDependenciesOf(m2, c2)).containsExactlyInAnyOrder(d28, d18)
+        assertThat(service.allDependenciesOf(m3, c2)).containsExactlyInAnyOrder(d18)
+        assertThat(service.allDependenciesOf(m4, c2)).containsExactlyInAnyOrder(d49)
+        assertThat(service.allDependenciesOf(m5, c2)).containsExactlyInAnyOrder(d18, d49, d79, d57)
+        assertThat(service.allDependenciesOf(m6, c2)).containsExactlyInAnyOrder(d62, d28, d18)
+        assertThat(service.allDependenciesOf(m7, c2)).contains(d79)
+        assertThat(service.allDependenciesOf(m8, c2)).isEmpty()
+        assertThat(service.allDependenciesOf(m9, c2)).isEmpty()
     }
 
     private fun dag(): ModuleDependencyDag {

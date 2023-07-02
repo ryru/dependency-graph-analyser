@@ -46,8 +46,20 @@ class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencySe
         return dag.dependencies().map(::toDependency).sorted().toSortedSet()
     }
 
+    override fun allDependencies(vararg configurations: Configuration): SortedSet<Dependency> {
+        return allDependencies().filter { hasConfiguration(configurations, it) }.toSortedSet()
+    }
+
     override fun directDependenciesOf(module: Module): SortedSet<Dependency> {
         return dag.modules().filter { it.module == module }.flatMap { toDependencies(it) }
+            .toSortedSet()
+    }
+
+    override fun directDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency> {
+        return directDependenciesOf(module).filter { hasConfiguration(configurations, it) }
             .toSortedSet()
     }
 
@@ -56,9 +68,28 @@ class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencySe
             .toSortedSet()
     }
 
+    override fun nonDirectDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency> {
+        return nonDirectDependenciesOf(module).filter { hasConfiguration(configurations, it) }
+            .toSortedSet()
+    }
+
     override fun allDependenciesOf(module: Module): SortedSet<Dependency> {
         return nonDirectDependenciesOf(module).plus(directDependenciesOf(module)).toSortedSet()
     }
+
+    override fun allDependenciesOf(
+        module: Module,
+        vararg configurations: Configuration
+    ): SortedSet<Dependency> {
+        return allDependenciesOf(module).filter { hasConfiguration(configurations, it) }
+            .toSortedSet()
+    }
+
+    private fun hasConfiguration(configurations: Array<out Configuration>, it: Dependency) =
+        configurations.contains(it.configuration)
 
     private fun toDependencies(vertex: ModuleVertex): List<Dependency> =
         vertex.getOutgoing().flatMap { it.value }.map(::toDependency)
