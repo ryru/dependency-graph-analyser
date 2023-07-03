@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/export/module-dependency-graph.export.test.iml" filepath="$PROJECT_DIR$/.idea/modules/export/module-dependency-graph.export.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/graph/module-dependency-graph.graph.main.iml" filepath="$PROJECT_DIR$/.idea/modules/graph/module-dependency-graph.graph.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/graph/module-dependency-graph.graph.test.iml" filepath="$PROJECT_DIR$/.idea/modules/graph/module-dependency-graph.graph.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/import/module-dependency-graph.import.main.iml" filepath="$PROJECT_DIR$/.idea/modules/import/module-dependency-graph.import.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/import/module-dependency-graph.import.test.iml" filepath="$PROJECT_DIR$/.idea/modules/import/module-dependency-graph.import.test.iml" />
     </modules>
   </component>
 </project>
