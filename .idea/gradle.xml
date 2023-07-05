@@ -24,8 +24,6 @@
             <option value="$PROJECT_DIR$/export" />
             <option value="$PROJECT_DIR$/graph" />
             <option value="$PROJECT_DIR$/import" />
-            <option value="$PROJECT_DIR$/list" />
-            <option value="$PROJECT_DIR$/utilities" />
           </set>
         </option>
       </GradleProjectSettings>
