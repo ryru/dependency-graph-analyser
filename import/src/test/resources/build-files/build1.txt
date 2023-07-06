@@ -1,7 +1,0 @@
-plugins {
-    id("ch.addere.mdg.kotlin-library-conventions")
-}
-
-dependencies {
-    c1(project(":m2"))
-}

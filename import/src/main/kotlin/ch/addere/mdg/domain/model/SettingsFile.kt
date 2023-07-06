@@ -1,6 +1,5 @@
-package ch.addere.mdg.ch.addere.mdg.domain.model
+package ch.addere.mdg.domain.model
 
-import ch.addere.mdg.domain.model.Module
 import ch.addere.mdg.domain.model.extractor.findModulesInGroovySettings
 import ch.addere.mdg.domain.model.extractor.findModulesInKotlinSettings
 import java.io.File

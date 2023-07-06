@@ -1,9 +1,8 @@
-package ch.addere.mdg.ch.addere.mdg.domain.model
+package ch.addere.mdg.domain.model
 
 import assertk.assertThat
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEmpty
-import ch.addere.mdg.domain.model.Module
 import org.junit.jupiter.api.Test
 import java.io.File
 

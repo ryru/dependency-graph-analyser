@@ -1,12 +1,9 @@
-package ch.addere.mdg.ch.addere.mdg.domain.model
+package ch.addere.mdg.domain.model
 
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEmpty
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -18,11 +15,11 @@ private val C2 = Configuration("c2")
 private val D1 = Dependency(M1, M2, C1)
 private val D2 = Dependency(M1, M3, C2)
 
-class BuildFileTest {
+class KotlinBuildFileTest {
 
     @Test
-    fun `test kotlin build file 1`() {
-        val build = BuildFile(M1, getFile("/build-files/build1.txt"))
+    fun `test build with single project dependency on one line`() {
+        val build = KotlinBuildFile(M1, getFile("/build-files/kotlin/onelinder.build.gradle.kts"))
 
         val dependencies = build.getDependencies()
 
@@ -30,8 +27,9 @@ class BuildFileTest {
     }
 
     @Test
-    fun `test kotlin build file 2`() {
-        val build = BuildFile(M1, getFile("/build-files/build2.txt"))
+    fun `test build with multiple project dependencies`() {
+        val build =
+            KotlinBuildFile(M1, getFile("/build-files/kotlin/multidependencies.build.gradle.kts"))
 
         val dependencies = build.getDependencies()
 
@@ -39,8 +37,18 @@ class BuildFileTest {
     }
 
     @Test
+    fun `test build without project dependency`() {
+        val build =
+            KotlinBuildFile(M2, getFile("/build-files/kotlin/noprojectdependency.build.gradle.kts"))
+
+        val dependencies = build.getDependencies()
+
+        assertThat(dependencies).isEmpty()
+    }
+
+    @Test
     fun `test empty file`() {
-        val build = BuildFile(M2, getFile("/build-files/empty.txt"))
+        val build = KotlinBuildFile(M2, getFile("/build-files/empty.txt"))
 
         val dependencies = build.getDependencies()
 
@@ -49,7 +57,7 @@ class BuildFileTest {
 
     @Test
     fun `test random file`() {
-        val build = BuildFile(M1, getFile("/build-files/randomfile.txt"))
+        val build = KotlinBuildFile(M1, getFile("/build-files/randomfile.txt"))
 
         val dependencies = build.getDependencies()
 
