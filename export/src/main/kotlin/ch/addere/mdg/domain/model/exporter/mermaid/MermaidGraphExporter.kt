@@ -3,6 +3,8 @@ package ch.addere.mdg.domain.model.exporter.mermaid
 import ch.addere.mdg.domain.model.Configuration
 import ch.addere.mdg.domain.model.Module
 import ch.addere.mdg.domain.model.exporter.Exporter
+import java.math.BigInteger
+import java.security.MessageDigest
 
 const val INDENTATION = 4
 
@@ -10,6 +12,8 @@ private const val RELATION_DIRECT = "-->"
 private const val RELATION_INDIRECT = "-.->"
 
 abstract class MermaidGraphExporter : Exporter {
+
+    private val md = MessageDigest.getInstance("MD5")
 
     fun directRelation(origin: Module, destination: Module, configuration: Configuration): String {
         return relation(origin, destination, configuration, RELATION_DIRECT)
@@ -36,10 +40,13 @@ abstract class MermaidGraphExporter : Exporter {
     }
 
     private fun toKeyValueModule(module: Module): String {
-        val key = module.name.replace("-", "_")
+        val key = generateReproducibleKeyWithoutRegisteredWords(module)
         val value = module.name
         return "$key($value)"
     }
+
+    private fun generateReproducibleKeyWithoutRegisteredWords(module: Module) =
+        "v" + BigInteger(1, md.digest(module.name.toByteArray())).toString(16).take(6)
 
     private fun toDependencyRelation(configuration: Configuration): String {
         return "|${configuration.name}|"

@@ -19,10 +19,11 @@ class MermaidFullGraphExporterTest {
         assertThat(testWriter.toStringBlock()).isEqualTo(
             """
                 graph TD
-                    m1(m1) -->|c1| m2(m2)
-                    m1(m1) -->|c1| m4(m4)
-                    m2(m2) -->|c2| m3(m3)
-                    m4(m4) -->|c1| m2(m2)""".trimIndent()
+                    vae7be2(m1) -->|c1| vaaf2f8(m2)
+                    vae7be2(m1) -->|c1| vfd6b6f(m4)
+                    vaaf2f8(m2) -->|c2| v9678f7(m3)
+                    vfd6b6f(m4) -->|c1| vaaf2f8(m2)"""
+                .trimIndent()
         )
     }
 
