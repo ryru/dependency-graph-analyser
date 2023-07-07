@@ -3,6 +3,9 @@ package ch.addere.mdg.domain.model
 import assertk.assertThat
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
+import ch.addere.mdg.domain.model.GradleDsl.GROOVY
+import ch.addere.mdg.domain.model.GradleDsl.KOTLIN
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -17,19 +20,21 @@ class SettingsFileTest {
 
     @Test
     fun `test kotlin settings file 1`() {
-        val settings = SettingsFile(getFile("/settings-files/settings1.txt"))
+        val settings = SettingsFile(getFile("/settings-files/some.settings.gradle"))
 
         val modules = settings.getModules()
 
+        assertThat(settings.gradleDsl()).isEqualTo(GROOVY)
         assertThat(modules).containsExactlyInAnyOrder(APP, EXPORT, GRAPH, IMPORT, LIST, UTILITIES)
     }
 
     @Test
     fun `test kotlin settings file 2`() {
-        val settings = SettingsFile(getFile("/settings-files/settings2.txt"))
+        val settings = SettingsFile(getFile("/settings-files/someother.settings.gradle.kts"))
 
         val modules = settings.getModules()
 
+        assertThat(settings.gradleDsl()).isEqualTo(KOTLIN)
         assertThat(modules).containsExactlyInAnyOrder(APP, EXPORT, GRAPH, IMPORT, LIST, UTILITIES)
     }
 
