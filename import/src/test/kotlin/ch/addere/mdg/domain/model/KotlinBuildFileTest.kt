@@ -21,7 +21,7 @@ class KotlinBuildFileTest {
     fun `test build with single project dependency on one line`() {
         val build = KotlinBuildFile(M1, getFile("/build-files/kotlin/onelinder.build.gradle.kts"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).contains(D1)
     }
@@ -31,7 +31,7 @@ class KotlinBuildFileTest {
         val build =
             KotlinBuildFile(M1, getFile("/build-files/kotlin/multidependencies.build.gradle.kts"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).containsExactlyInAnyOrder(D1, D2)
     }
@@ -41,7 +41,7 @@ class KotlinBuildFileTest {
         val build =
             KotlinBuildFile(M2, getFile("/build-files/kotlin/noprojectdependency.build.gradle.kts"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }
@@ -50,7 +50,7 @@ class KotlinBuildFileTest {
     fun `test empty file`() {
         val build = KotlinBuildFile(M2, getFile("/build-files/empty.txt"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }
@@ -59,7 +59,7 @@ class KotlinBuildFileTest {
     fun `test random file`() {
         val build = KotlinBuildFile(M1, getFile("/build-files/randomfile.txt"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }

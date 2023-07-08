@@ -11,13 +11,11 @@ class KotlinBuildFile(origin: Module, buildFile: File) : BuildFile(origin, build
     }
 
     private fun toDestinationModule(input: String): Module {
-        val module = input.substringAfter(":")
-            .replace(")", "")
-            .replace("\"", "")
-            .replace("{", "")
-            .replace("}", "")
-            .trim()
-        return Module(module)
+        val moduleString = Regex("\":[A-Za-z0-9\\-]+\"").findAll(input)
+            .map { it.value }
+            .map { it.replace(":", "").replace("\"", "") }
+            .first()
+        return Module(moduleString)
     }
 
     private fun toConfiguration(input: String): Configuration {

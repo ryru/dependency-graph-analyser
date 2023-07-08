@@ -34,13 +34,14 @@ class Project(rootPath: File) {
         input.name.contains("settings.gradle")
 
     private fun initialiseBuildFiles(settingsFile: SettingsFile) =
-        settingsFile.getModules().map(::findBuildFile).toSet()
+        settingsFile.modules.map(::findBuildFile).toSet()
 
     private fun findBuildFile(module: Module): BuildFile {
         val rootDir = settingsFile.settingsFile.parentFile
         val moduleDir = rootDir.resolve(module.name)
 
         return Optional.ofNullable(findFirstGradleBuildFile(moduleDir))
+            .or { Optional.ofNullable(findModuleGradleBuildFile(module, moduleDir)) }
             .map { buildFileOf(module, it) }
             .orElseThrow { IllegalArgumentException("path '$moduleDir' seems not to contain a Gradle build file") }
     }
@@ -50,6 +51,12 @@ class Project(rootPath: File) {
 
     private fun isGradleBuildFile(input: File) =
         input.name.contains("build.gradle")
+
+    private fun findModuleGradleBuildFile(module: Module, rootPath: File) =
+        rootPath.walk().filter { isModuleBuildFile(it, module) }.firstOrNull()
+
+    private fun isModuleBuildFile(input: File, module: Module) =
+        input.name.contains("${module.name}.gradle")
 
     private fun buildFileOf(module: Module, buildFile: File) =
         when (settingsFile.gradleDsl()) {

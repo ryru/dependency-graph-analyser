@@ -7,8 +7,8 @@ class ImportImpl : Import {
 
     override fun readProject(project: Project): ModuleDependencyDag {
         val dag = ModuleDependencyDag()
-        project.settingsFile.getModules().forEach { dag.addModule(it) }
-        project.buildFiles.flatMap { it.getDependencies() }.forEach { dag.addDependency(it) }
+        project.settingsFile.modules.forEach { dag.addModule(it) }
+        project.buildFiles.flatMap { it.dependencies }.forEach { dag.addDependency(it) }
         return dag
     }
 }

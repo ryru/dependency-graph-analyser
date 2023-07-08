@@ -1,0 +1,11 @@
+rootProject.name = 'demo'
+var modules = arrayOf(
+    'app',
+    'list',
+    'utilities',
+)
+
+modules.forEach {
+  include(it)
+  project(':$it').buildFileName = '${it}.gradle.kts'
+}

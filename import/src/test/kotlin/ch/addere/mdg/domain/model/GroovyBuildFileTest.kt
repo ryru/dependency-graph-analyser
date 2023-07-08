@@ -21,7 +21,7 @@ class GroovyBuildFileTest {
     fun `test build with single project dependency on one line`() {
         val build = GroovyBuildFile(M1, getFile("/build-files/groovy/onelinder.build.gradle"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).contains(D1)
     }
@@ -34,7 +34,7 @@ class GroovyBuildFileTest {
                 getFile("/build-files/groovy/multidependencies.build.gradle")
             )
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).containsExactlyInAnyOrder(D1, D2)
     }
@@ -44,7 +44,7 @@ class GroovyBuildFileTest {
         val build =
             GroovyBuildFile(M2, getFile("/build-files/groovy/noprojectdependency.build.gradle"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }
@@ -53,7 +53,7 @@ class GroovyBuildFileTest {
     fun `test empty file`() {
         val build = GroovyBuildFile(M2, getFile("/build-files/empty.txt"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }
@@ -62,7 +62,7 @@ class GroovyBuildFileTest {
     fun `test random file`() {
         val build = GroovyBuildFile(M1, getFile("/build-files/randomfile.txt"))
 
-        val dependencies = build.getDependencies()
+        val dependencies = build.dependencies
 
         assertThat(dependencies).isEmpty()
     }

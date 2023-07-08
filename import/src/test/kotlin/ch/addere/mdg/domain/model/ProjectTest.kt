@@ -53,7 +53,7 @@ class ProjectTest {
         val project = Project(gradleSettingsFile)
 
         assertThat(project).isNotNull()
-        assertThat(project.settingsFile.getModules())
+        assertThat(project.settingsFile.modules)
             .containsExactlyInAnyOrder(M1, M2, M3, M4)
         assertThat(project.buildFiles)
             .transform { buildFile -> buildFile.map { it.origin } }
@@ -72,7 +72,7 @@ class ProjectTest {
         val project = Project(rootFolder)
 
         assertThat(project).isNotNull()
-        assertThat(project.settingsFile.getModules())
+        assertThat(project.settingsFile.modules)
             .containsExactlyInAnyOrder(M1, M2, M3, M4)
         assertThat(project.buildFiles)
             .transform { buildFile -> buildFile.map { it.origin } }
@@ -138,7 +138,7 @@ class ProjectTest {
             """
                 dependencies {
                     api project(':m1')
-                    implementation project(":m2') 
+                    implementation project(':m2') 
                     implementation project(':m3') 
                 }
         """.trimIndent()
