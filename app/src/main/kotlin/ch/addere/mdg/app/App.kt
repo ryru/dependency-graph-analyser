@@ -31,9 +31,9 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
         .file()
         .help("Gradle settings file or parent folder containing one")
 
-    private val mermaidGraph: Boolean by option("--mermaid-graph")
+    private val isMermaidChart: Boolean by option("--mermaid-chart")
         .flag()
-        .help("Generate Mermaid graph.")
+        .help("Generate Mermaid chart")
 
     private val import: Import by inject()
 
@@ -53,7 +53,7 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
         echo(String.format("%6d modules", nofModules))
         echo(String.format("%6d dependencies (%d unique)", nofDependencies, nofUniqueDependencies))
 
-        if (mermaidGraph) {
+        if (isMermaidChart) {
             echo()
             val mermaidFullGraphExporter = MermaidFullGraphExporter(service.allDependencies())
             mermaidFullGraphExporter.print(ConsoleWriter(::echo))
