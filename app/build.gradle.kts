@@ -9,7 +9,11 @@ plugins {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-text")
+    api(project(":export"))
+    api(project(":import"))
+
+    implementation("com.github.ajalt.clikt:clikt:4.0.0")
+    implementation("io.insert-koin:koin-core:3.4.2")
 }
 
 application {
