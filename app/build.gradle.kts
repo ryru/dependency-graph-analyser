@@ -20,3 +20,13 @@ application {
     // Define the main class for the application.
     mainClass.set("ch.addere.mdg.app.AppKt")
 }
+
+distributions {
+    main {
+        distributionBaseName.set("dga")
+    }
+}
+
+tasks.withType<CreateStartScripts> {
+    applicationName = "dga"
+}

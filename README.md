@@ -2,21 +2,24 @@
 
 Analyse and visualise module dependencies in Gradle projects.
 
-__Note:__ This CLI tool is still in development, features and argument may change.
-
-In large and complex Gradle projects with many modules and dependencies it is sometimes hard to keep
-an overview. This CLI tool analyses such projects and generates
-nice [Mermaid](https://mermaid.js.org/) graphs.
+In large and complex Gradle projects with many dependencies between the modules, it is sometimes
+difficult to keep track of everything. `dga` can analyse such projects and visualise the
+dependencies between the individual modules with the help of [Mermaid](https://mermaid.js.org/).
 
 Features:
 
-* Analyse Gradle projects with Kotlin or Groovy DSL
+* Analyses Gradle projects in both DSLs (Kotlin and Groovy)
+* Summarises the project modules and dependencies in figures
+* Generates text-based graphs which are compatible with Mermaid charts
+
+__Note:__ This CLI tool is still under development, functionality and programme call arguments may
+still change.
 
 ## Usage
 
 ```
 ./gradlew install
-./app/build/install/app/bin/app --mermaid-graph .
+./app/build/install/dga/bin/dga . --mermaid-chart
 
 Analyse settings.gradle.kts
      4 modules
