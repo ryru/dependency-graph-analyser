@@ -9,6 +9,7 @@ import ch.addere.mdg.domain.model.exporter.mermaid.MermaidFullGraphExporter
 import ch.addere.mdg.domain.model.writer.ConsoleWriter
 import ch.addere.mdg.domain.service.DependencyService
 import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.options.flag
@@ -21,6 +22,7 @@ import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.parameter.parametersOf
 import java.io.File
+import kotlin.system.exitProcess
 
 class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle project."),
     KoinComponent {
@@ -36,7 +38,7 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
     private val import: Import by inject()
 
     override fun run() {
-        val project: Project = get { parametersOf(settingsFile) }
+        val project = Project(settingsFile)
         val dag = import.readProject(project)
         val service: DependencyService = get { parametersOf(dag) }
 
@@ -46,22 +48,33 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
         val nofUniqueDependencies =
             service.allDependencies().map { it.configuration.name }.toSet().size
 
+        echo()
         echo("Analyse $analysedFileName")
         echo(String.format("%6d modules", nofModules))
         echo(String.format("%6d dependencies (%d unique)", nofDependencies, nofUniqueDependencies))
 
         if (mermaidGraph) {
+            echo()
             val mermaidFullGraphExporter = MermaidFullGraphExporter(service.allDependencies())
             mermaidFullGraphExporter.print(ConsoleWriter(::echo))
         }
+        echo()
     }
 }
 
 fun main(args: Array<String>) {
+    val dga = Dga()
+    try {
+        startKoin {
+            modules(dgaModule)
+        }
 
-    startKoin {
-        modules(dga)
+        dga.parse(args)
+    } catch (e: CliktError) {
+        dga.echoFormattedHelp(e)
+        exitProcess(e.statusCode)
+    } catch (e: Exception) {
+        dga.echo(e.message, err = true)
+        exitProcess(1)
     }
-
-    Dga().main(args)
 }

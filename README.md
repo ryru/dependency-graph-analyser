@@ -17,14 +17,17 @@ Features:
 ```
 ./gradlew install
 ./app/build/install/app/bin/app --mermaid-graph .
+
 Analyse settings.gradle.kts
      4 modules
      4 dependencies (1 unique)
+
 graph TD
     vd2a57d(app) -->|api| vb25074(export)
     vd2a57d(app) -->|api| v93473a(import)
     vb25074(export) -->|api| vf8b0b9(graph)
     v93473a(import) -->|api| vf8b0b9(graph)
+
 ```
 
 The output is compatible with Mermaids graph schema and can be visualised e.g. in Markdown files.
