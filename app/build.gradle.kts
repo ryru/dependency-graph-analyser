@@ -9,7 +9,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":export"))
+    api(project(":exporter"))
     api(project(":importer"))
 
     implementation("com.github.ajalt.clikt:clikt:4.0.0")
