@@ -1,8 +1,8 @@
 package ch.addere.mdg.exporter.domain.model.exporter.mermaid
 
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Module
 import ch.addere.mdg.exporter.domain.model.Exporter
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Module
 import java.math.BigInteger
 import java.security.MessageDigest
 

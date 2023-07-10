@@ -1,6 +1,6 @@
 package ch.addere.mdg.importer.domain.model
 
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Module
 import ch.addere.mdg.importer.domain.model.GradleDsl.GROOVY
 import ch.addere.mdg.importer.domain.model.GradleDsl.KOTLIN
 import java.io.File

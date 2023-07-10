@@ -1,7 +1,7 @@
 package ch.addere.mdg.importer.domain.model
 
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Module
 import java.io.File
 
 class GroovyBuildFile(origin: Module, buildFile: File) : BuildFile(origin, buildFile) {

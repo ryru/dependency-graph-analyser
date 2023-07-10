@@ -1,13 +1,13 @@
-package ch.addere.mdg.domain.model.graph
+package ch.addere.mdg.graph.domain.model.graph
 
 import assertk.assertFailure
 import assertk.assertThat
 import assertk.assertions.hasMessage
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Dependency
+import ch.addere.mdg.graph.domain.model.Module
 import org.junit.jupiter.api.Test
 
 class ModuleDependencyDagTest {

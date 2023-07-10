@@ -1,7 +1,7 @@
 package ch.addere.mdg.app
 
-import ch.addere.mdg.domain.service.DependencyService
-import ch.addere.mdg.domain.service.DependencyServiceImpl
+import ch.addere.mdg.graph.domain.service.DependencyService
+import ch.addere.mdg.graph.domain.service.DependencyServiceImpl
 import ch.addere.mdg.importer.application.Import
 import ch.addere.mdg.importer.application.ImportImpl
 import org.koin.core.module.dsl.bind

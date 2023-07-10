@@ -1,8 +1,8 @@
-package ch.addere.mdg.domain.service
+package ch.addere.mdg.graph.domain.service
 
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Dependency
+import ch.addere.mdg.graph.domain.model.Module
 import java.util.*
 
 interface DependencyService {

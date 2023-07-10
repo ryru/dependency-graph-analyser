@@ -1,8 +1,8 @@
 package ch.addere.mdg.exporter.domain.model
 
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Dependency
+import ch.addere.mdg.graph.domain.model.Module
 import java.util.*
 
 

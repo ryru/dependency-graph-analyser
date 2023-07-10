@@ -4,8 +4,8 @@ import assertk.assertThat
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.extracting
 import assertk.assertions.hasSize
-import ch.addere.mdg.domain.model.Module
-import ch.addere.mdg.domain.model.graph.ModuleVertex
+import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.model.graph.ModuleVertex
 import ch.addere.mdg.importer.domain.model.Project
 import org.junit.jupiter.api.Test
 import java.io.File

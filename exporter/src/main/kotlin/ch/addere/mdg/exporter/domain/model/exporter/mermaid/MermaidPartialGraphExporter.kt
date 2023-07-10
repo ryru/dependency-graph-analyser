@@ -1,7 +1,7 @@
 package ch.addere.mdg.exporter.domain.model.exporter.mermaid
 
-import ch.addere.mdg.domain.model.Dependency
 import ch.addere.mdg.exporter.domain.model.writer.Writer
+import ch.addere.mdg.graph.domain.model.Dependency
 import java.util.*
 
 class MermaidPartialGraphExporter(

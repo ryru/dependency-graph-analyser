@@ -1,6 +1,6 @@
-package ch.addere.mdg.domain.model.graph
+package ch.addere.mdg.graph.domain.model.graph
 
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Module
 
 class ModuleVertex(val module: Module) {
 

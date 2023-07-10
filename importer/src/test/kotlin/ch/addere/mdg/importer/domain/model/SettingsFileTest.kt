@@ -6,7 +6,7 @@ import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.messageContains
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Module
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

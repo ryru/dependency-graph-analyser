@@ -2,7 +2,7 @@ package ch.addere.mdg.importer.domain.model
 
 import assertk.assertThat
 import assertk.assertions.*
-import ch.addere.mdg.domain.model.Module
+import ch.addere.mdg.graph.domain.model.Module
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.junit.jupiter.params.ParameterizedTest

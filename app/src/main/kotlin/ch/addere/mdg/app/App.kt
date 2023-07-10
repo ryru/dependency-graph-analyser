@@ -3,9 +3,9 @@
  */
 package ch.addere.mdg.app
 
-import ch.addere.mdg.domain.service.DependencyService
 import ch.addere.mdg.exporter.domain.model.exporter.mermaid.MermaidFullGraphExporter
 import ch.addere.mdg.exporter.domain.model.writer.ConsoleWriter
+import ch.addere.mdg.graph.domain.service.DependencyService
 import ch.addere.mdg.importer.application.Import
 import ch.addere.mdg.importer.domain.model.Project
 import com.github.ajalt.clikt.core.CliktCommand

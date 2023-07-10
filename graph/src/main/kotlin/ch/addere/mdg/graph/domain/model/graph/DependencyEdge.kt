@@ -1,6 +1,6 @@
-package ch.addere.mdg.domain.model.graph
+package ch.addere.mdg.graph.domain.model.graph
 
-import ch.addere.mdg.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Configuration
 
 data class DependencyEdge(
     val origin: ModuleVertex,

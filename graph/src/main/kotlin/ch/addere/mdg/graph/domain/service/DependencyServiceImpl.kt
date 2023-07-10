@@ -1,11 +1,11 @@
-package ch.addere.mdg.domain.service
+package ch.addere.mdg.graph.domain.service
 
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
-import ch.addere.mdg.domain.model.graph.DependencyEdge
-import ch.addere.mdg.domain.model.graph.ModuleDependencyDag
-import ch.addere.mdg.domain.model.graph.ModuleVertex
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Dependency
+import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.model.graph.DependencyEdge
+import ch.addere.mdg.graph.domain.model.graph.ModuleDependencyDag
+import ch.addere.mdg.graph.domain.model.graph.ModuleVertex
 import java.util.*
 
 class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencyService {

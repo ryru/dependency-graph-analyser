@@ -1,13 +1,13 @@
-package ch.addere.mdg.domain.service
+package ch.addere.mdg.graph.domain.service
 
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEmpty
-import ch.addere.mdg.domain.model.Configuration
-import ch.addere.mdg.domain.model.Dependency
-import ch.addere.mdg.domain.model.Module
-import ch.addere.mdg.domain.model.graph.ModuleDependencyDag
+import ch.addere.mdg.graph.domain.model.Configuration
+import ch.addere.mdg.graph.domain.model.Dependency
+import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.model.graph.ModuleDependencyDag
 import org.junit.jupiter.api.Test
 
 class DependencyServiceImplTest {
