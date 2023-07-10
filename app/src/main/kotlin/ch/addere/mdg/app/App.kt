@@ -3,11 +3,11 @@
  */
 package ch.addere.mdg.app
 
-import ch.addere.mdg.application.Import
-import ch.addere.mdg.domain.model.Project
 import ch.addere.mdg.domain.model.exporter.mermaid.MermaidFullGraphExporter
 import ch.addere.mdg.domain.model.writer.ConsoleWriter
 import ch.addere.mdg.domain.service.DependencyService
+import ch.addere.mdg.importer.application.Import
+import ch.addere.mdg.importer.domain.model.Project
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument

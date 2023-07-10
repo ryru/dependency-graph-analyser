@@ -10,7 +10,7 @@ plugins {
 
 dependencies {
     api(project(":export"))
-    api(project(":import"))
+    api(project(":importer"))
 
     implementation("com.github.ajalt.clikt:clikt:4.0.0")
     implementation("io.insert-koin:koin-core:3.4.2")
