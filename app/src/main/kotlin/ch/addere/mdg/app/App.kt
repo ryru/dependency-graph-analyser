@@ -3,11 +3,9 @@
  */
 package ch.addere.mdg.app
 
-import ch.addere.mdg.exporter.domain.model.exporter.mermaid.MermaidFullGraphExporter
-import ch.addere.mdg.exporter.domain.model.writer.ConsoleWriter
-import ch.addere.mdg.graph.domain.service.DependencyService
-import ch.addere.mdg.importer.application.Import
-import ch.addere.mdg.importer.domain.model.Project
+import ch.addere.mdg.app.domain.model.CommandArgument
+import ch.addere.mdg.app.domain.service.DependencyCommand
+import ch.addere.mdg.app.infrastructure.factory.dgaModule
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
@@ -18,7 +16,6 @@ import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.types.file
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.parameter.parametersOf
 import java.io.File
@@ -31,34 +28,15 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
         .file()
         .help("Gradle settings file or parent folder containing one")
 
-    private val isMermaidChart: Boolean by option("--mermaid-chart")
+    private val isMermaidGraph: Boolean by option("--mermaid-graph")
         .flag()
-        .help("Generate Mermaid chart")
-
-    private val import: Import by inject()
+        .help("Generate Mermaid graph useful to visualise a graph chart")
 
     override fun run() {
-        val project = Project(settingsFile)
-        val dag = import.readProject(project)
-        val service: DependencyService = get { parametersOf(dag) }
+        val argument = CommandArgument(::echo, settingsFile, isMermaidGraph)
+        val command: DependencyCommand = get { parametersOf(argument) }
 
-        val analysedFileName = project.settingsFile.settingsFile.name
-        val nofModules = service.allModules().size
-        val nofDependencies = service.allDependencies().size
-        val nofUniqueDependencies =
-            service.allDependencies().map { it.configuration.name }.toSet().size
-
-        echo()
-        echo("Analyse $analysedFileName")
-        echo(String.format("%6d modules", nofModules))
-        echo(String.format("%6d dependencies (%d unique)", nofDependencies, nofUniqueDependencies))
-
-        if (isMermaidChart) {
-            echo()
-            val mermaidFullGraphExporter = MermaidFullGraphExporter(service.allDependencies())
-            mermaidFullGraphExporter.print(ConsoleWriter(::echo))
-        }
-        echo()
+        command.run()
     }
 }
 
