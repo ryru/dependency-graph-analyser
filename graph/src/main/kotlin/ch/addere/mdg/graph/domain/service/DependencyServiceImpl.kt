@@ -11,11 +11,11 @@ import java.util.*
 class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencyService {
 
     override fun allModules(): SortedSet<Module> {
-        return dag.modules().map(::toModule).toSortedSet()
+        return dag.vertices().map(::toModule).toSortedSet()
     }
 
     override fun allModules(vararg configurations: Configuration): SortedSet<Module> {
-        return findAllModulesWithGivenConfiguration(dag.modules(), configurations.toSet())
+        return findAllModulesWithGivenConfiguration(dag.vertices(), configurations.toSet())
     }
 
     private fun findAllModulesWithGivenConfiguration(
@@ -51,7 +51,7 @@ class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencySe
     }
 
     override fun directDependenciesOf(module: Module): SortedSet<Dependency> {
-        return dag.modules().filter { it.module == module }.flatMap { toDependencies(it) }
+        return dag.vertices().filter { it.module == module }.flatMap { toDependencies(it) }
             .toSortedSet()
     }
 

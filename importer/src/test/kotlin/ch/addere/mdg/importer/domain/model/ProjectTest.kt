@@ -3,6 +3,7 @@ package ch.addere.mdg.importer.domain.model
 import assertk.assertThat
 import assertk.assertions.*
 import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.service.ModuleRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import org.junit.jupiter.params.ParameterizedTest
@@ -24,7 +25,7 @@ class ProjectTest {
     fun `test non Gradle project settings file throws`() {
         val nonGradleSettingsFile = getEmptyFile()
 
-        assertk.assertFailure { Project(nonGradleSettingsFile) }
+        assertk.assertFailure { Project(nonGradleSettingsFile, ModuleRepository()) }
             .isInstanceOf(IllegalArgumentException::class)
             .messageContains("file '$nonGradleSettingsFile' seems not to be a Gradle project settings file")
 
@@ -34,7 +35,7 @@ class ProjectTest {
     fun `test folder without Gradle project settings throws`() {
         val nonGradleSettingsFolder = getEmptyDir()
 
-        assertk.assertFailure { Project(nonGradleSettingsFolder) }
+        assertk.assertFailure { Project(nonGradleSettingsFolder, ModuleRepository()) }
             .isInstanceOf(IllegalArgumentException::class)
             .messageContains("path '$nonGradleSettingsFolder' seems not to contain a Gradle project settings file")
 
@@ -46,7 +47,7 @@ class ProjectTest {
         buildProject(dsl)
         val gradleSettingsFile = tempFolder!!.resolve("settings.gradle${dsl.extension}")
 
-        val project = Project(gradleSettingsFile)
+        val project = Project(gradleSettingsFile, ModuleRepository())
 
         assertThat(project).isNotNull()
         assertThat(project.settingsFile.modules)
@@ -65,7 +66,7 @@ class ProjectTest {
         buildProject(dsl)
         val rootFolder = tempFolder!!
 
-        val project = Project(rootFolder)
+        val project = Project(rootFolder, ModuleRepository())
 
         assertThat(project).isNotNull()
         assertThat(project.settingsFile.modules)

@@ -2,20 +2,12 @@ package ch.addere.mdg.graph.domain.model.graph
 
 import ch.addere.mdg.graph.domain.model.Dependency
 import ch.addere.mdg.graph.domain.model.Module
-import java.util.*
+import ch.addere.mdg.graph.domain.service.ModuleRepository
 
-class ModuleDependencyDag {
+class ModuleDependencyDag(moduleRepository: ModuleRepository) {
 
-    private val modules: MutableSet<ModuleVertex> = mutableSetOf()
+    private val vertices = moduleRepository.getAllModules().map { ModuleVertex(it) }.toSet()
     private val dependencies: MutableSet<DependencyEdge> = mutableSetOf()
-
-    fun addModule(module: Module) {
-        resolve(module)
-    }
-
-    fun addAllModule(vararg modules: Module) {
-        modules.forEach { addModule(it) }
-    }
 
     fun addDependency(dependency: Dependency) {
         val origin = resolve(dependency.origin)
@@ -38,26 +30,19 @@ class ModuleDependencyDag {
     }
 
     private fun resolve(module: Module): ModuleVertex {
-        return Optional.ofNullable(modules.firstOrNull { it.module == module })
-            .orElseGet { createAndInsertVertex(module) }
+        return vertices.first { it.module == module }
     }
 
-    private fun createAndInsertVertex(module: Module): ModuleVertex {
-        val newVertex = ModuleVertex(module)
-        modules.add(newVertex)
-        return newVertex
-    }
-
-    fun nofModules(): Int {
-        return modules.size
+    fun nofVertices(): Int {
+        return vertices.size
     }
 
     fun nofDependencies(): Int {
         return dependencies.size
     }
 
-    fun modules(): Set<ModuleVertex> {
-        return modules
+    fun vertices(): Set<ModuleVertex> {
+        return vertices
     }
 
     fun dependencies(): Set<DependencyEdge> {

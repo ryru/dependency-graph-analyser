@@ -1,12 +1,13 @@
 package ch.addere.mdg.importer.domain.model
 
 import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.service.ModuleRepository
 import ch.addere.mdg.importer.domain.model.GradleDsl.GROOVY
 import ch.addere.mdg.importer.domain.model.GradleDsl.KOTLIN
 import java.io.File
 import java.util.*
 
-class Project(rootPath: File) {
+class Project(rootPath: File, moduleRepository: ModuleRepository) {
 
     val settingsFile: SettingsFile
     val buildFiles: Set<BuildFile>
@@ -14,6 +15,8 @@ class Project(rootPath: File) {
     init {
         settingsFile = initialiseSettings(rootPath)
         buildFiles = initialiseBuildFiles(settingsFile)
+
+        moduleRepository.addModule(settingsFile.modules)
     }
 
     private fun initialiseSettings(rootPath: File): SettingsFile {

@@ -312,8 +312,9 @@ class DependencyServiceImplTest {
     }
 
     private fun dag(): ModuleDependencyDag {
-        val dag = ModuleDependencyDag()
-        dag.addAllModule(m3, m2, m1, m0, m3, m5, m4, m7, m6, m8, m9)
+        val moduleRepository = ModuleRepository()
+        moduleRepository.addModule(setOf(m3, m2, m1, m0, m3, m5, m4, m7, m6, m8, m9))
+        val dag = ModuleDependencyDag(moduleRepository)
         dag.addAllDependency(d31, d21, d10, d54, d53, d40, d18, d28, d49, d57, d62, d79)
         return dag
     }
