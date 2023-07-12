@@ -5,5 +5,6 @@ import java.io.File
 data class CommandArgument(
     val printer: (String) -> Unit,
     val settings: File,
-    val isMermaidGraph: Boolean
+    val isMermaidGraph: Boolean,
+    val isAllModules: Boolean
 )

@@ -3,6 +3,7 @@ package ch.addere.mdg.app.infrastructure.factory
 import ch.addere.mdg.app.domain.model.CommandArgument
 import ch.addere.mdg.app.domain.model.ConsolePrinter
 import ch.addere.mdg.app.domain.model.MermaidPrinter
+import ch.addere.mdg.app.domain.model.ModulePrinter
 import ch.addere.mdg.app.domain.model.OverviewPrinter
 import ch.addere.mdg.app.domain.service.DependencyCommand
 import ch.addere.mdg.graph.application.module.ModuleService
@@ -21,6 +22,7 @@ val dgaModule = module {
     singleOf(::DependencyCommand)
     singleOf(::DependencyServiceImpl) { bind<DependencyService>() }
     singleOf(::MermaidPrinter)
+    singleOf(::ModulePrinter)
     singleOf(::ModuleRepository)
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
     singleOf(::OverviewPrinter)

@@ -32,8 +32,12 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
         .flag()
         .help("Generate Mermaid graph useful to visualise a graph chart")
 
+    private val isAllModules: Boolean by option("--modules")
+        .flag()
+        .help("Return all modules of the given project ordered alphabetically")
+
     override fun run() {
-        val argument = CommandArgument(::echo, settingsFile, isMermaidGraph)
+        val argument = CommandArgument(::echo, settingsFile, isMermaidGraph, isAllModules)
         val command: DependencyCommand = get { parametersOf(argument) }
 
         command.run()

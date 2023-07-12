@@ -62,15 +62,6 @@ class DependencyServiceImplTest {
     private val d79 = Dependency(m7, m9, c2)
 
     @Test
-    fun `test get all modules`() {
-        val service = DependencyServiceImpl(dag())
-
-        val modules = service.allModules()
-
-        assertThat(modules).containsExactlyInAnyOrder(m0, m1, m2, m3, m4, m5, m6, m7, m8, m9)
-    }
-
-    @Test
     fun `test get all modules with configuration c1`() {
         val service = DependencyServiceImpl(dag())
 

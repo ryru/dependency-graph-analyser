@@ -10,10 +10,6 @@ import java.util.*
 
 class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencyService {
 
-    override fun allModules(): SortedSet<Module> {
-        return dag.vertices().map(::toModule).toSortedSet()
-    }
-
     override fun allModules(vararg configurations: Configuration): SortedSet<Module> {
         return findAllModulesWithGivenConfiguration(dag.vertices(), configurations.toSet())
     }

@@ -8,11 +8,6 @@ import java.util.*
 interface DependencyService {
 
     /**
-     * All modules of the graph sorted by name.
-     */
-    fun allModules(): SortedSet<Module>
-
-    /**
      * All modules with given configuration of the graph sorted by name.
      */
     fun allModules(vararg configurations: Configuration): SortedSet<Module>

@@ -21,6 +21,7 @@ dependencies {
     }
 
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26.1")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
 }
 
 testing {
