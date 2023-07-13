@@ -10,7 +10,7 @@ import ch.addere.mdg.graph.domain.model.Module
 import ch.addere.mdg.graph.domain.model.graph.ModuleDependencyDag
 import org.junit.jupiter.api.Test
 
-class DependencyServiceImplTest {
+class DependencyRelationServiceImplTest {
 
     /**
      * Diagram of the test DAG.
@@ -63,7 +63,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test get all modules with configuration c1`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         val modules = service.allModules(c1)
 
@@ -72,7 +72,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test get all modules with configuration c2`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         val modules = service.allModules(c2)
 
@@ -80,20 +80,10 @@ class DependencyServiceImplTest {
     }
 
     @Test
-    fun `test get all dependencies`() {
-        val service = DependencyServiceImpl(dag())
-
-        val dependencies = service.allDependencies()
-
-        assertThat(dependencies)
-            .containsExactlyInAnyOrder(d10, d18, d21, d28, d31, d40, d49, d53, d54, d57, d62, d79)
-    }
-
-    @Test
     fun `test get all dependencies with configuration c1`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
-        val dependencies = service.allDependencies(c1)
+        val dependencies = service.allDependencies(setOf(c1))
 
         assertThat(dependencies)
             .containsExactlyInAnyOrder(d10, d21, d31, d40, d53, d54)
@@ -101,9 +91,9 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test get all dependencies with configuration c2`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
-        val dependencies = service.allDependencies(c2)
+        val dependencies = service.allDependencies(setOf(c2))
 
         assertThat(dependencies)
             .containsExactlyInAnyOrder(d18, d28, d49, d57, d62, d79)
@@ -111,9 +101,9 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test get all dependencies with both configurations`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
-        val dependencies = service.allDependencies(c1, c2)
+        val dependencies = service.allDependencies(setOf(c1, c2))
 
         assertThat(dependencies)
             .containsExactlyInAnyOrder(d10, d18, d21, d28, d31, d40, d49, d53, d54, d57, d62, d79)
@@ -121,7 +111,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test direct dependencies`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.directDependenciesOf(m0)).isEmpty()
         assertThat(service.directDependenciesOf(m1)).containsExactlyInAnyOrder(d10, d18)
@@ -137,7 +127,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test direct dependencies with configuration c1`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.directDependenciesOf(m0, c1)).isEmpty()
         assertThat(service.directDependenciesOf(m1, c1)).contains(d10)
@@ -153,7 +143,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test direct dependencies with configuration c2`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.directDependenciesOf(m0, c2)).isEmpty()
         assertThat(service.directDependenciesOf(m1, c2)).contains(d18)
@@ -169,7 +159,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test direct dependencies with both configurations`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.directDependenciesOf(m0, c2, c1)).isEmpty()
         assertThat(service.directDependenciesOf(m1, c2, c1)).containsExactlyInAnyOrder(d10, d18)
@@ -186,7 +176,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test non-direct dependencies`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.nonDirectDependenciesOf(m0)).isEmpty()
         assertThat(service.nonDirectDependenciesOf(m1)).isEmpty()
@@ -204,7 +194,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test non-direct dependencies with configuration c1`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.nonDirectDependenciesOf(m0, c1)).isEmpty()
         assertThat(service.nonDirectDependenciesOf(m1, c1)).isEmpty()
@@ -220,7 +210,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test non-direct dependencies with configuration c2`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.nonDirectDependenciesOf(m0, c2)).isEmpty()
         assertThat(service.nonDirectDependenciesOf(m1, c2)).isEmpty()
@@ -236,7 +226,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test non-direct dependencies with both configurations`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.nonDirectDependenciesOf(m0, c1, c2)).isEmpty()
         assertThat(service.nonDirectDependenciesOf(m1, c1, c2)).isEmpty()
@@ -254,7 +244,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test all dependencies`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.allDependenciesOf(m0)).isEmpty()
         assertThat(service.allDependenciesOf(m1)).containsExactlyInAnyOrder(d10, d18)
@@ -271,7 +261,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test all dependencies with configuration c1`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.allDependenciesOf(m0, c1)).isEmpty()
         assertThat(service.allDependenciesOf(m1, c1)).contains(d10)
@@ -288,7 +278,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test all dependencies with configuration c2`() {
-        val service = DependencyServiceImpl(dag())
+        val service = DependencyRelationServiceImpl(dag())
 
         assertThat(service.allDependenciesOf(m0, c2)).isEmpty()
         assertThat(service.allDependenciesOf(m1, c2)).containsExactlyInAnyOrder(d18)
@@ -304,9 +294,12 @@ class DependencyServiceImplTest {
 
     private fun dag(): ModuleDependencyDag {
         val moduleRepository = ModuleRepository()
+        val dependencyRepository = DependencyRepository()
+
         moduleRepository.addModule(setOf(m3, m2, m1, m0, m3, m5, m4, m7, m6, m8, m9))
-        val dag = ModuleDependencyDag(moduleRepository)
-        dag.addAllDependency(d31, d21, d10, d54, d53, d40, d18, d28, d49, d57, d62, d79)
-        return dag
+        dependencyRepository
+            .addDependency(setOf(d31, d21, d10, d54, d53, d40, d18, d28, d49, d57, d62, d79))
+
+        return ModuleDependencyDag(moduleRepository, dependencyRepository)
     }
 }

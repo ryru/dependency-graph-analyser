@@ -5,7 +5,7 @@ import ch.addere.mdg.graph.domain.model.Dependency
 import ch.addere.mdg.graph.domain.model.Module
 import java.util.*
 
-interface DependencyService {
+interface DependencyRelationService {
 
     /**
      * All modules with given configuration of the graph sorted by name.
@@ -13,14 +13,9 @@ interface DependencyService {
     fun allModules(vararg configurations: Configuration): SortedSet<Module>
 
     /**
-     * All dependencies of the graph sorted by origin, destination and configuration.
-     */
-    fun allDependencies(): SortedSet<Dependency>
-
-    /**
      * All dependencies with given configurations of the graph sorted by origin, destination and configuration.
      */
-    fun allDependencies(vararg configurations: Configuration): SortedSet<Dependency>
+    fun allDependencies(configurations: Collection<Configuration>): SortedSet<Dependency>
 
     /**
      * All sorted direct dependencies of a given module within the graph.

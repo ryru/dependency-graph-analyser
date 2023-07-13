@@ -1,32 +1,29 @@
 package ch.addere.mdg.graph.domain.model.graph
 
+import ch.addere.mdg.graph.domain.model.Configuration
 import ch.addere.mdg.graph.domain.model.Dependency
 import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.service.DependencyRepository
 import ch.addere.mdg.graph.domain.service.ModuleRepository
+import java.util.*
 
-class ModuleDependencyDag(moduleRepository: ModuleRepository) {
+class ModuleDependencyDag(
+    moduleRepository: ModuleRepository,
+    dependencyRepository: DependencyRepository
+) {
 
     private val vertices = moduleRepository.getAllModules().map { ModuleVertex(it) }.toSet()
-    private val dependencies: MutableSet<DependencyEdge> = mutableSetOf()
+    private val edges = dependencyRepository.getAllDependencies().map(::toDependencyEdge).toSet()
 
-    fun addDependency(dependency: Dependency) {
+    private fun toDependencyEdge(dependency: Dependency): DependencyEdge {
         val origin = resolve(dependency.origin)
         val destination = resolve(dependency.destination)
         val dependencyEdge = DependencyEdge(origin, destination, dependency.configuration)
 
-        if (dependencies.contains(dependencyEdge)) {
-            throw IllegalArgumentException(
-                """Dependency of type '${dependencyEdge.configuration.name}' between origin '${dependencyEdge.origin.module.name}' and destination '${dependencyEdge.destination.module.name}' already exists"""
-            )
-        }
-        dependencies.add(dependencyEdge)
-
         origin.addOutgoing(destination, dependencyEdge)
         destination.addIncoming(origin, dependencyEdge)
-    }
 
-    fun addAllDependency(vararg dependencies: Dependency) {
-        dependencies.forEach { addDependency(it) }
+        return dependencyEdge
     }
 
     private fun resolve(module: Module): ModuleVertex {
@@ -37,15 +34,23 @@ class ModuleDependencyDag(moduleRepository: ModuleRepository) {
         return vertices.size
     }
 
-    fun nofDependencies(): Int {
-        return dependencies.size
+    fun nofEdges(): Int {
+        return edges.size
     }
 
     fun vertices(): Set<ModuleVertex> {
         return vertices
     }
 
-    fun dependencies(): Set<DependencyEdge> {
-        return dependencies
+    fun vertex(module: Module): Optional<ModuleVertex> {
+        return Optional.ofNullable(vertices.firstOrNull { it.module == module })
+    }
+
+    fun edges(): Set<DependencyEdge> {
+        return edges
+    }
+
+    fun edge(configuration: Collection<Configuration>): Set<DependencyEdge> {
+        return edges.filter { configuration.contains(it.configuration) }.toSet()
     }
 }

@@ -1,8 +1,10 @@
 package ch.addere.mdg.importer.domain.model
 
+import assertk.assertFailure
 import assertk.assertThat
 import assertk.assertions.*
 import ch.addere.mdg.graph.domain.model.Module
+import ch.addere.mdg.graph.domain.service.DependencyRepository
 import ch.addere.mdg.graph.domain.service.ModuleRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -25,7 +27,7 @@ class ProjectTest {
     fun `test non Gradle project settings file throws`() {
         val nonGradleSettingsFile = getEmptyFile()
 
-        assertk.assertFailure { Project(nonGradleSettingsFile, ModuleRepository()) }
+        assertFailure { Project(nonGradleSettingsFile, ModuleRepository(), DependencyRepository()) }
             .isInstanceOf(IllegalArgumentException::class)
             .messageContains("file '$nonGradleSettingsFile' seems not to be a Gradle project settings file")
 
@@ -35,7 +37,13 @@ class ProjectTest {
     fun `test folder without Gradle project settings throws`() {
         val nonGradleSettingsFolder = getEmptyDir()
 
-        assertk.assertFailure { Project(nonGradleSettingsFolder, ModuleRepository()) }
+        assertFailure {
+            Project(
+                nonGradleSettingsFolder,
+                ModuleRepository(),
+                DependencyRepository()
+            )
+        }
             .isInstanceOf(IllegalArgumentException::class)
             .messageContains("path '$nonGradleSettingsFolder' seems not to contain a Gradle project settings file")
 
@@ -47,7 +55,7 @@ class ProjectTest {
         buildProject(dsl)
         val gradleSettingsFile = tempFolder!!.resolve("settings.gradle${dsl.extension}")
 
-        val project = Project(gradleSettingsFile, ModuleRepository())
+        val project = Project(gradleSettingsFile, ModuleRepository(), DependencyRepository())
 
         assertThat(project).isNotNull()
         assertThat(project.settingsFile.modules)
@@ -66,7 +74,7 @@ class ProjectTest {
         buildProject(dsl)
         val rootFolder = tempFolder!!
 
-        val project = Project(rootFolder, ModuleRepository())
+        val project = Project(rootFolder, ModuleRepository(), DependencyRepository())
 
         assertThat(project).isNotNull()
         assertThat(project.settingsFile.modules)

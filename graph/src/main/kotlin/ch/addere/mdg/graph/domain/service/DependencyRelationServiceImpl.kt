@@ -8,7 +8,8 @@ import ch.addere.mdg.graph.domain.model.graph.ModuleDependencyDag
 import ch.addere.mdg.graph.domain.model.graph.ModuleVertex
 import java.util.*
 
-class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencyService {
+class DependencyRelationServiceImpl(private val dag: ModuleDependencyDag) :
+    DependencyRelationService {
 
     override fun allModules(vararg configurations: Configuration): SortedSet<Module> {
         return findAllModulesWithGivenConfiguration(dag.vertices(), configurations.toSet())
@@ -38,17 +39,12 @@ class DependencyServiceImpl(private val dag: ModuleDependencyDag) : DependencySe
         configurations: Set<Configuration>
     ) = a.value.intersect(configurations.toSet()).isNotEmpty()
 
-    override fun allDependencies(): SortedSet<Dependency> {
-        return dag.dependencies().map(::toDependency).sorted().toSortedSet()
-    }
-
-    override fun allDependencies(vararg configurations: Configuration): SortedSet<Dependency> {
-        return allDependencies().filter { hasConfiguration(configurations, it) }.toSortedSet()
+    override fun allDependencies(configurations: Collection<Configuration>): SortedSet<Dependency> {
+        return dag.edge(configurations).map(::toDependency).toSortedSet()
     }
 
     override fun directDependenciesOf(module: Module): SortedSet<Dependency> {
-        return dag.vertices().filter { it.module == module }.flatMap { toDependencies(it) }
-            .toSortedSet()
+        return dag.vertex(module).map { toDependencies(it) }.orElse(emptyList()).toSortedSet()
     }
 
     override fun directDependenciesOf(
