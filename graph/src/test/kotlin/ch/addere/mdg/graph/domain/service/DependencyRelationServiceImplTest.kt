@@ -65,7 +65,7 @@ class DependencyRelationServiceImplTest {
     fun `test get all modules with configuration c1`() {
         val service = DependencyRelationServiceImpl(dag())
 
-        val modules = service.allModules(c1)
+        val modules = service.allModules(setOf(c1))
 
         assertThat(modules).containsExactlyInAnyOrder(m1, m2, m3, m4, m5)
     }
@@ -74,7 +74,7 @@ class DependencyRelationServiceImplTest {
     fun `test get all modules with configuration c2`() {
         val service = DependencyRelationServiceImpl(dag())
 
-        val modules = service.allModules(c2)
+        val modules = service.allModules(setOf(c2))
 
         assertThat(modules).containsExactlyInAnyOrder(m1, m2, m4, m5, m6, m7)
     }
@@ -161,17 +161,20 @@ class DependencyRelationServiceImplTest {
     fun `test direct dependencies with both configurations`() {
         val service = DependencyRelationServiceImpl(dag())
 
-        assertThat(service.directDependenciesOf(m0, c2, c1)).isEmpty()
-        assertThat(service.directDependenciesOf(m1, c2, c1)).containsExactlyInAnyOrder(d10, d18)
-        assertThat(service.directDependenciesOf(m2, c2, c1)).containsExactlyInAnyOrder(d21, d28)
-        assertThat(service.directDependenciesOf(m3, c2, c1)).contains(d31)
-        assertThat(service.directDependenciesOf(m4, c2, c1)).containsExactlyInAnyOrder(d40, d49)
-        assertThat(service.directDependenciesOf(m5, c2, c1))
+        assertThat(service.directDependenciesOf(m0, setOf(c2, c1))).isEmpty()
+        assertThat(service.directDependenciesOf(m1, setOf(c2, c1)))
+            .containsExactlyInAnyOrder(d10, d18)
+        assertThat(service.directDependenciesOf(m2, setOf(c2, c1)))
+            .containsExactlyInAnyOrder(d21, d28)
+        assertThat(service.directDependenciesOf(m3, setOf(c2, c1))).contains(d31)
+        assertThat(service.directDependenciesOf(m4, setOf(c2, c1)))
+            .containsExactlyInAnyOrder(d40, d49)
+        assertThat(service.directDependenciesOf(m5, setOf(c2, c1)))
             .containsExactlyInAnyOrder(d53, d54, d57)
-        assertThat(service.directDependenciesOf(m6, c2, c1)).contains(d62)
-        assertThat(service.directDependenciesOf(m7, c2, c1)).contains(d79)
-        assertThat(service.directDependenciesOf(m8, c2, c1)).isEmpty()
-        assertThat(service.directDependenciesOf(m9, c2, c1)).isEmpty()
+        assertThat(service.directDependenciesOf(m6, setOf(c2, c1))).contains(d62)
+        assertThat(service.directDependenciesOf(m7, setOf(c2, c1))).contains(d79)
+        assertThat(service.directDependenciesOf(m8, setOf(c2, c1))).isEmpty()
+        assertThat(service.directDependenciesOf(m9, setOf(c2, c1))).isEmpty()
     }
 
     @Test
@@ -228,18 +231,19 @@ class DependencyRelationServiceImplTest {
     fun `test non-direct dependencies with both configurations`() {
         val service = DependencyRelationServiceImpl(dag())
 
-        assertThat(service.nonDirectDependenciesOf(m0, c1, c2)).isEmpty()
-        assertThat(service.nonDirectDependenciesOf(m1, c1, c2)).isEmpty()
-        assertThat(service.nonDirectDependenciesOf(m2, c1, c2)).contains(d10)
-        assertThat(service.nonDirectDependenciesOf(m3, c1, c2)).containsExactlyInAnyOrder(d10, d18)
-        assertThat(service.nonDirectDependenciesOf(m4, c1, c2)).isEmpty()
-        assertThat(service.nonDirectDependenciesOf(m5, c1, c2))
+        assertThat(service.nonDirectDependenciesOf(m0, setOf(c1, c2))).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m1, setOf(c1, c2))).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m2, setOf(c1, c2))).contains(d10)
+        assertThat(service.nonDirectDependenciesOf(m3, setOf(c1, c2)))
+            .containsExactlyInAnyOrder(d10, d18)
+        assertThat(service.nonDirectDependenciesOf(m4, setOf(c1, c2))).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m5, setOf(c1, c2)))
             .containsExactlyInAnyOrder(d10, d18, d31, d40, d49, d79)
-        assertThat(service.nonDirectDependenciesOf(m6, c1, c2))
+        assertThat(service.nonDirectDependenciesOf(m6, setOf(c1, c2)))
             .containsExactlyInAnyOrder(d10, d18, d21, d28)
-        assertThat(service.nonDirectDependenciesOf(m7, c1, c2)).isEmpty()
-        assertThat(service.nonDirectDependenciesOf(m8, c1, c2)).isEmpty()
-        assertThat(service.nonDirectDependenciesOf(m9, c1, c2)).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m7, setOf(c1, c2))).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m8, setOf(c1, c2))).isEmpty()
+        assertThat(service.nonDirectDependenciesOf(m9, setOf(c1, c2))).isEmpty()
     }
 
     @Test

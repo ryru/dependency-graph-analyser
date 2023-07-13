@@ -11,7 +11,7 @@ import java.util.*
 class DependencyRelationServiceImpl(private val dag: ModuleDependencyDag) :
     DependencyRelationService {
 
-    override fun allModules(vararg configurations: Configuration): SortedSet<Module> {
+    override fun allModules(configurations: Collection<Configuration>): SortedSet<Module> {
         return findAllModulesWithGivenConfiguration(dag.vertices(), configurations.toSet())
     }
 
@@ -49,10 +49,16 @@ class DependencyRelationServiceImpl(private val dag: ModuleDependencyDag) :
 
     override fun directDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Configuration
     ): SortedSet<Dependency> {
-        return directDependenciesOf(module).filter { hasConfiguration(configurations, it) }
-            .toSortedSet()
+        return findAllDependenciesWithConfiguration(directDependenciesOf(module), configurations)
+    }
+
+    override fun directDependenciesOf(
+        module: Module,
+        configurations: Collection<Configuration>
+    ): SortedSet<Dependency> {
+        return findAllDependenciesWithConfigurations(directDependenciesOf(module), configurations)
     }
 
     override fun nonDirectDependenciesOf(module: Module): SortedSet<Dependency> {
@@ -62,10 +68,19 @@ class DependencyRelationServiceImpl(private val dag: ModuleDependencyDag) :
 
     override fun nonDirectDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Configuration
     ): SortedSet<Dependency> {
-        return nonDirectDependenciesOf(module).filter { hasConfiguration(configurations, it) }
-            .toSortedSet()
+        return findAllDependenciesWithConfiguration(nonDirectDependenciesOf(module), configurations)
+    }
+
+    override fun nonDirectDependenciesOf(
+        module: Module,
+        configurations: Collection<Configuration>
+    ): SortedSet<Dependency> {
+        return findAllDependenciesWithConfigurations(
+            nonDirectDependenciesOf(module),
+            configurations
+        )
     }
 
     override fun allDependenciesOf(module: Module): SortedSet<Dependency> {
@@ -74,18 +89,35 @@ class DependencyRelationServiceImpl(private val dag: ModuleDependencyDag) :
 
     override fun allDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Configuration
     ): SortedSet<Dependency> {
-        return allDependenciesOf(module).filter { hasConfiguration(configurations, it) }
-            .toSortedSet()
+        return findAllDependenciesWithConfiguration(allDependenciesOf(module), configurations)
     }
 
-    private fun hasConfiguration(configurations: Array<out Configuration>, it: Dependency) =
-        configurations.contains(it.configuration)
+    override fun allDependenciesOf(
+        module: Module,
+        configurations: Collection<Configuration>
+    ): SortedSet<Dependency> {
+        return findAllDependenciesWithConfigurations(allDependenciesOf(module), configurations)
+    }
 
     private fun toDependencies(vertex: ModuleVertex): List<Dependency> =
         vertex.getOutgoing().flatMap { it.value }.map(::toDependency)
 
     private fun toDependency(edge: DependencyEdge): Dependency =
         Dependency(edge.origin.module, edge.destination.module, edge.configuration)
+
+    private fun findAllDependenciesWithConfiguration(
+        dependencies: Collection<Dependency>,
+        configuration: Configuration
+    ): SortedSet<Dependency> {
+        return dependencies.filter { configuration == it.configuration }.toSortedSet()
+    }
+
+    private fun findAllDependenciesWithConfigurations(
+        dependencies: Collection<Dependency>,
+        configurations: Collection<Configuration>
+    ): SortedSet<Dependency> {
+        return dependencies.filter { configurations.contains(it.configuration) }.toSortedSet()
+    }
 }

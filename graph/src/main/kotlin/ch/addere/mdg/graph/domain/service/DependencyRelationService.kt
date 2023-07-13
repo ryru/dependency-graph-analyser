@@ -10,7 +10,7 @@ interface DependencyRelationService {
     /**
      * All modules with given configuration of the graph sorted by name.
      */
-    fun allModules(vararg configurations: Configuration): SortedSet<Module>
+    fun allModules(configurations: Collection<Configuration>): SortedSet<Module>
 
     /**
      * All dependencies with given configurations of the graph sorted by origin, destination and configuration.
@@ -23,11 +23,16 @@ interface DependencyRelationService {
     fun directDependenciesOf(module: Module): SortedSet<Dependency>
 
     /**
+     * All sorted direct dependencies with a given configuration of a given module within the graph.
+     */
+    fun directDependenciesOf(module: Module, configurations: Configuration): SortedSet<Dependency>
+
+    /**
      * All sorted direct dependencies with given configurations of a given module within the graph.
      */
     fun directDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Collection<Configuration>
     ): SortedSet<Dependency>
 
     /**
@@ -36,11 +41,19 @@ interface DependencyRelationService {
     fun nonDirectDependenciesOf(module: Module): SortedSet<Dependency>
 
     /**
+     * All sorted non-direct dependencies with a given configuration of a given module within the graph.
+     */
+    fun nonDirectDependenciesOf(
+        module: Module,
+        configurations: Configuration
+    ): SortedSet<Dependency>
+
+    /**
      * All sorted non-direct dependencies with given configurations of a given module within the graph.
      */
     fun nonDirectDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Collection<Configuration>
     ): SortedSet<Dependency>
 
     /**
@@ -49,10 +62,15 @@ interface DependencyRelationService {
     fun allDependenciesOf(module: Module): SortedSet<Dependency>
 
     /**
+     * All sorted dependencies with given a configuration of a given module within the graph.
+     */
+    fun allDependenciesOf(module: Module, configurations: Configuration): SortedSet<Dependency>
+
+    /**
      * All sorted dependencies with given configurations of a given module within the graph.
      */
     fun allDependenciesOf(
         module: Module,
-        vararg configurations: Configuration
+        configurations: Collection<Configuration>
     ): SortedSet<Dependency>
 }
