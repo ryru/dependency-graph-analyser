@@ -1,7 +1,7 @@
 package ch.addere.mdg.app.domain.model
 
-import ch.addere.mdg.graph.application.module.DependencyService
-import ch.addere.mdg.graph.application.module.ModuleService
+import ch.addere.mdg.graph.application.DependencyService
+import ch.addere.mdg.graph.application.ModuleService
 import ch.addere.mdg.importer.domain.model.Project
 
 class OverviewPrinter(

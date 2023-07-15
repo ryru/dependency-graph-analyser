@@ -3,7 +3,7 @@ package ch.addere.mdg.app.domain.model
 import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEmpty
-import ch.addere.mdg.graph.application.module.ModuleServiceImpl
+import ch.addere.mdg.graph.application.ModuleServiceImpl
 import ch.addere.mdg.graph.domain.model.Module
 import ch.addere.mdg.graph.domain.service.ModuleRepository
 import org.junit.jupiter.api.AfterEach

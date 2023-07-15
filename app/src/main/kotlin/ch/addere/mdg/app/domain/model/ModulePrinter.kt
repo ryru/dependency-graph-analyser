@@ -1,6 +1,6 @@
 package ch.addere.mdg.app.domain.model
 
-import ch.addere.mdg.graph.application.module.ModuleService
+import ch.addere.mdg.graph.application.ModuleService
 import ch.addere.mdg.graph.domain.model.Module
 
 class ModulePrinter(

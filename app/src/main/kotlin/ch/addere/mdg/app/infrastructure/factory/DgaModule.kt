@@ -6,10 +6,10 @@ import ch.addere.mdg.app.domain.model.MermaidPrinter
 import ch.addere.mdg.app.domain.model.ModulePrinter
 import ch.addere.mdg.app.domain.model.OverviewPrinter
 import ch.addere.mdg.app.domain.service.DependencyCommand
-import ch.addere.mdg.graph.application.module.DependencyService
-import ch.addere.mdg.graph.application.module.DependencyServiceImpl
-import ch.addere.mdg.graph.application.module.ModuleService
-import ch.addere.mdg.graph.application.module.ModuleServiceImpl
+import ch.addere.mdg.graph.application.DependencyService
+import ch.addere.mdg.graph.application.DependencyServiceImpl
+import ch.addere.mdg.graph.application.ModuleService
+import ch.addere.mdg.graph.application.ModuleServiceImpl
 import ch.addere.mdg.graph.domain.model.graph.ModuleDependencyDag
 import ch.addere.mdg.graph.domain.service.DependencyRelationService
 import ch.addere.mdg.graph.domain.service.DependencyRelationServiceImpl
