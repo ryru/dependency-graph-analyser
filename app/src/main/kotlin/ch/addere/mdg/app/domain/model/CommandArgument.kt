@@ -6,5 +6,6 @@ data class CommandArgument(
     val printer: (String) -> Unit,
     val settings: File,
     val isMermaidGraph: Boolean,
-    val isAllModules: Boolean
+    val isAllModules: Boolean,
+    val isAllConfigurations: Boolean
 )

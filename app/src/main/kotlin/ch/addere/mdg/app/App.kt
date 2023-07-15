@@ -34,10 +34,15 @@ class Dga : CliktCommand(help = "Analyse the dependency graph of a Gradle projec
 
     private val isAllModules: Boolean by option("--modules")
         .flag()
-        .help("Return all modules of the given project ordered alphabetically")
+        .help("Shows all modules ordered alphabetically")
+
+    private val isAllConfigurations: Boolean by option("--configurations")
+        .flag()
+        .help("Shows all configurations ordered by occurrence")
 
     override fun run() {
-        val argument = CommandArgument(::echo, settingsFile, isMermaidGraph, isAllModules)
+        val argument =
+            CommandArgument(::echo, settingsFile, isMermaidGraph, isAllModules, isAllConfigurations)
         val command: DependencyCommand = get { parametersOf(argument) }
 
         command.run()

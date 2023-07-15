@@ -2,6 +2,7 @@ package ch.addere.mdg.app.infrastructure.factory
 
 import ch.addere.mdg.app.domain.model.CommandArgument
 import ch.addere.mdg.app.domain.model.ConsolePrinter
+import ch.addere.mdg.app.domain.model.DependencyPrinter
 import ch.addere.mdg.app.domain.model.MermaidPrinter
 import ch.addere.mdg.app.domain.model.ModulePrinter
 import ch.addere.mdg.app.domain.model.OverviewPrinter
@@ -23,6 +24,7 @@ import org.koin.dsl.module
 val dgaModule = module {
     singleOf(::ConsolePrinter)
     singleOf(::DependencyCommand)
+    singleOf(::DependencyPrinter)
     singleOf(::DependencyRelationServiceImpl) { bind<DependencyRelationService>() }
     singleOf(::DependencyRepository)
     singleOf(::DependencyServiceImpl) { bind<DependencyService>() }

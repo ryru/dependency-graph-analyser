@@ -1,5 +1,6 @@
 package ch.addere.mdg.graph.application
 
+import ch.addere.mdg.graph.domain.model.Configuration
 import ch.addere.mdg.graph.domain.service.DependencyRepository
 
 class DependencyServiceImpl(private val dependencyRepository: DependencyRepository) :
@@ -11,5 +12,12 @@ class DependencyServiceImpl(private val dependencyRepository: DependencyReposito
 
     override fun nofUniqueDependencies(): Int {
         return dependencyRepository.getAllDependencies().map { it.configuration.name }.toSet().size
+    }
+
+    override fun configuraitonsWithOccurence(): Map<Configuration, Int> {
+        return dependencyRepository.getAllDependencies().associate { dependency ->
+            dependency.configuration to dependencyRepository.getAllDependencies()
+                .count { it == dependency }
+        }
     }
 }
