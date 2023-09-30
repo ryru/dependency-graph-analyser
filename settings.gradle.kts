@@ -19,4 +19,11 @@ plugins {
 }
 
 rootProject.name = "dependency-graph-analyser"
-include("app", "exporter", "graph", "importer")
+include(
+    "app",
+    "exporter",
+    "graph",
+    "importer",
+    "importer-gradle-model",
+    "importer-gradle-plugin",
+)

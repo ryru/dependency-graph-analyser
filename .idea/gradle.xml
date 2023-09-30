@@ -24,6 +24,8 @@
             <option value="$PROJECT_DIR$/exporter" />
             <option value="$PROJECT_DIR$/graph" />
             <option value="$PROJECT_DIR$/importer" />
+            <option value="$PROJECT_DIR$/importer-gradle-model" />
+            <option value="$PROJECT_DIR$/importer-gradle-plugin" />
           </set>
         </option>
       </GradleProjectSettings>

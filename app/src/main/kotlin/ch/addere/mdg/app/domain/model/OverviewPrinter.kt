@@ -12,12 +12,11 @@ class OverviewPrinter(
 ) {
 
     fun printToConsole() {
-        val analysedFileName = project.settingsFile.settingsFile.name
         val nofModules = moduleService.nofModules()
         val nofDependencies = dependencyService.nofDependencies()
         val nofUniqueDependencies = dependencyService.nofUniqueDependencies()
 
-        printer.println("Analyse $analysedFileName")
+        printer.println("Analyse project \"${project.projectName()}\"")
         printer.println(String.format("%6d modules", nofModules))
         printer.println(
             String.format(

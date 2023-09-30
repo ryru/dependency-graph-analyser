@@ -16,10 +16,12 @@ import ch.addere.mdg.graph.domain.service.DependencyRelationService
 import ch.addere.mdg.graph.domain.service.DependencyRelationServiceImpl
 import ch.addere.mdg.graph.domain.service.DependencyRepository
 import ch.addere.mdg.graph.domain.service.ModuleRepository
+import ch.addere.mdg.importer.application.service.GradleConnectorService
 import ch.addere.mdg.importer.domain.model.Project
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import java.io.File
 
 val dgaModule = module {
     singleOf(::ConsolePrinter)
@@ -34,13 +36,11 @@ val dgaModule = module {
     singleOf(::ModuleRepository)
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
     singleOf(::OverviewPrinter)
-    singleOf(::project)
+    singleOf(::settings)
+    singleOf(::GradleConnectorService)
+    singleOf(::Project)
 }
 
-private fun project(
-    argument: CommandArgument,
-    moduleRepository: ModuleRepository,
-    dependencyRepository: DependencyRepository
-): Project {
-    return Project(argument.settings, moduleRepository, dependencyRepository)
+private fun settings(argument: CommandArgument): File {
+    return argument.settings
 }
