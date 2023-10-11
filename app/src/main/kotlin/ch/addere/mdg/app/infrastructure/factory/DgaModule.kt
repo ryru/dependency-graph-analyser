@@ -1,6 +1,5 @@
 package ch.addere.mdg.app.infrastructure.factory
 
-import ch.addere.mdg.app.domain.model.CommandArgument
 import ch.addere.mdg.app.domain.model.ConsolePrinter
 import ch.addere.mdg.app.domain.model.DependencyPrinter
 import ch.addere.mdg.app.domain.model.MermaidPrinter
@@ -21,7 +20,6 @@ import ch.addere.mdg.importer.domain.model.Project
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import java.io.File
 
 val dgaModule = module {
     singleOf(::ConsolePrinter)
@@ -36,11 +34,6 @@ val dgaModule = module {
     singleOf(::ModuleRepository)
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
     singleOf(::OverviewPrinter)
-    singleOf(::settings)
     singleOf(::GradleConnectorService)
     singleOf(::Project)
-}
-
-private fun settings(argument: CommandArgument): File {
-    return argument.settings
 }

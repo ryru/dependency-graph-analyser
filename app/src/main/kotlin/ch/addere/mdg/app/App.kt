@@ -6,6 +6,7 @@ package ch.addere.mdg.app
 import ch.addere.mdg.app.domain.model.CommandArgument
 import ch.addere.mdg.app.domain.service.DependencyCommand
 import ch.addere.mdg.app.infrastructure.factory.dgaModule
+import ch.addere.mdg.app.infrastructure.factory.userInputModule
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
@@ -53,6 +54,7 @@ fun main(args: Array<String>) {
     val dga = Dga()
     try {
         startKoin {
+            modules(userInputModule)
             modules(dgaModule)
         }
 

@@ -4,7 +4,7 @@ import java.io.File
 
 data class CommandArgument(
     val printer: (String) -> Unit,
-    val settings: File,
+    val gradleProjectPath: File,
     val isMermaidGraph: Boolean,
     val isAllModules: Boolean,
     val isAllConfigurations: Boolean
