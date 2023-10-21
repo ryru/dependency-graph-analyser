@@ -26,3 +26,6 @@ publishing {
     }
 }
 
+tasks.withType<PublishToMavenLocal> {
+    dependsOn(tasks.getByPath(":dependency-model:publishToMavenLocal"))
+}
