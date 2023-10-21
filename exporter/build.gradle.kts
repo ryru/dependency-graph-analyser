@@ -1,5 +1,5 @@
 plugins {
-    id("ch.addere.mdg.kotlin-library-conventions")
+    id("ch.addere.dga.kotlin-library-conventions")
 }
 
 dependencies {

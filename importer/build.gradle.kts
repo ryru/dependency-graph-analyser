@@ -1,9 +1,9 @@
 plugins {
-    id("ch.addere.mdg.kotlin-library-conventions")
+    id("ch.addere.dga.kotlin-library-conventions")
     `java-gradle-plugin`
 }
 
 dependencies {
     api(project(":graph"))
-    api(project(":importer-gradle-model"))
+    api(project(":dependency-model"))
 }
