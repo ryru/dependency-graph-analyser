@@ -7,13 +7,13 @@ import ch.addere.dga.app.domain.model.ModulePrinter
 import ch.addere.dga.app.domain.model.OverviewPrinter
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.graph.application.DependencyService
-import ch.addere.dga.graph.application.DependencyServiceImpl
 import ch.addere.dga.graph.application.ModuleService
 import ch.addere.dga.graph.application.ModuleServiceImpl
 import ch.addere.dga.graph.domain.model.graph.ModuleDependencyDag
 import ch.addere.dga.graph.domain.service.DependencyRelationService
 import ch.addere.dga.graph.domain.service.DependencyRelationServiceImpl
 import ch.addere.dga.graph.domain.service.DependencyRepository
+import ch.addere.dga.graph.domain.service.DependencyServiceImpl
 import ch.addere.dga.graph.domain.service.ModuleRepository
 import ch.addere.dga.importer.application.service.GradleConnectorService
 import ch.addere.dga.importer.domain.model.Project

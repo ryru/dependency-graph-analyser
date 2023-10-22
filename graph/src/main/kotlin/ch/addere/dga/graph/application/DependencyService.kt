@@ -17,5 +17,5 @@ interface DependencyService {
     /**
      * Returns all dependencies with number of occurrence.
      */
-    fun configuraitonsWithOccurence(): Map<Configuration, Int>
+    fun configurationsWithOccurrence(): Map<Configuration, Int>
 }

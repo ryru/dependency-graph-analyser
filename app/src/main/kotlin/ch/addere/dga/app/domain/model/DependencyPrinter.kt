@@ -8,10 +8,10 @@ class DependencyPrinter(
 ) {
 
     fun printToConsole() {
-        val dependencies = dependencyService.configuraitonsWithOccurence()
+        val dependencies = dependencyService.configurationsWithOccurrence()
         if (dependencies.isNotEmpty()) {
             printer.println()
-            val ordered = dependencies.toList().sortedBy { (_, value) -> value }.toMap()
+            val ordered = dependencies.toList().sortedByDescending { (_, value) -> value }.toMap()
             ordered.forEach { (configuration, amount) -> printer.println("${configuration.name}, $amount") }
         }
     }
