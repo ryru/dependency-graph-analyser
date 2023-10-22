@@ -93,3 +93,7 @@ graph TD
 ## How DGA works
 
 See [HowItWorks.md](HOWITWORKS.md)
+
+## Contribution
+
+Pull requests are welcome! Check [CONTRIBUTING.md](CONTRIBUTING.md) before starting any work.
