@@ -89,3 +89,7 @@ graph TD
     v1bc49d(importer) -->|api| v8ebf3d(dependency-model)
     v1bc49d(importer) -->|api| vf8b0b9(graph)
 ```
+
+## How DGA works
+
+See [HowItWorks.md](HOWITWORKS.md)
