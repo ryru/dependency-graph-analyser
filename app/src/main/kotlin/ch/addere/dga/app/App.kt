@@ -8,6 +8,8 @@ import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.help
+import com.github.ajalt.clikt.parameters.groups.OptionGroup
+import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
@@ -26,31 +28,31 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
         .file()
         .help("Path of the Gradle project directory")
 
-    private val isChartMermaid: Boolean by option("--chart-mermaid")
-        .flag()
-        .help("Generate text chart that can be visualised by Mermaid")
-
-    private val isAllModules: Boolean by option("--modules")
-        .flag()
-        .help("Shows all modules ordered alphabetically")
-
-    private val isAllConfigurations: Boolean by option("--configurations")
-        .flag()
-        .help("Shows all configurations ordered by occurrence")
+    private val optionsOutput by OptionsOutput()
 
     override fun run() {
-        val argument =
-            CommandArgument(
-                ::echo,
-                gradleProject,
-                isChartMermaid,
-                isAllModules,
-                isAllConfigurations
-            )
+        val argument = CommandArgument(::echo, gradleProject, optionsOutput)
         val command: DependencyCommand = get { parametersOf(argument) }
 
         command.run()
     }
+}
+
+class OptionsOutput : OptionGroup(
+    name = "Display Options",
+    help = "Options controlling the output of the analysis."
+) {
+    val isAllModules: Boolean by option("--modules")
+        .flag()
+        .help("Shows all modules ordered alphabetically")
+
+    val isAllConfigurations: Boolean by option("--configurations")
+        .flag()
+        .help("Shows all configurations ordered by occurrence")
+
+    val isChartMermaid: Boolean by option("--chart-mermaid")
+        .flag()
+        .help("Generate text chart that can be visualised by Mermaid")
 }
 
 fun main(args: Array<String>) {

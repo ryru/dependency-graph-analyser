@@ -20,11 +20,11 @@ class DependencyCommand(
         printer.println()
         overview.printToConsole()
 
-        if (argument.isAllModules) {
+        if (argument.optionsOutput.isAllModules) {
             modules.printToConsole()
-        } else if (argument.isAllConfigurations) {
+        } else if (argument.optionsOutput.isAllConfigurations) {
             dependencies.printToConsole()
-        } else if (argument.isMermaidGraph) {
+        } else if (argument.optionsOutput.isChartMermaid) {
             mermaid.printToConsole()
         }
         printer.println()
