@@ -9,7 +9,6 @@ import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.graph.application.DependencyService
 import ch.addere.dga.graph.application.ModuleFilter
 import ch.addere.dga.graph.application.ModuleService
-import ch.addere.dga.graph.domain.service.DependencyRepository
 
 class DependencyCommand(
     private val config: CommandConfig,
@@ -20,7 +19,6 @@ class DependencyCommand(
     private val printer: ConsolePrinter,
     private val moduleService: ModuleService,
     private val dependencyService: DependencyService,
-    private val repository: DependencyRepository,
     private val overviewService: OverviewService,
 ) {
 
@@ -35,7 +33,7 @@ class DependencyCommand(
         val overviewDataForOutput = overviewService.overviewData()
         val modulesForOutput = moduleService.modules(filterContainsModule)
         val configurationsForOutput = dependencyService.configurationsWithOccurrence()
-        val dependenciesForOutput = repository.getAllDependencies()
+        val dependenciesForOutput = dependencyService.dependencies(filterContainsModule)
 
         printer.println()
         overview.printToConsole(overviewDataForOutput)

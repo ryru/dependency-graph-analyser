@@ -1,7 +1,9 @@
 package ch.addere.dga.graph.domain.service
 
 import ch.addere.dga.graph.application.DependencyService
+import ch.addere.dga.graph.application.ModuleFilter
 import ch.addere.dga.graph.domain.model.Configuration
+import ch.addere.dga.graph.domain.model.Dependency
 
 class DependencyServiceImpl(private val dependencyRepository: DependencyRepository) :
     DependencyService {
@@ -21,5 +23,21 @@ class DependencyServiceImpl(private val dependencyRepository: DependencyReposito
 
     private fun countNofConfigurations(configuration: Configuration): Int {
         return dependencyRepository.getDependencyByConfiguration(configuration).count()
+    }
+
+    override fun dependencies(filter: ModuleFilter): Set<Dependency> {
+        return dependenciesMatchOrigin(filter) + dependenciesMatchDestination(filter)
+    }
+
+    private fun dependenciesMatchOrigin(filter: ModuleFilter): Set<Dependency> {
+        return dependencyRepository.getAllDependencies()
+            .filter { dependency -> filter.invoke(dependency.origin) }
+            .toSet()
+    }
+
+    private fun dependenciesMatchDestination(filter: ModuleFilter): Set<Dependency> {
+        return dependencyRepository.getAllDependencies()
+            .filter { dependency -> filter.invoke(dependency.destination) }
+            .toSet()
     }
 }
