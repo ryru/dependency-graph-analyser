@@ -1,4 +1,6 @@
-package ch.addere.dga.app.domain.model
+package ch.addere.dga.app.domain.service.printer
+
+import ch.addere.dga.app.domain.model.CommandArgument
 
 class ConsolePrinter(argument: CommandArgument) {
 

@@ -1,11 +1,12 @@
 package ch.addere.dga.app.infrastructure.factory
 
-import ch.addere.dga.app.domain.model.ConsolePrinter
-import ch.addere.dga.app.domain.model.DependencyPrinter
-import ch.addere.dga.app.domain.model.MermaidPrinter
-import ch.addere.dga.app.domain.model.ModulePrinter
-import ch.addere.dga.app.domain.model.OverviewPrinter
 import ch.addere.dga.app.domain.service.DependencyCommand
+import ch.addere.dga.app.domain.service.OverviewService
+import ch.addere.dga.app.domain.service.printer.ConsolePrinter
+import ch.addere.dga.app.domain.service.printer.DependencyPrinter
+import ch.addere.dga.app.domain.service.printer.MermaidPrinter
+import ch.addere.dga.app.domain.service.printer.ModulePrinter
+import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.graph.application.DependencyService
 import ch.addere.dga.graph.application.ModuleService
 import ch.addere.dga.graph.application.ModuleServiceImpl
@@ -28,12 +29,13 @@ val dgaModule = module {
     singleOf(::DependencyRelationServiceImpl) { bind<DependencyRelationService>() }
     singleOf(::DependencyRepository)
     singleOf(::DependencyServiceImpl) { bind<DependencyService>() }
+    singleOf(::GradleConnectorService)
     singleOf(::MermaidPrinter)
     singleOf(::ModuleDependencyDag)
     singleOf(::ModulePrinter)
     singleOf(::ModuleRepository)
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
     singleOf(::OverviewPrinter)
-    singleOf(::GradleConnectorService)
+    singleOf(::OverviewService)
     singleOf(::Project)
 }
