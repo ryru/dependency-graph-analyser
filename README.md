@@ -1,4 +1,4 @@
-# DAG: Dependency Graph Analyser
+# DGA: Dependency Graph Analyser
 
 Analyse and visualise module dependencies in Gradle projects.
 
