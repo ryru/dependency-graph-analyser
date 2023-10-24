@@ -1,10 +1,10 @@
 package ch.addere.dga.app.domain.service.printer
 
-import ch.addere.dga.app.domain.model.CommandArgument
+import ch.addere.dga.app.domain.model.CommandConfig
 
-class ConsolePrinter(argument: CommandArgument) {
+class ConsolePrinter(config: CommandConfig) {
 
-    val printer = argument.printer
+    val printer = config.printer
 
     fun println() {
         printer("")

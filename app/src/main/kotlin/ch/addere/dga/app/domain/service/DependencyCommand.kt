@@ -1,17 +1,18 @@
 package ch.addere.dga.app.domain.service
 
-import ch.addere.dga.app.domain.model.CommandArgument
+import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.service.printer.ConsolePrinter
 import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.graph.application.DependencyService
+import ch.addere.dga.graph.application.ModuleFilter
 import ch.addere.dga.graph.application.ModuleService
 import ch.addere.dga.graph.domain.service.DependencyRepository
 
 class DependencyCommand(
-    private val argument: CommandArgument,
+    private val config: CommandConfig,
     private val dependencies: DependencyPrinter,
     private val mermaid: MermaidPrinter,
     private val modules: ModulePrinter,
@@ -25,19 +26,25 @@ class DependencyCommand(
 
     fun run() {
 
+        val filterContainsModule = if (config.filterConfig.modules == null) {
+            ModuleFilter { _ -> true }
+        } else {
+            ModuleFilter { module -> config.filterConfig.modules.contains(module) }
+        }
+
         val overviewDataForOutput = overviewService.overviewData()
-        val modulesForOutput = moduleService.modules()
+        val modulesForOutput = moduleService.modules(filterContainsModule)
         val configurationsForOutput = dependencyService.configurationsWithOccurrence()
         val dependenciesForOutput = repository.getAllDependencies()
 
         printer.println()
         overview.printToConsole(overviewDataForOutput)
 
-        if (argument.optionsOutput.isAllModules) {
+        if (config.outputConfig.isAllModule) {
             modules.printToConsole(modulesForOutput)
-        } else if (argument.optionsOutput.isAllConfigurations) {
+        } else if (config.outputConfig.isAllConfigurations) {
             dependencies.printToConsole(configurationsForOutput)
-        } else if (argument.optionsOutput.isChartMermaid) {
+        } else if (config.outputConfig.isChartMermaid) {
             mermaid.printToConsole(dependenciesForOutput)
         }
         printer.println()

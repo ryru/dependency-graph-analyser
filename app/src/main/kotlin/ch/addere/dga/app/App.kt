@@ -1,18 +1,23 @@
 package ch.addere.dga.app
 
-import ch.addere.dga.app.domain.model.CommandArgument
+import ch.addere.dga.app.domain.model.CommandConfig
+import ch.addere.dga.app.domain.model.FilterConfig
+import ch.addere.dga.app.domain.model.OutputConfig
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
+import ch.addere.dga.graph.domain.model.Module
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.groups.OptionGroup
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
+import com.github.ajalt.clikt.parameters.options.convert
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.split
 import com.github.ajalt.clikt.parameters.types.file
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -28,14 +33,29 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
         .file()
         .help("Path of the Gradle project directory")
 
+    private val optionsFilter by OptionsFilter()
     private val optionsOutput by OptionsOutput()
 
     override fun run() {
-        val argument = CommandArgument(::echo, gradleProject, optionsOutput)
+        val filterConfig = FilterConfig(optionsFilter.modules)
+        val outputConfig = OutputConfig(
+            optionsOutput.isAllModules,
+            optionsOutput.isAllConfigurations,
+            optionsOutput.isChartMermaid
+        )
+        val argument = CommandConfig(::echo, gradleProject, filterConfig, outputConfig)
         val command: DependencyCommand = get { parametersOf(argument) }
 
         command.run()
     }
+}
+
+class OptionsFilter : OptionGroup(
+    name = "Filter Options",
+    help = "Options controlling what to analyse."
+) {
+    val modules: List<Module>? by option("-m").convert("module1, module2") { Module(it) }.split(",")
+        .help("Module names either in origin or destination. Specify multiple comma-separated module names.")
 }
 
 class OptionsOutput : OptionGroup(

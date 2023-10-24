@@ -14,4 +14,9 @@ interface ModuleService {
      * Returns all modules in alphabetic order.
      */
     fun modules(): SortedSet<Module>
+
+    /**
+     * Returns all modules matching the filter.
+     */
+    fun modules(filter: ModuleFilter): Set<Module>
 }

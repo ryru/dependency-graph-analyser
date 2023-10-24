@@ -2,7 +2,7 @@ package ch.addere.dga.app.domain.service.printer
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
-import ch.addere.dga.app.domain.model.CommandArgument
+import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.model.OverviewData
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -32,9 +32,9 @@ class OverviewPrinterTest {
     }
 
     private fun consolePrinter(): ConsolePrinter {
-        val argumentMock: CommandArgument = Mockito.mock()
-        whenever(argumentMock.printer).thenReturn(::logPrinter)
-        return ConsolePrinter(argumentMock)
+        val configMock: CommandConfig = Mockito.mock()
+        whenever(configMock.printer).thenReturn(::logPrinter)
+        return ConsolePrinter(configMock)
     }
 
     private fun logPrinter(input: String) {

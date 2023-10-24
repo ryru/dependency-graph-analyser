@@ -1,10 +1,10 @@
 package ch.addere.dga.app.domain.model
 
-import ch.addere.dga.app.OptionsOutput
 import java.io.File
 
-data class CommandArgument(
+data class CommandConfig(
     val printer: (String) -> Unit,
     val gradleProjectPath: File,
-    val optionsOutput: OptionsOutput
+    val filterConfig: FilterConfig,
+    val outputConfig: OutputConfig
 )

@@ -1,7 +1,7 @@
 package ch.addere.dga.graph.application
 
-import ch.addere.dga.graph.domain.service.ModuleRepository
 import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.graph.domain.service.ModuleRepository
 import java.util.*
 
 class ModuleServiceImpl(private val moduleRepository: ModuleRepository) : ModuleService {
@@ -12,5 +12,9 @@ class ModuleServiceImpl(private val moduleRepository: ModuleRepository) : Module
 
     override fun modules(): SortedSet<Module> {
         return moduleRepository.getAllModules().toSortedSet()
+    }
+
+    override fun modules(filter: ModuleFilter): Set<Module> {
+        return moduleRepository.getAllModules().filter(filter).toSet()
     }
 }
