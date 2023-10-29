@@ -16,27 +16,48 @@ graph TD
     v1bc49d(importer) -->|api| vf8b0b9(graph)
 ```
 
+What you see in the above graph:
+
+* _Module_ `app` has two direct _dependencies_: `exporter` and `importer`, both use the
+  _configuration_ `api`.
+* _Module_ `dependency-plugin` has one direct _dependency_ (`dependency-model`) of
+  _configuration_ `implementation`.
+
 Features:
 
 * Analyses Gradle projects in both DSLs (Kotlin and Groovy)
-* Summarises the project modules and dependencies in figures
+* Summarises the project modules and dependencies
 * Generates text-based graphs which are compatible with Mermaid charts
+* Filter only relevant modules
 
 ## Usage
 
 Print the CLI help with `dga --help`:
 
 ```
-dga --help
+$ dga --help
 Usage: dga [<options>] <gradleproject>
 
   Analyse the module dependency graph of a Gradle project.
 
-Options:
-  --chart-mermaid   Generate text chart that can be visualised by Mermaid
+Filter Options:
+
+  Options controlling what to analyse.
+
+  -m=<module1, module2>  Module names either in origin or destination. Specify multiple comma-separated module names.
+  -o=<module1, module2>  Module names in origin. Specify multiple comma-separated module names.
+  -d=<module1, module2>  Module names in destination. Specify multiple comma-separated module names.
+
+Display Options:
+
+  Options controlling the output of the analysis.
+
   --modules         Shows all modules ordered alphabetically
   --configurations  Shows all configurations ordered by occurrence
-  -h, --help        Show this message and exit
+  --chart-mermaid   Generate text chart that can be visualised by Mermaid
+
+Options:
+  -h, --help  Show this message and exit
 
 Arguments:
   <gradleproject>  Path of the Gradle project directory
@@ -47,8 +68,8 @@ Arguments:
 Download and setup this project:
 
 ```
-git clone https://github.com/ryru/dependency-graph-analyser.git
-cd dependency-graph-analyser/
+$ git clone https://github.com/ryru/dependency-graph-analyser.git
+$ cd dependency-graph-analyser/
 ./gradlew clean install
 ./gradlew :dependency-plugin:publishToMavenLocal
 ```
@@ -63,11 +84,12 @@ cd dependency-graph-analyser/
 Get an overview of this project by running `dga .``:
 
 ```
-./app/build/install/dga/bin/dga .
+$ ./app/build/install/dga/bin/dga .
 
 Analyse project "dependency-graph-analyser"
      6 modules
-     6 dependencies (2 unique)
+     6 dependencies (2 unique configurations)
+
 ```
 
 ### Create a Mermaid Chart
@@ -75,11 +97,11 @@ Analyse project "dependency-graph-analyser"
 Use `dga . --chart-mermaid` to generate a Mermaid chart of this project:
 
 ```
-./app/build/install/dga/bin/dga . --chart-mermaid
+$ ./app/build/install/dga/bin/dga . --chart-mermaid
 
 Analyse project "dependency-graph-analyser"
      6 modules
-     6 dependencies (2 unique)
+     6 dependencies (2 unique configurations)
 
 graph TD
     vd2a57d(app) -->|api| ved7802(exporter)
@@ -88,6 +110,26 @@ graph TD
     ved7802(exporter) -->|api| vf8b0b9(graph)
     v1bc49d(importer) -->|api| v8ebf3d(dependency-model)
     v1bc49d(importer) -->|api| vf8b0b9(graph)
+
+```
+
+#### Filter Modules
+
+Use `dga . -o app,exporter --chart-mermaid` to generate a Mermaid chart of this project only
+containing the modules `app` and `exporter` in the origin:
+
+```
+$ ./app/build/install/dga/bin/dga . -o app,exporter --chart-mermaid
+
+Analyse project "dependency-graph-analyser"
+     6 modules
+     6 dependencies (2 unique configurations)
+
+graph TD
+    vd2a57d(app) -->|api| ved7802(exporter)
+    vd2a57d(app) -->|api| v1bc49d(importer)
+    ved7802(exporter) -->|api| vf8b0b9(graph)
+
 ```
 
 ## How DGA works

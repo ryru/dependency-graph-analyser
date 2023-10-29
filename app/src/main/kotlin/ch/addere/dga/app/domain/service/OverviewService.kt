@@ -14,8 +14,8 @@ class OverviewService(
     fun overviewData(): OverviewData {
         val name = project.projectName()
         val nofModules = moduleService.nofModules()
-        val nofDependencies = dependencyService.nofDependencies()
-        val nofUniqueDependencies = dependencyService.nofUniqueDependencies()
+        val nofDependencies = dependencyService.nofProjectDependencies()
+        val nofUniqueDependencies = dependencyService.nofUniqueConfigurations()
         return OverviewData(name, nofModules, nofDependencies, nofUniqueDependencies)
     }
 }

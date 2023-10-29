@@ -1,8 +1,6 @@
 package ch.addere.dga.graph.application
 
 import assertk.assertThat
-import assertk.assertions.containsExactlyInAnyOrder
-import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import ch.addere.dga.graph.domain.model.Module
 import ch.addere.dga.graph.domain.service.ModuleRepository
@@ -18,7 +16,6 @@ class ModuleServiceImplTest {
         val service = ModuleServiceImpl(ModuleRepository())
 
         assertThat(service.nofModules()).isEqualTo(0)
-        assertThat(service.modules()).isEmpty()
     }
 
     @Test
@@ -26,7 +23,6 @@ class ModuleServiceImplTest {
         val service = serviceWithModules()
 
         assertThat(service.nofModules()).isEqualTo(2)
-        assertThat(service.modules()).containsExactlyInAnyOrder(M1, M2)
     }
 
     private fun serviceWithModules(): ModuleService {

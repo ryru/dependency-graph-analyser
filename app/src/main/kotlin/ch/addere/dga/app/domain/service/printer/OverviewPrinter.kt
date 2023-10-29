@@ -10,7 +10,7 @@ class OverviewPrinter(private val printer: ConsolePrinter) {
         printer.println(String.format("%6d modules", overviewData.nofModules))
         printer.println(
             String.format(
-                "%6d dependencies (%d unique)",
+                "%6d dependencies (%d unique configurations)",
                 overviewData.nofDependencies,
                 overviewData.nofUniqueDependencies
             )

@@ -1,27 +1,37 @@
 package ch.addere.dga.graph.application
 
-import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Dependency
+import ch.addere.dga.graph.domain.model.Module
 
 interface DependencyService {
 
     /**
-     * Returns the number of dependencies.
+     * Returns the total number of sub-/project dependencies.
      */
-    fun nofDependencies(): Int
+    fun nofProjectDependencies(): Int
 
     /**
-     * Returns the number of unique dependencies.
+     * Returns the total number of unique configurations.
      */
-    fun nofUniqueDependencies(): Int
+    fun nofUniqueConfigurations(): Int
 
     /**
-     * Returns all dependencies with number of occurrence.
+     * Returns all dependencies.
      */
-    fun configurationsWithOccurrence(): Map<Configuration, Int>
+    fun allDependencies(): Set<Dependency>
 
     /**
-     * Returns all dependencies matching the filter.
+     * Returns all dependencies.
      */
-    fun dependencies(filter: ModuleFilter): Set<Dependency>
+    fun filterDependencies(modules: Collection<Module>): Set<Dependency>
+
+    /**
+     * Returns all dependencies.
+     */
+    fun filterDependenciesByOrigin(modules: Collection<Module>): Set<Dependency>
+
+    /**
+     * Returns all dependencies.
+     */
+    fun filterDependenciesByDestination(modules: Collection<Module>): Set<Dependency>
 }

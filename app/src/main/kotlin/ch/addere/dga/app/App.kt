@@ -37,7 +37,11 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
     private val optionsOutput by OptionsOutput()
 
     override fun run() {
-        val filterConfig = FilterConfig(optionsFilter.modules)
+        val filterConfig = FilterConfig(
+            optionsFilter.modules,
+            optionsFilter.originModules,
+            optionsFilter.destinationModules
+        )
         val outputConfig = OutputConfig(
             optionsOutput.isAllModules,
             optionsOutput.isAllConfigurations,
@@ -56,6 +60,14 @@ class OptionsFilter : OptionGroup(
 ) {
     val modules: List<Module>? by option("-m").convert("module1, module2") { Module(it) }.split(",")
         .help("Module names either in origin or destination. Specify multiple comma-separated module names.")
+
+    val originModules: List<Module>? by option("-o").convert("module1, module2") { Module(it) }
+        .split(",")
+        .help("Module names in origin. Specify multiple comma-separated module names.")
+
+    val destinationModules: List<Module>? by option("-d").convert("module1, module2") { Module(it) }
+        .split(",")
+        .help("Module names in destination. Specify multiple comma-separated module names.")
 }
 
 class OptionsOutput : OptionGroup(

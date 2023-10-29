@@ -1,9 +1,9 @@
 package ch.addere.dga.graph.domain.service
 
 import assertk.assertThat
-import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import ch.addere.dga.graph.application.DependencyService
+import ch.addere.dga.graph.application.DependencyServiceImpl
 import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Dependency
 import ch.addere.dga.graph.domain.model.Module
@@ -24,19 +24,16 @@ class DependencyServiceImplTest {
     fun `test empty repo has zero modules`() {
         val service = DependencyServiceImpl(DependencyRepository())
 
-        assertThat(service.nofDependencies()).isEqualTo(0)
-        assertThat(service.nofUniqueDependencies()).isEqualTo(0)
-        assertThat(service.configurationsWithOccurrence()).isEmpty()
+        assertThat(service.nofProjectDependencies()).isEqualTo(0)
+        assertThat(service.nofUniqueConfigurations()).isEqualTo(0)
     }
 
     @Test
     fun `test repo with modules has non zero modules`() {
         val service = serviceWithModules()
 
-        assertThat(service.nofDependencies()).isEqualTo(3)
-        assertThat(service.nofUniqueDependencies()).isEqualTo(2)
-        assertThat(service.configurationsWithOccurrence()).transform { it[c1] == 2 }
-        assertThat(service.configurationsWithOccurrence()).transform { it[c2] == 1 }
+        assertThat(service.nofProjectDependencies()).isEqualTo(3)
+        assertThat(service.nofUniqueConfigurations()).isEqualTo(2)
     }
 
     private fun serviceWithModules(): DependencyService {

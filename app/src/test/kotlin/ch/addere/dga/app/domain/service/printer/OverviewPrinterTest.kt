@@ -27,7 +27,7 @@ class OverviewPrinterTest {
         assertThat(log).containsExactly(
             "Analyse project \"test Project\"",
             "     1 modules",
-            "     2 dependencies (3 unique)"
+            "     2 dependencies (3 unique configurations)"
         )
     }
 
