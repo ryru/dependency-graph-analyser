@@ -1,8 +1,8 @@
 package ch.addere.dga.app.domain.service
 
 import ch.addere.dga.app.domain.model.OverviewData
-import ch.addere.dga.graph.application.DependencyService
-import ch.addere.dga.graph.application.ModuleService
+import ch.addere.dga.graph.domain.service.DependencyService
+import ch.addere.dga.graph.domain.service.ModuleService
 import ch.addere.dga.importer.domain.model.Project
 
 class OverviewService(

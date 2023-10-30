@@ -6,7 +6,7 @@ import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
-import ch.addere.dga.graph.application.DependencyService
+import ch.addere.dga.graph.domain.service.DependencyService
 
 class DependencyCommand(
     private val config: CommandConfig,
@@ -26,16 +26,15 @@ class DependencyCommand(
         val modules = config.filterConfig.modules()
         val originModules = config.filterConfig.originModules()
         val destinationModules = config.filterConfig.destinationModules()
+        val configurations = config.filterConfig.configurations()
 
         val filteredDependencies =
-            if (modules.isEmpty() && originModules.isEmpty() && destinationModules.isEmpty()
-            ) {
-                dependencyService.allDependencies()
-            } else {
-                dependencyService.filterDependencies(modules) +
-                    dependencyService.filterDependenciesByOrigin(originModules) +
-                    dependencyService.filterDependenciesByDestination(destinationModules)
-            }
+            dependencyService.filteredDependencies(
+                modules,
+                originModules,
+                destinationModules,
+                configurations
+            )
 
         printer.println()
         overview.printToConsole(overviewDataForOutput)

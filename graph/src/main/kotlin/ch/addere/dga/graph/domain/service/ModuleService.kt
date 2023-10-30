@@ -1,4 +1,4 @@
-package ch.addere.dga.graph.application
+package ch.addere.dga.graph.domain.service
 
 interface ModuleService {
 

@@ -6,6 +6,7 @@ import ch.addere.dga.app.domain.model.OutputConfig
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
+import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Module
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
@@ -40,7 +41,8 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
         val filterConfig = FilterConfig(
             optionsFilter.modules,
             optionsFilter.originModules,
-            optionsFilter.destinationModules
+            optionsFilter.destinationModules,
+            optionsFilter.configurations
         )
         val outputConfig = OutputConfig(
             optionsOutput.isAllModules,
@@ -56,35 +58,48 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
 
 class OptionsFilter : OptionGroup(
     name = "Filter Options",
-    help = "Options controlling what to analyse."
+    help = """
+        Filter control what to analyse. If several filters are set, dependencies must fulfil all of them.
+        Without any set filter the whole Gradle project will be processed.
+        """.trimIndent()
 ) {
-    val modules: List<Module>? by option("-m").convert("module1, module2") { Module(it) }.split(",")
+    val modules: List<Module>? by option("-m")
+        .convert("module,...") { Module(it) }.split(",")
         .help("Module names either in origin or destination. Specify multiple comma-separated module names.")
 
-    val originModules: List<Module>? by option("-o").convert("module1, module2") { Module(it) }
+    val originModules: List<Module>? by option("-o")
+        .convert("module,...") { Module(it) }
         .split(",")
         .help("Module names in origin. Specify multiple comma-separated module names.")
 
-    val destinationModules: List<Module>? by option("-d").convert("module1, module2") { Module(it) }
+    val destinationModules: List<Module>? by option("-d")
+        .convert("module,...") { Module(it) }
         .split(",")
         .help("Module names in destination. Specify multiple comma-separated module names.")
+
+    val configurations: List<Configuration>? by option("-c")
+        .convert("configuration,...") { Configuration(it) }
+        .split(",")
+        .help("Configurations used in dependencies. Specify multiple comma-separated configuration names.")
 }
 
 class OptionsOutput : OptionGroup(
     name = "Display Options",
-    help = "Options controlling the output of the analysis."
+    help = """
+        Options controlling how to output the analysed data. Display options can not be combined.
+        """.trimIndent()
 ) {
     val isAllModules: Boolean by option("--modules")
         .flag()
-        .help("Shows all modules ordered alphabetically")
+        .help("Shows all modules of the project applying to the specified filters.")
 
     val isAllConfigurations: Boolean by option("--configurations")
         .flag()
-        .help("Shows all configurations ordered by occurrence")
+        .help("Displays all configurations applying to the specified filters and sorted by frequency of occurrence.")
 
     val isChartMermaid: Boolean by option("--chart-mermaid")
         .flag()
-        .help("Generate text chart that can be visualised by Mermaid")
+        .help("Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.")
 }
 
 fun main(args: Array<String>) {

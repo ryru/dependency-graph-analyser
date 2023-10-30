@@ -1,6 +1,4 @@
-package ch.addere.dga.graph.application
-
-import ch.addere.dga.graph.domain.service.ModuleRepository
+package ch.addere.dga.graph.domain.service
 
 class ModuleServiceImpl(private val moduleRepository: ModuleRepository) : ModuleService {
 

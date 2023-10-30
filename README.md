@@ -28,7 +28,7 @@ Features:
 * Analyses Gradle projects in both DSLs (Kotlin and Groovy)
 * Summarises the project modules and dependencies
 * Generates text-based graphs which are compatible with Mermaid charts
-* Filter only relevant modules
+* Filter only relevant modules or configurations
 
 ## Usage
 
@@ -42,19 +42,20 @@ Usage: dga [<options>] <gradleproject>
 
 Filter Options:
 
-  Options controlling what to analyse.
+  Filter control what to analyse. If several filters are set, dependencies must fulfil all of them. Without any set filter the whole Gradle project will be processed.
 
-  -m=<module1, module2>  Module names either in origin or destination. Specify multiple comma-separated module names.
-  -o=<module1, module2>  Module names in origin. Specify multiple comma-separated module names.
-  -d=<module1, module2>  Module names in destination. Specify multiple comma-separated module names.
+  -m=<module,...>         Module names either in origin or destination. Specify multiple comma-separated module names.
+  -o=<module,...>         Module names in origin. Specify multiple comma-separated module names.
+  -d=<module,...>         Module names in destination. Specify multiple comma-separated module names.
+  -c=<configuration,...>  Configurations used in dependencies. Specify multiple comma-separated configuration names.
 
 Display Options:
 
-  Options controlling the output of the analysis.
+  Options controlling how to output the analysed data. Display options can not be combined.
 
-  --modules         Shows all modules ordered alphabetically
-  --configurations  Shows all configurations ordered by occurrence
-  --chart-mermaid   Generate text chart that can be visualised by Mermaid
+  --modules         Shows all modules of the project applying to the specified filters.
+  --configurations  Displays all configurations applying to the specified filters and sorted by frequency of occurrence.
+  --chart-mermaid   Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.
 
 Options:
   -h, --help  Show this message and exit
@@ -68,8 +69,8 @@ Arguments:
 Download and setup this project:
 
 ```
-$ git clone https://github.com/ryru/dependency-graph-analyser.git
-$ cd dependency-graph-analyser/
+git clone https://github.com/ryru/dependency-graph-analyser.git
+cd dependency-graph-analyser/
 ./gradlew clean install
 ./gradlew :dependency-plugin:publishToMavenLocal
 ```
@@ -84,7 +85,7 @@ $ cd dependency-graph-analyser/
 Get an overview of this project by running `dga .``:
 
 ```
-$ ./app/build/install/dga/bin/dga .
+./app/build/install/dga/bin/dga .
 
 Analyse project "dependency-graph-analyser"
      6 modules
@@ -97,7 +98,7 @@ Analyse project "dependency-graph-analyser"
 Use `dga . --chart-mermaid` to generate a Mermaid chart of this project:
 
 ```
-$ ./app/build/install/dga/bin/dga . --chart-mermaid
+./app/build/install/dga/bin/dga . --chart-mermaid
 
 Analyse project "dependency-graph-analyser"
      6 modules
@@ -119,7 +120,7 @@ Use `dga . -o app,exporter --chart-mermaid` to generate a Mermaid chart of this 
 containing the modules `app` and `exporter` in the origin:
 
 ```
-$ ./app/build/install/dga/bin/dga . -o app,exporter --chart-mermaid
+./app/build/install/dga/bin/dga . -o app,exporter --chart-mermaid
 
 Analyse project "dependency-graph-analyser"
      6 modules

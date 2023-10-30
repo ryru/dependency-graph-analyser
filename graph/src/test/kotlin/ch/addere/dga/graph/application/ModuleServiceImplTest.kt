@@ -4,6 +4,8 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import ch.addere.dga.graph.domain.model.Module
 import ch.addere.dga.graph.domain.service.ModuleRepository
+import ch.addere.dga.graph.domain.service.ModuleService
+import ch.addere.dga.graph.domain.service.ModuleServiceImpl
 import org.junit.jupiter.api.Test
 
 private val M1 = Module("m1")
