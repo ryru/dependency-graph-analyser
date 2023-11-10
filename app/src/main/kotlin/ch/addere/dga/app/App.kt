@@ -15,6 +15,7 @@ import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.groups.OptionGroup
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
 import com.github.ajalt.clikt.parameters.options.convert
+import com.github.ajalt.clikt.parameters.options.default
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
@@ -63,23 +64,20 @@ class OptionsFilter : OptionGroup(
         Without any set filter the whole Gradle project will be processed.
         """.trimIndent()
 ) {
-    val modules: List<Module>? by option("-m")
-        .convert("module,...") { Module(it) }.split(",")
+    val modules: List<Module> by option("-m")
+        .convert("module,...") { Module(it) }.split(",").default(emptyList())
         .help("Module names either in origin or destination. Specify multiple comma-separated module names.")
 
-    val originModules: List<Module>? by option("-o")
-        .convert("module,...") { Module(it) }
-        .split(",")
+    val originModules: List<Module> by option("-o")
+        .convert("module,...") { Module(it) }.split(",").default(emptyList())
         .help("Module names in origin. Specify multiple comma-separated module names.")
 
-    val destinationModules: List<Module>? by option("-d")
-        .convert("module,...") { Module(it) }
-        .split(",")
+    val destinationModules: List<Module> by option("-d")
+        .convert("module,...") { Module(it) }.split(",").default(emptyList())
         .help("Module names in destination. Specify multiple comma-separated module names.")
 
-    val configurations: List<Configuration>? by option("-c")
-        .convert("configuration,...") { Configuration(it) }
-        .split(",")
+    val configurations: List<Configuration> by option("-c")
+        .convert("configuration,...") { Configuration(it) }.split(",").default(emptyList())
         .help("Configurations used in dependencies. Specify multiple comma-separated configuration names.")
 }
 

@@ -23,10 +23,10 @@ class DependencyCommand(
 
         val overviewDataForOutput = overviewService.overviewData()
 
-        val modules = config.filterConfig.modules()
-        val originModules = config.filterConfig.originModules()
-        val destinationModules = config.filterConfig.destinationModules()
-        val configurations = config.filterConfig.configurations()
+        val modules = config.filterConfig.modules
+        val originModules = config.filterConfig.originModules
+        val destinationModules = config.filterConfig.destinationModules
+        val configurations = config.filterConfig.configurations
 
         val filteredDependencies =
             dependencyService.filteredDependencies(
