@@ -28,7 +28,7 @@ class ModuleRepositoryTest {
         moduleRepository.addModule(M1)
 
         assertThat(moduleRepository.getAllModules()).contains(M1)
-        assertThat(moduleRepository.getModuleByName("m1")).transform { it.get() }.isEqualTo(M1)
+        assertThat(moduleRepository.getModuleByName("m1")).isEqualTo(M1)
     }
 
 
@@ -39,8 +39,8 @@ class ModuleRepositoryTest {
         moduleRepository.addModule(setOf(M1, M2, M3))
 
         assertThat(moduleRepository.getAllModules()).containsExactlyInAnyOrder(M1, M2, M3)
-        assertThat(moduleRepository.getModuleByName("m1")).transform { it.get() }.isEqualTo(M1)
-        assertThat(moduleRepository.getModuleByName("m2")).transform { it.get() }.isEqualTo(M2)
-        assertThat(moduleRepository.getModuleByName("m3")).transform { it.get() }.isEqualTo(M3)
+        assertThat(moduleRepository.getModuleByName("m1")).isEqualTo(M1)
+        assertThat(moduleRepository.getModuleByName("m2")).isEqualTo(M2)
+        assertThat(moduleRepository.getModuleByName("m3")).isEqualTo(M3)
     }
 }

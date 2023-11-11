@@ -7,6 +7,7 @@ import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.graph.domain.service.DependencyService
+import ch.addere.dga.graph.domain.service.ModuleService
 
 class DependencyCommand(
     private val config: CommandConfig,
@@ -17,15 +18,21 @@ class DependencyCommand(
     private val printer: ConsolePrinter,
     private val dependencyService: DependencyService,
     private val overviewService: OverviewService,
+    private val moduleService: ModuleService
 ) {
 
     fun run() {
 
         val overviewDataForOutput = overviewService.overviewData()
 
-        val modules = config.filterConfig.modules
-        val originModules = config.filterConfig.originModules
-        val destinationModules = config.filterConfig.destinationModules
+        val modules =
+            config.filterConfig.modules.flatMap(moduleService::resolvePartialModuleName).toList()
+        val originModules =
+            config.filterConfig.originModules.flatMap(moduleService::resolvePartialModuleName)
+                .toList()
+        val destinationModules =
+            config.filterConfig.destinationModules.flatMap(moduleService::resolvePartialModuleName)
+                .toList()
         val configurations = config.filterConfig.configurations
 
         val filteredDependencies =

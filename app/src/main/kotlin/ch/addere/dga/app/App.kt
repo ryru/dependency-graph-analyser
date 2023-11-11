@@ -62,6 +62,13 @@ class OptionsFilter : OptionGroup(
     help = """
         Filter control what to analyse. If several filters are set, dependencies must fulfil all of them.
         Without any set filter the whole Gradle project will be processed.
+        
+        Use an '*' asterisk to specify multiple modules without writing each of them.
+        
+        E.g.:
+          - "importer-*" resolves to all modules starting with 'importer-'.
+          - "*-exporter" resolves to all modules ending with '-exporter'.
+          - "file-*-exporter" resolves to all modules starting with 'file-' and ending with '-exporter'.
         """.trimIndent()
 ) {
     val modules: List<Module> by option("-m")
