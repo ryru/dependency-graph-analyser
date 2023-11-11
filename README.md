@@ -2,9 +2,9 @@
 
 Analyse and visualise module dependencies in Gradle projects.
 
-In large and complex Gradle projects with many dependencies between the modules, it is sometimes
-difficult to keep track of everything. `dga` can analyse such projects and visualise the
-dependencies between the individual modules with the help of [Mermaid](https://mermaid.js.org/).
+In large and complex Gradle projects with many dependencies between the modules, it can be difficult
+to keep track of everything. `dga` can analyse projects and visualise the dependencies between the
+individual modules with the help of [Mermaid](https://mermaid.js.org/).
 
 ```mermaid
 graph TD
@@ -35,7 +35,7 @@ Features:
 Print the CLI help with `dga --help`:
 
 ```
-$ dga --help
+dga --help
 Usage: dga [<options>] <gradleproject>
 
   Analyse the module dependency graph of a Gradle project.
@@ -43,6 +43,13 @@ Usage: dga [<options>] <gradleproject>
 Filter Options:
 
   Filter control what to analyse. If several filters are set, dependencies must fulfil all of them. Without any set filter the whole Gradle project will be processed.
+
+  Use an '*' asterisk to specify multiple modules without writing each of them.
+
+  E.g.:
+   • "importer-*" resolves to all modules starting with 'importer-'.
+   • "*-exporter" resolves to all modules ending with '-exporter'.
+   • "file-*-exporter" resolves to all modules starting with 'file-' and ending with '-exporter'.
 
   -m=<module,...>         Module names either in origin or destination. Specify multiple comma-separated module names.
   -o=<module,...>         Module names in origin. Specify multiple comma-separated module names.
