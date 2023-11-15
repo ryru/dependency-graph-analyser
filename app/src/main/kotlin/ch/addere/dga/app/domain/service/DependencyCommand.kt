@@ -6,6 +6,9 @@ import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
+import ch.addere.dga.graph.domain.model.FilteredConfiguration
+import ch.addere.dga.graph.domain.model.FilteredModules
+import ch.addere.dga.graph.domain.service.ConfigurationService
 import ch.addere.dga.graph.domain.service.DependencyService
 import ch.addere.dga.graph.domain.service.ModuleService
 
@@ -18,29 +21,33 @@ class DependencyCommand(
     private val printer: ConsolePrinter,
     private val dependencyService: DependencyService,
     private val overviewService: OverviewService,
-    private val moduleService: ModuleService
+    private val moduleService: ModuleService,
+    private val configurationService: ConfigurationService
 ) {
 
     fun run() {
 
         val overviewDataForOutput = overviewService.overviewData()
 
-        val modules =
-            config.filterConfig.modules.flatMap(moduleService::resolvePartialModuleName).toList()
-        val originModules =
-            config.filterConfig.originModules.flatMap(moduleService::resolvePartialModuleName)
+        val inputModules = config.filterConfig.modules
+        val inputOrigin = config.filterConfig.originModules
+        val inputDestination = config.filterConfig.destinationModules
+        val inputConfigurations = config.filterConfig.configurations
+
+        val filteredModules = inputModules.flatMap(moduleService::resolvePartialModuleName).toList()
+        val filteredOrigin = inputOrigin.flatMap(moduleService::resolvePartialModuleName).toList()
+        val filteredDestination =
+            inputDestination.flatMap(moduleService::resolvePartialModuleName).toList()
+        val filteredConfigurations =
+            inputConfigurations.flatMap(configurationService::resolvePartialConfigurationName)
                 .toList()
-        val destinationModules =
-            config.filterConfig.destinationModules.flatMap(moduleService::resolvePartialModuleName)
-                .toList()
-        val configurations = config.filterConfig.configurations
 
         val filteredDependencies =
             dependencyService.filteredDependencies(
-                modules,
-                originModules,
-                destinationModules,
-                configurations
+                FilteredModules(inputModules.isNotEmpty(), filteredModules),
+                FilteredModules(inputOrigin.isNotEmpty(), filteredOrigin),
+                FilteredModules(inputDestination.isNotEmpty(), filteredDestination),
+                FilteredConfiguration(inputConfigurations.isNotEmpty(), filteredConfigurations)
             )
 
         printer.println()

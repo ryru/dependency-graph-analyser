@@ -6,6 +6,8 @@ import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
 import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Dependency
+import ch.addere.dga.graph.domain.model.FilteredConfiguration
+import ch.addere.dga.graph.domain.model.FilteredModules
 import ch.addere.dga.graph.domain.model.Module
 import org.junit.jupiter.api.Test
 
@@ -38,51 +40,76 @@ class DependencyServiceImplTest {
     }
 
     @Test
-    fun `test service without filters should not filter anything`() {
+    fun `test no applicable filters should not filter anything`() {
         val service = serviceWithModules()
 
         val result =
-            service.filteredDependencies(emptyList(), emptyList(), emptyList(), emptyList())
+            service.filteredDependencies(
+                notApplicableFilteredModules(),
+                notApplicableFilteredModules(),
+                notApplicableFilteredModules(),
+                notApplicableFilteredConfigurations()
+            )
 
         assertThat(result).containsAll(d1, d2, d3, d4)
     }
 
     @Test
-    fun `test service with all filters should filter all dependencies`() {
+    fun `test all filters set should filter all dependencies`() {
         val service = serviceWithModules()
 
         val result =
-            service.filteredDependencies(listOf(m3), listOf(m2), listOf(m1), listOf(c1))
+            service.filteredDependencies(
+                filteredModules(m3),
+                filteredModules(m2),
+                filteredModules(m1),
+                filteredConfigurations(c1)
+            )
 
         assertThat(result).isEmpty()
     }
 
     @Test
-    fun `test service with module filters should filter`() {
+    fun `test filter module should filter`() {
         val service = serviceWithModules()
 
         val result =
-            service.filteredDependencies(listOf(m2), emptyList(), emptyList(), emptyList())
+            service.filteredDependencies(
+                filteredModules(m2),
+                notApplicableFilteredModules(),
+                notApplicableFilteredModules(),
+                notApplicableFilteredConfigurations()
+            )
 
         assertThat(result).containsAll(d2, d3, d4)
     }
 
     @Test
-    fun `test service with module and configuration filters should filter`() {
+    fun `test filter module and configuration should filter`() {
         val service = serviceWithModules()
 
         val result =
-            service.filteredDependencies(listOf(m2), emptyList(), emptyList(), listOf(c1))
+            service.filteredDependencies(
+                filteredModules(m2),
+                notApplicableFilteredModules(),
+                notApplicableFilteredModules(),
+                filteredConfigurations(c1)
+            )
 
         assertThat(result).containsAll(d2)
     }
 
     @Test
-    fun `test service with origin and destination module filters should filter`() {
+    fun `test filter origin and destination should filter`() {
         val service = serviceWithModules()
 
         val result =
-            service.filteredDependencies(emptyList(), listOf(m2), listOf(m1), emptyList())
+            service.filteredDependencies(
+                notApplicableFilteredModules(),
+                filteredModules(m2),
+                filteredModules(m1),
+                notApplicableFilteredConfigurations()
+            )
 
         assertThat(result).containsAll(d2)
     }
@@ -91,5 +118,21 @@ class DependencyServiceImplTest {
         val dependencyRepository = DependencyRepository()
         dependencyRepository.addDependency(listOf(d1, d2, d3, d4))
         return DependencyServiceImpl(dependencyRepository)
+    }
+
+    private fun notApplicableFilteredModules(): FilteredModules {
+        return FilteredModules(false, emptyList())
+    }
+
+    private fun notApplicableFilteredConfigurations(): FilteredConfiguration {
+        return FilteredConfiguration(false, emptyList())
+    }
+
+    private fun filteredModules(vararg module: Module): FilteredModules {
+        return FilteredModules(true, module.toList())
+    }
+
+    private fun filteredConfigurations(vararg configurations: Configuration): FilteredConfiguration {
+        return FilteredConfiguration(true, configurations.toList())
     }
 }

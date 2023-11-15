@@ -1,8 +1,8 @@
 package ch.addere.dga.graph.domain.service
 
-import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Dependency
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.graph.domain.model.FilteredConfiguration
+import ch.addere.dga.graph.domain.model.FilteredModules
 
 interface DependencyService {
 
@@ -20,9 +20,9 @@ interface DependencyService {
      * Returns only dependencies matching all requirements.
      */
     fun filteredDependencies(
-        requiredModules: List<Module>,
-        requiredOriginModules: List<Module>,
-        requiredDestinationModules: List<Module>,
-        requiredConfigurations: List<Configuration>
+        filteredModules: FilteredModules,
+        filteredOrigin: FilteredModules,
+        filteredDestination: FilteredModules,
+        filteredConfiguration: FilteredConfiguration
     ): Set<Dependency>
 }
