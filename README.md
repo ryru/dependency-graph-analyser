@@ -42,9 +42,9 @@ Usage: dga [<options>] <gradleproject>
 
 Filter Options:
 
-  Filter control what to analyse. If several filters are set, dependencies must fulfil all of them. Without any set filter the whole Gradle project will be processed.
+  Filter control what to analyse. If several filters are set, dependencies must fulfill all of them. Without any set filter the whole Gradle project will be processed.
 
-  Use an '*' asterisk to specify multiple modules without writing each of them.
+  Use an '*' asterisk to specify multiple modules or configurations without writing each of them.
 
   E.g.:
    • "importer-*" resolves to all modules starting with 'importer-'.

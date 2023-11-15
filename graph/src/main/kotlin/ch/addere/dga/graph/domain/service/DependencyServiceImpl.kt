@@ -1,8 +1,8 @@
 package ch.addere.dga.graph.domain.service
 
-import ch.addere.dga.graph.domain.model.Configuration
 import ch.addere.dga.graph.domain.model.Dependency
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.graph.domain.model.FilteredConfiguration
+import ch.addere.dga.graph.domain.model.FilteredModules
 
 class DependencyServiceImpl(private val repository: DependencyRepository) : DependencyService {
 
@@ -15,34 +15,28 @@ class DependencyServiceImpl(private val repository: DependencyRepository) : Depe
     }
 
     override fun filteredDependencies(
-        requiredModules: List<Module>,
-        requiredOriginModules: List<Module>,
-        requiredDestinationModules: List<Module>,
-        requiredConfigurations: List<Configuration>
+        filteredModules: FilteredModules,
+        filteredOrigin: FilteredModules,
+        filteredDestination: FilteredModules,
+        filteredConfiguration: FilteredConfiguration
     ): Set<Dependency> {
 
         var relevantModules: Set<Dependency> = repository.getAllDependencies()
-        if (requiredModules.isNotEmpty()) {
+        if (filteredModules.isApplicable) {
             relevantModules =
-                relevantModules.filter {
-                    requiredModules.contains(it.origin) || requiredModules.contains(
-                        it.destination
-                    )
-                }
+                relevantModules.filter { filteredModules.contains(it.origin, it.destination) }
                     .toSet()
         }
-        if (requiredOriginModules.isNotEmpty()) {
-            relevantModules =
-                relevantModules.filter { requiredOriginModules.contains(it.origin) }.toSet()
+        if (filteredOrigin.isApplicable) {
+            relevantModules = relevantModules.filter { filteredOrigin.contains(it.origin) }.toSet()
         }
-        if (requiredDestinationModules.isNotEmpty()) {
+        if (filteredDestination.isApplicable) {
             relevantModules =
-                relevantModules.filter { requiredDestinationModules.contains(it.destination) }
-                    .toSet()
+                relevantModules.filter { filteredDestination.contains(it.destination) }.toSet()
         }
-        if (requiredConfigurations.isNotEmpty()) {
+        if (filteredConfiguration.isApplicable) {
             relevantModules =
-                relevantModules.filter { requiredConfigurations.contains(it.configuration) }.toSet()
+                relevantModules.filter { filteredConfiguration.contains(it.configuration) }.toSet()
         }
         return relevantModules
     }

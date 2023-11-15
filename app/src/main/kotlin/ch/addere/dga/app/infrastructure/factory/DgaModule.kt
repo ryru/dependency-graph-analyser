@@ -8,6 +8,8 @@ import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.graph.domain.model.graph.ModuleDependencyDag
+import ch.addere.dga.graph.domain.service.ConfigurationService
+import ch.addere.dga.graph.domain.service.ConfigurationServiceImpl
 import ch.addere.dga.graph.domain.service.DependencyRelationService
 import ch.addere.dga.graph.domain.service.DependencyRelationServiceImpl
 import ch.addere.dga.graph.domain.service.DependencyRepository
@@ -23,6 +25,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val dgaModule = module {
+    singleOf(::ConfigurationServiceImpl) { bind<ConfigurationService>() }
     singleOf(::ConsolePrinter)
     singleOf(::DependencyCommand)
     singleOf(::DependencyPrinter)
