@@ -22,14 +22,6 @@ class ModuleRepository {
         }
     }
 
-    fun getAllModulesEndingWith(nameEndingWith: String): Set<Module> {
-        return modules.filter { it.name.endsWith(nameEndingWith) }.toSet()
-    }
-
-    fun getAllModulesStartingWith(nameStartingWith: String): Set<Module> {
-        return modules.filter { it.name.startsWith(nameStartingWith) }.toSet()
-    }
-
     fun getAllModules(): Set<Module> {
         return modules
     }

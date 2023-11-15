@@ -158,6 +158,20 @@ class ModuleServiceImplTest {
     }
 
     @Test
+    fun `test globbing module-wildcard-module finds multiple modules 2`() {
+        val module = Module("*end*")
+
+        val result = service.resolvePartialModuleName(module)
+
+        assertThat(result).containsExactlyInAnyOrder(
+            mDependencyAOther,
+            mDependencyBOther,
+            mDependencyCOther,
+            mDependencyD
+        )
+    }
+
+    @Test
     fun `test globbing normalise multiple wildcards`() {
         val module = Module("dependency****other")
 
