@@ -9,19 +9,15 @@ class ModuleServiceImpl(private val moduleRepository: ModuleRepository) : Module
     }
 
     override fun resolvePartialModuleName(module: Module): Set<Module> {
-        val normalisedModuleName = module.name.replace("\\*+".toRegex(), "*")
+        val normalisedModuleName = module.name.replace("\\*+".toRegex(), ".*")
         return recLookup(moduleRepository.getAllModules(), normalisedModuleName)
     }
 
     private fun recLookup(alreadyFoundModules: Set<Module>, nameToLookup: String): Set<Module> {
         return when {
             alreadyFoundModules.isEmpty() -> emptySet()
-            nameToLookup == "*" -> alreadyFoundModules
             '*' !in nameToLookup -> lookupName(nameToLookup)
-            nameToLookup.first() == '*' -> lookupWildcardStart(nameToLookup)
-            nameToLookup.last() == '*' -> lookupWildcardEnd(nameToLookup)
-            '*' in nameToLookup -> lookupWildcardMiddle(nameToLookup)
-            else -> emptySet()
+            else -> regexLookup(nameToLookup.toRegex())
         }
     }
 
@@ -30,26 +26,9 @@ class ModuleServiceImpl(private val moduleRepository: ModuleRepository) : Module
         return if (moduleByName != null) setOf(moduleByName) else emptySet()
     }
 
-    private fun lookupWildcardStart(nameToLookup: String): Set<Module> {
-        val nameEndingWith = nameToLookup.drop(1)
-        val substringBefore = nameEndingWith.substringBefore('*')
-        val matches = moduleRepository.getAllModulesEndingWith(substringBefore)
-        return recLookup(matches, nameEndingWith) + matches
-    }
-
-    private fun lookupWildcardEnd(nameToLookup: String): Set<Module> {
-        val nameStartingWith = nameToLookup.dropLast(1)
-        val substringAfterLast = nameStartingWith.substringAfterLast('*')
-        val matches = moduleRepository.getAllModulesStartingWith(substringAfterLast)
-        return recLookup(matches, nameStartingWith) + matches
-    }
-
-    private fun lookupWildcardMiddle(nameToLookup: String): Set<Module> {
-        val substringBefore = nameToLookup.substringBefore('*')
-        val substringAfter = nameToLookup.substringAfter('*')
-
-        val matchFirstPart = moduleRepository.getAllModulesStartingWith(substringBefore)
-        val matchSecondPart = moduleRepository.getAllModulesEndingWith(substringAfter)
-        return matchFirstPart.intersect(matchSecondPart)
+    private fun regexLookup(regexNameToLookup: Regex): Set<Module> {
+        return moduleRepository.getAllModules()
+            .filter { it.name.matches(regexNameToLookup) }
+            .toSet()
     }
 }
