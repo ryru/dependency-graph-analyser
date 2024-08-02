@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
 }
 
 repositories {
@@ -7,10 +7,6 @@ repositories {
 }
 
 dependencies {
-    constraints {
-        implementation("org.apache.commons:commons-text:1.10.0")
-    }
-
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.26.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
 }
@@ -25,6 +21,6 @@ testing {
 
 kotlin {
     jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
