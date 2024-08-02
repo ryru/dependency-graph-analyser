@@ -1,6 +1,7 @@
 # DGA: Dependency Graph Analyser
 
 [![Verify project](https://github.com/ryru/dependency-graph-analyser/actions/workflows/verify.yml/badge.svg)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/verify.yml)
+[![Build project](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml/badge.svg)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml)
 
 Analyse and visualise module dependencies in Gradle projects.
 
