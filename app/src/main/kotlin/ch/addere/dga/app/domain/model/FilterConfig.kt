@@ -7,5 +7,6 @@ data class FilterConfig(
     val modules: List<Module>,
     val originModules: List<Module>,
     val destinationModules: List<Module>,
-    val configurations: List<Configuration>
+    val configurations: List<Configuration>,
+    val isTransitiveModules: Boolean
 )

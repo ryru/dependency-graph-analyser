@@ -6,9 +6,11 @@ import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
+import ch.addere.dga.graph.domain.model.Dependency
 import ch.addere.dga.graph.domain.model.FilteredConfiguration
 import ch.addere.dga.graph.domain.model.FilteredModules
 import ch.addere.dga.graph.domain.service.ConfigurationService
+import ch.addere.dga.graph.domain.service.DependencyRelationService
 import ch.addere.dga.graph.domain.service.DependencyService
 import ch.addere.dga.graph.domain.service.ModuleService
 
@@ -22,7 +24,8 @@ class DependencyCommand(
     private val dependencyService: DependencyService,
     private val overviewService: OverviewService,
     private val moduleService: ModuleService,
-    private val configurationService: ConfigurationService
+    private val configurationService: ConfigurationService,
+    private val dependencyRelationService: DependencyRelationService
 ) {
 
     fun run() {
@@ -42,13 +45,27 @@ class DependencyCommand(
             inputConfigurations.flatMap(configurationService::resolvePartialConfigurationName)
                 .toList()
 
-        val filteredDependencies =
+        var filteredDependencies: Set<Dependency> =
             dependencyService.filteredDependencies(
                 FilteredModules(inputModules.isNotEmpty(), filteredModules),
                 FilteredModules(inputOrigin.isNotEmpty(), filteredOrigin),
                 FilteredModules(inputDestination.isNotEmpty(), filteredDestination),
                 FilteredConfiguration(inputConfigurations.isNotEmpty(), filteredConfigurations)
             )
+
+        if (config.filterConfig.isTransitiveModules) {
+            val configurationSet = filteredDependencies.map { it.configuration }.toSet()
+            filteredDependencies = filteredDependencies.flatMap { dependency ->
+                dependencyRelationService.allDependenciesOf(
+                    dependency.origin,
+                    configurationSet
+                ) union
+                    dependencyRelationService.allDependenciesOf(
+                        dependency.destination,
+                        configurationSet
+                    )
+            }.toSet()
+        }
 
         printer.println()
         overview.printToConsole(overviewDataForOutput)

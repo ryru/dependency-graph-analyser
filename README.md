@@ -32,6 +32,7 @@ Features:
 * Summarises the project modules and dependencies
 * Generates text-based graphs which are compatible with Mermaid charts
 * Filter only relevant modules or configurations
+* Include transitive project dependencies
 
 ## Usage
 
@@ -58,6 +59,7 @@ Filter Options:
   -o=<module,...>         Module names in origin. Specify multiple comma-separated module names.
   -d=<module,...>         Module names in destination. Specify multiple comma-separated module names.
   -c=<configuration,...>  Configurations used in dependencies. Specify multiple comma-separated configuration names.
+  --transitive            Also include transitive modules.
 
 Display Options:
 
@@ -72,6 +74,7 @@ Options:
 
 Arguments:
   <gradleproject>  Path of the Gradle project directory
+
 ```
 
 ### Quick Start
