@@ -21,23 +21,25 @@ class DependencyServiceImpl(private val repository: DependencyRepository) : Depe
         filteredConfiguration: FilteredConfiguration
     ): Set<Dependency> {
 
-        var relevantModules: Set<Dependency> = repository.getAllDependencies()
+        var filteredDependencies: Set<Dependency> = repository.getAllDependencies()
         if (filteredModules.isApplicable) {
-            relevantModules =
-                relevantModules.filter { filteredModules.contains(it.origin, it.destination) }
+            filteredDependencies =
+                filteredDependencies.filter { filteredModules.contains(it.origin, it.destination) }
                     .toSet()
         }
         if (filteredOrigin.isApplicable) {
-            relevantModules = relevantModules.filter { filteredOrigin.contains(it.origin) }.toSet()
+            filteredDependencies =
+                filteredDependencies.filter { filteredOrigin.contains(it.origin) }.toSet()
         }
         if (filteredDestination.isApplicable) {
-            relevantModules =
-                relevantModules.filter { filteredDestination.contains(it.destination) }.toSet()
+            filteredDependencies =
+                filteredDependencies.filter { filteredDestination.contains(it.destination) }.toSet()
         }
         if (filteredConfiguration.isApplicable) {
-            relevantModules =
-                relevantModules.filter { filteredConfiguration.contains(it.configuration) }.toSet()
+            filteredDependencies =
+                filteredDependencies.filter { filteredConfiguration.contains(it.configuration) }
+                    .toSet()
         }
-        return relevantModules
+        return filteredDependencies
     }
 }

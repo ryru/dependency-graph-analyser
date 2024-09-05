@@ -43,7 +43,8 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
             optionsFilter.modules,
             optionsFilter.originModules,
             optionsFilter.destinationModules,
-            optionsFilter.configurations
+            optionsFilter.configurations,
+            optionsFilter.transitiveModules
         )
         val outputConfig = OutputConfig(
             optionsOutput.isAllModules,
@@ -86,6 +87,10 @@ class OptionsFilter : OptionGroup(
     val configurations: List<Configuration> by option("-c")
         .convert("configuration,...") { Configuration(it) }.split(",").default(emptyList())
         .help("Configurations used in dependencies. Specify multiple comma-separated configuration names.")
+
+    val transitiveModules: Boolean by option("--transitive")
+        .flag()
+        .help("Also include transitive modules.")
 }
 
 class OptionsOutput : OptionGroup(
