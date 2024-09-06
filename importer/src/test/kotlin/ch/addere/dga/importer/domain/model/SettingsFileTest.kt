@@ -7,6 +7,8 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.messageContains
 import ch.addere.dga.core.domain.model.Module
+import ch.addere.dga.importer.GradleDsl
+import ch.addere.dga.importer.SettingsFile
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

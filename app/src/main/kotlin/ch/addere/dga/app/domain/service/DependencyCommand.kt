@@ -13,6 +13,7 @@ import ch.addere.dga.core.domain.service.ConfigurationService
 import ch.addere.dga.core.domain.service.DependencyRelationService
 import ch.addere.dga.core.domain.service.DependencyService
 import ch.addere.dga.core.domain.service.ModuleService
+import ch.addere.dga.importer.application.service.GradleProjectLoader
 
 class DependencyCommand(
     private val config: CommandConfig,
@@ -25,12 +26,15 @@ class DependencyCommand(
     private val overviewService: OverviewService,
     private val moduleService: ModuleService,
     private val configurationService: ConfigurationService,
-    private val dependencyRelationService: DependencyRelationService
+    private val dependencyRelationService: DependencyRelationService,
+    private val gradleProjectLoader: GradleProjectLoader
 ) {
 
     fun run() {
 
-        val overviewDataForOutput = overviewService.overviewData()
+        val projectName: String = gradleProjectLoader.loadGradleProject(config.gradleProjectPath)
+
+        val overviewDataForOutput = overviewService.overviewData(projectName)
 
         val inputModules = config.filterConfig.modules
         val inputOrigin = config.filterConfig.originModules

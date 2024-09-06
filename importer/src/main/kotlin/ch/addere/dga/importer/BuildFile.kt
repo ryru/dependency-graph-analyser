@@ -1,11 +1,11 @@
-package ch.addere.dga.importer.domain.model
+package ch.addere.dga.importer
 
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
 import java.io.File
 
-abstract class BuildFile(val origin: Module, val buildFile: File) {
+abstract class BuildFile(val origin: Module, private val buildFile: File) {
 
     val dependencies: Set<Dependency>
 

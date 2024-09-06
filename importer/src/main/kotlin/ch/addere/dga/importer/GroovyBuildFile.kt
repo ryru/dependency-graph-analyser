@@ -1,4 +1,4 @@
-package ch.addere.dga.importer.domain.model
+package ch.addere.dga.importer
 
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Module

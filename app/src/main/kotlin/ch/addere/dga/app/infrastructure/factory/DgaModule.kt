@@ -18,8 +18,6 @@ import ch.addere.dga.core.domain.service.DependencyServiceImpl
 import ch.addere.dga.core.domain.service.ModuleRepository
 import ch.addere.dga.core.domain.service.ModuleService
 import ch.addere.dga.core.domain.service.ModuleServiceImpl
-import ch.addere.dga.importer.application.service.GradleConnectorService
-import ch.addere.dga.importer.domain.model.Project
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -32,7 +30,6 @@ val dgaModule = module {
     singleOf(::DependencyRelationServiceImpl) { bind<DependencyRelationService>() }
     singleOf(::DependencyRepository)
     singleOf(::DependencyServiceImpl) { bind<DependencyService>() }
-    singleOf(::GradleConnectorService)
     singleOf(::MermaidPrinter)
     singleOf(::ModuleDependencyDag)
     singleOf(::ModulePrinter)
@@ -40,5 +37,4 @@ val dgaModule = module {
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
     singleOf(::OverviewPrinter)
     singleOf(::OverviewService)
-    singleOf(::Project)
 }

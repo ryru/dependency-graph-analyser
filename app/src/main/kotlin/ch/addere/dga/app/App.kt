@@ -5,6 +5,7 @@ import ch.addere.dga.app.domain.model.FilterConfig
 import ch.addere.dga.app.domain.model.OutputConfig
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.app.infrastructure.factory.dgaModule
+import ch.addere.dga.app.infrastructure.factory.importerModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Module
@@ -118,6 +119,7 @@ fun main(args: Array<String>) {
         startKoin {
             modules(userInputModule)
             modules(dgaModule)
+            modules(importerModule)
         }
 
         dga.parse(args)

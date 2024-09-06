@@ -1,27 +1,23 @@
-package ch.addere.dga.importer.domain.model
+package ch.addere.dga.importer.domain.service
 
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
 import ch.addere.dga.core.domain.service.DependencyRepository
 import ch.addere.dga.core.domain.service.ModuleRepository
-import ch.addere.dga.importer.application.service.GradleConnectorService
+import ch.addere.dga.dependencymodel.DependencyModel
 
-class Project(
-    gradleConnectorService: GradleConnectorService,
-    moduleRepository: ModuleRepository,
-    dependencyRepository: DependencyRepository
+class ModelImporterService(
+    private val moduleRepository: ModuleRepository,
+    private val dependencyRepository: DependencyRepository
 ) {
-
-    private val gradleData = gradleConnectorService.connectToGradle()
-
-    init {
-        val modules = gradleData.projectModules
+    fun import(dependencyModel: DependencyModel): String {
+        val modules = dependencyModel.projectModules
             .map { Module(it.projectModule) }
             .toSortedSet()
         moduleRepository.addModule(modules)
 
-        gradleData.projectModuleDependencies
+        dependencyModel.projectModuleDependencies
             .map { entry ->
                 val origin = Module(entry.key)
                 entry.value.map {
@@ -32,9 +28,7 @@ class Project(
                     dependencyRepository.addDependency(dependency)
                 }
             }
-    }
 
-    fun projectName(): String {
-        return gradleData.projectName
+        return dependencyModel.projectName
     }
 }

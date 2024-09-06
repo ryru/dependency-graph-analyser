@@ -1,13 +1,13 @@
-package ch.addere.dga.importer.domain.model
+package ch.addere.dga.importer
 
 import ch.addere.dga.core.domain.model.Module
-import ch.addere.dga.importer.domain.model.GradleDsl.GROOVY
-import ch.addere.dga.importer.domain.model.GradleDsl.KOTLIN
+import ch.addere.dga.importer.GradleDsl.GROOVY
+import ch.addere.dga.importer.GradleDsl.KOTLIN
 import java.io.BufferedReader
 import java.io.File
 import kotlin.streams.asStream
 
-class SettingsFile(val settingsFile: File) {
+class SettingsFile(private val settingsFile: File) {
 
     val modules: Set<Module>
 
