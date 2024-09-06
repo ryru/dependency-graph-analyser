@@ -7,6 +7,7 @@ import assertk.assertions.isEmpty
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
+import ch.addere.dga.importer.KotlinBuildFile
 import org.junit.jupiter.api.Test
 import java.io.File
 

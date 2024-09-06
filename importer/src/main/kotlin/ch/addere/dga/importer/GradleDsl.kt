@@ -1,4 +1,4 @@
-package ch.addere.dga.importer.domain.model
+package ch.addere.dga.importer
 
 enum class GradleDsl(val extension: String) {
     GROOVY(""),

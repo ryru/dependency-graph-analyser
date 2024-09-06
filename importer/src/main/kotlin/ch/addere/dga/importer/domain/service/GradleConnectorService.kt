@@ -1,4 +1,4 @@
-package ch.addere.dga.importer.application.service
+package ch.addere.dga.importer.domain.service
 
 import ch.addere.dga.dependencymodel.DependencyModel
 import org.gradle.tooling.GradleConnector
@@ -9,17 +9,18 @@ import kotlin.io.path.Path
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.createTempDirectory
 
-const val SCRIPT_FILE_NAME = "init.gradle.kts"
-const val SCRIPT_PARENT_DIR = "dga"
+class GradleConnectorService {
 
-class GradleConnectorService(val gradleFolder: File) {
+    private val scriptFileName = "init.gradle.kts"
+    private val scriptParentDir = "dga"
 
-    fun connectToGradle(): DependencyModel {
+
+    fun connectToGradle(gradleProjectFolder: File): DependencyModel {
 
         val pathToInitScript = createInitScript()
 
         val connector = GradleConnector.newConnector()
-        connector.forProjectDirectory(gradleFolder)
+        connector.forProjectDirectory(gradleProjectFolder)
 
         var model: DependencyModel?
 
@@ -37,17 +38,17 @@ class GradleConnectorService(val gradleFolder: File) {
 
     private fun createInitScript(): Path {
         val osTempDir = createTempDirectory().parent
-        val scriptDir = Files.createDirectories(Path("$osTempDir/$SCRIPT_PARENT_DIR/"))
-        val initScript = File("$scriptDir/$SCRIPT_FILE_NAME")
-        initScript.writeText(javaClass.getResource("/$SCRIPT_FILE_NAME")!!.readText())
+        val scriptDir = Files.createDirectories(Path("$osTempDir/$scriptParentDir/"))
+        val initScript = File("$scriptDir/$scriptFileName")
+        initScript.writeText(javaClass.getResource("/$scriptFileName")!!.readText())
         return initScript.toPath()
     }
 
     private fun deleteInitScript(pathToInitScript: Path) {
-        if (pathToInitScript.endsWith(SCRIPT_FILE_NAME)) {
+        if (pathToInitScript.endsWith(scriptFileName)) {
             Files.delete(pathToInitScript)
         }
-        if (pathToInitScript.parent.endsWith(SCRIPT_PARENT_DIR)) {
+        if (pathToInitScript.parent.endsWith(scriptParentDir)) {
             Files.delete(pathToInitScript.parent)
         }
     }
