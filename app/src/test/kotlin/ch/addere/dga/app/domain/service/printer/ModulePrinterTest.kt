@@ -4,7 +4,7 @@ import assertk.assertThat
 import assertk.assertions.containsExactly
 import assertk.assertions.isEmpty
 import ch.addere.dga.app.domain.model.CommandConfig
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.core.domain.model.Module
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock

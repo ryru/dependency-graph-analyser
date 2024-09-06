@@ -2,9 +2,11 @@ plugins {
     id("ch.addere.dga.kotlin-application-conventions")
 }
 
+description = "CLI application project"
+
 dependencies {
-    api(project(":exporter"))
-    api(project(":importer"))
+    implementation(project(":core"))
+    implementation(project(":importer"))
 
     implementation("com.github.ajalt.clikt:clikt:4.0.0")
     implementation("io.insert-koin:koin-core:3.4.2")

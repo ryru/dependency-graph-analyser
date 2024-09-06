@@ -3,6 +3,8 @@ plugins {
     `maven-publish`
 }
 
+description = "Data model of the analysed Gradle project"
+
 group = "ch.addere.dga.plugin"
 version = "0.1.0"
 

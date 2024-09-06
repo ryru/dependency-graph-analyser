@@ -1,7 +1,7 @@
 package ch.addere.dga.importer.domain.model
 
-import ch.addere.dga.graph.domain.model.Configuration
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.core.domain.model.Configuration
+import ch.addere.dga.core.domain.model.Module
 import java.io.File
 
 class KotlinBuildFile(origin: Module, buildFile: File) : BuildFile(origin, buildFile) {

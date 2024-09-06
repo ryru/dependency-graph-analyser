@@ -1,6 +1,6 @@
 package ch.addere.dga.importer.domain.model
 
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.core.domain.model.Module
 import ch.addere.dga.importer.domain.model.GradleDsl.GROOVY
 import ch.addere.dga.importer.domain.model.GradleDsl.KOTLIN
 import java.io.BufferedReader

@@ -1,6 +1,6 @@
 package ch.addere.dga.app.domain.service.printer
 
-import ch.addere.dga.graph.domain.model.Configuration
+import ch.addere.dga.core.domain.model.Configuration
 
 class DependencyPrinter(private val printer: ConsolePrinter) {
 

@@ -23,7 +23,6 @@ include(
     "app",
     "dependency-model",
     "dependency-plugin",
-    "exporter",
-    "graph",
+    "core",
     "importer",
 )

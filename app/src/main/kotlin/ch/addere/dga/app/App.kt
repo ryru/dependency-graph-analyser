@@ -6,8 +6,8 @@ import ch.addere.dga.app.domain.model.OutputConfig
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
-import ch.addere.dga.graph.domain.model.Configuration
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.core.domain.model.Configuration
+import ch.addere.dga.core.domain.model.Module
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
