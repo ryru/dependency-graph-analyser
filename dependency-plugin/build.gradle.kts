@@ -4,6 +4,8 @@ plugins {
     `maven-publish`
 }
 
+description = "Gradle plugin that is injected into to be analysed Gradle projects"
+
 group = "ch.addere.dga.plugin"
 version = "0.1.0"
 

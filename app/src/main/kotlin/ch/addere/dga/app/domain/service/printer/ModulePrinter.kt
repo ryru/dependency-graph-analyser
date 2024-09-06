@@ -1,6 +1,6 @@
 package ch.addere.dga.app.domain.service.printer
 
-import ch.addere.dga.graph.domain.model.Module
+import ch.addere.dga.core.domain.model.Module
 
 class ModulePrinter(private val printer: ConsolePrinter) {
 

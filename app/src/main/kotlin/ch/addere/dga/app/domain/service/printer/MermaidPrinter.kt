@@ -1,8 +1,8 @@
 package ch.addere.dga.app.domain.service.printer
 
-import ch.addere.dga.exporter.domain.model.exporter.mermaid.MermaidFullGraphExporter
-import ch.addere.dga.exporter.domain.model.writer.ConsoleWriter
-import ch.addere.dga.graph.domain.model.Dependency
+import ch.addere.dga.app.domain.model.mermaid.MermaidFullGraphExporter
+import ch.addere.dga.app.domain.model.writer.ConsoleWriter
+import ch.addere.dga.core.domain.model.Dependency
 
 class MermaidPrinter(private val printer: ConsolePrinter) {
 

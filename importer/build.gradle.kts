@@ -3,7 +3,9 @@ plugins {
     `java-gradle-plugin`
 }
 
+description = "Imports project information of to be analysed Gradle project"
+
 dependencies {
-    api(project(":graph"))
-    api(project(":dependency-model"))
+    implementation(project(":core"))
+    implementation(project(":dependency-model"))
 }

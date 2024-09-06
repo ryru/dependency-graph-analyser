@@ -11,24 +11,16 @@ individual modules with the help of [Mermaid](https://mermaid.js.org/).
 
 ```mermaid
 graph TD
-    vd2a57d(app) -->|api| ved7802(exporter)
-    vd2a57d(app) -->|api| v1bc49d(importer)
+    vd2a57d(app) -->|implementation| va74ad8(core)
+    vd2a57d(app) -->|implementation| v1bc49d(importer)
     v80f88a(dependency-plugin) -->|implementation| v8ebf3d(dependency-model)
-    ved7802(exporter) -->|api| vf8b0b9(graph)
-    v1bc49d(importer) -->|api| v8ebf3d(dependency-model)
-    v1bc49d(importer) -->|api| vf8b0b9(graph)
+    v1bc49d(importer) -->|implementation| va74ad8(core)
+    v1bc49d(importer) -->|implementation| v8ebf3d(dependency-model)
 ```
-
-What you see in the above graph:
-
-* _Module_ `app` has two direct _dependencies_: `exporter` and `importer`, both use the
-  _configuration_ `api`.
-* _Module_ `dependency-plugin` has one direct _dependency_ (`dependency-model`) of
-  _configuration_ `implementation`.
 
 Features:
 
-* Analyses Gradle projects in both DSLs (Kotlin and Groovy)
+* Analyses Gradle projects in both Kotlin and Groovy DSLs
 * Summarises the project modules and dependencies
 * Generates text-based graphs which are compatible with Mermaid charts
 * Filter only relevant modules or configurations
@@ -101,8 +93,8 @@ Get an overview of this project by running `dga .``:
 ./app/build/install/dga/bin/dga .
 
 Analyse project "dependency-graph-analyser"
-     6 modules
-     6 dependencies (2 unique configurations)
+     5 modules
+     5 dependencies (1 unique configurations)
 
 ```
 
@@ -136,13 +128,15 @@ containing the modules `app` and `exporter` in the origin:
 ./app/build/install/dga/bin/dga . -o app,exporter --chart-mermaid
 
 Analyse project "dependency-graph-analyser"
-     6 modules
-     6 dependencies (2 unique configurations)
+     5 modules
+     5 dependencies (1 unique configurations)
 
 graph TD
-    vd2a57d(app) -->|api| ved7802(exporter)
-    vd2a57d(app) -->|api| v1bc49d(importer)
-    ved7802(exporter) -->|api| vf8b0b9(graph)
+    vd2a57d(app) -->|implementation| va74ad8(core)
+    vd2a57d(app) -->|implementation| v1bc49d(importer)
+    v80f88a(dependency-plugin) -->|implementation| v8ebf3d(dependency-model)
+    v1bc49d(importer) -->|implementation| va74ad8(core)
+    v1bc49d(importer) -->|implementation| v8ebf3d(dependency-model)
 
 ```
 

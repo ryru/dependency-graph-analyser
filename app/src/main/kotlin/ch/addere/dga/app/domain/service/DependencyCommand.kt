@@ -6,13 +6,13 @@ import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
 import ch.addere.dga.app.domain.service.printer.OverviewPrinter
-import ch.addere.dga.graph.domain.model.Dependency
-import ch.addere.dga.graph.domain.model.FilteredConfiguration
-import ch.addere.dga.graph.domain.model.FilteredModules
-import ch.addere.dga.graph.domain.service.ConfigurationService
-import ch.addere.dga.graph.domain.service.DependencyRelationService
-import ch.addere.dga.graph.domain.service.DependencyService
-import ch.addere.dga.graph.domain.service.ModuleService
+import ch.addere.dga.core.domain.model.Dependency
+import ch.addere.dga.core.domain.model.FilteredConfiguration
+import ch.addere.dga.core.domain.model.FilteredModules
+import ch.addere.dga.core.domain.service.ConfigurationService
+import ch.addere.dga.core.domain.service.DependencyRelationService
+import ch.addere.dga.core.domain.service.DependencyService
+import ch.addere.dga.core.domain.service.ModuleService
 
 class DependencyCommand(
     private val config: CommandConfig,
