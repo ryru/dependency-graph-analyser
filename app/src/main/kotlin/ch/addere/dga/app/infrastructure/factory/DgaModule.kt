@@ -9,12 +9,11 @@ import ch.addere.dga.app.domain.service.printer.ConsolePrinter
 import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
+import ch.addere.dga.core.domain.DependencyRepository
+import ch.addere.dga.core.domain.DependencyRepositoryImpl
 import ch.addere.dga.core.domain.model.graph.ModuleDependencyDag
 import ch.addere.dga.core.domain.service.ConfigurationService
 import ch.addere.dga.core.domain.service.ConfigurationServiceImpl
-import ch.addere.dga.core.domain.service.DependencyRelationService
-import ch.addere.dga.core.domain.service.DependencyRelationServiceImpl
-import ch.addere.dga.core.domain.service.DependencyRepository
 import ch.addere.dga.core.domain.service.DependencyService
 import ch.addere.dga.core.domain.service.DependencyServiceImpl
 import ch.addere.dga.core.domain.service.ModuleRepository
@@ -29,8 +28,7 @@ val dgaModule = module {
     singleOf(::ConsolePrinter)
     singleOf(::DependencyCommandHandler)
     singleOf(::DependencyPrinter)
-    singleOf(::DependencyRelationServiceImpl) { bind<DependencyRelationService>() }
-    singleOf(::DependencyRepository)
+    singleOf(::DependencyRepositoryImpl) { bind<DependencyRepository>() }
     singleOf(::DependencyServiceImpl) { bind<DependencyService>() }
     singleOf(::MermaidPrinter)
     singleOf(::ModuleDependencyDag)

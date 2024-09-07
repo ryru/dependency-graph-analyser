@@ -51,7 +51,7 @@ Filter Options:
   -o=<module,...>         Module names in origin. Specify multiple comma-separated module names.
   -d=<module,...>         Module names in destination. Specify multiple comma-separated module names.
   -c=<configuration,...>  Configurations used in dependencies. Specify multiple comma-separated configuration names.
-  --transitive            Also include transitive modules.
+  -t, --transitive        If set, also include transitive module dependencies. This applies only if a module filter is active.
 
 Display Options:
 
@@ -59,7 +59,8 @@ Display Options:
 
   --modules         Shows all modules of the project applying to the specified filters.
   --configurations  Displays all configurations applying to the specified filters and sorted by frequency of occurrence.
-  --chart-mermaid   Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.
+  --mermaid-graph   Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.
+  --chart-mermaid   Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria. (deprecated)
 
 Options:
   -h, --help  Show this message and exit
@@ -87,15 +88,14 @@ cd dependency-graph-analyser/
 4. Publish the Gradle tooling API plugin and its data model to Maven local (available in the
    directory `~/.m2/repository/ch/addere/dga/`)
 
-Get an overview of this project by running `dga .``:
+Get an overview of this project by running `dga .`:
 
 ```
 ./app/build/install/dga/bin/dga .
 
 Analyse project "dependency-graph-analyser"
      5 modules
-     5 dependencies (1 unique configurations)
-
+     5 dependency configurations (1 unique dependency configurations)
 ```
 
 ### Create a Mermaid Chart
@@ -103,33 +103,11 @@ Analyse project "dependency-graph-analyser"
 Use `dga . --chart-mermaid` to generate a Mermaid chart of this project:
 
 ```
-./app/build/install/dga/bin/dga . --chart-mermaid
-
-Analyse project "dependency-graph-analyser"
-     6 modules
-     6 dependencies (2 unique configurations)
-
-graph TD
-    vd2a57d(app) -->|api| ved7802(exporter)
-    vd2a57d(app) -->|api| v1bc49d(importer)
-    v80f88a(dependency-plugin) -->|implementation| v8ebf3d(dependency-model)
-    ved7802(exporter) -->|api| vf8b0b9(graph)
-    v1bc49d(importer) -->|api| v8ebf3d(dependency-model)
-    v1bc49d(importer) -->|api| vf8b0b9(graph)
-
-```
-
-#### Filter Modules
-
-Use `dga . -o app,exporter --chart-mermaid` to generate a Mermaid chart of this project only
-containing the modules `app` and `exporter` in the origin:
-
-```
-./app/build/install/dga/bin/dga . -o app,exporter --chart-mermaid
+./app/build/install/dga/bin/dga . --mermaid-graph
 
 Analyse project "dependency-graph-analyser"
      5 modules
-     5 dependencies (1 unique configurations)
+     5 dependency configurations (1 unique dependency configurations)
 
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
@@ -139,6 +117,30 @@ graph TD
     v1bc49d(importer) -->|implementation| v8ebf3d(dependency-model)
 
 ```
+
+#### Filter Modules
+
+Use `dga . -o app --mermaid-graph` to generate a Mermaid graph chart of this project only
+containing the dependencies originating from the module `app`:
+
+```
+./app/build/install/dga/bin/dga . -o app --mermaid-graph
+
+Analyse project "dependency-graph-analyser"
+     5 modules
+     5 dependency configurations (1 unique dependency configurations)
+
+Applying filter on data results in:
+     3 modules
+     2 dependency configurations (1 unique dependency configurations)
+
+graph TD
+    vd2a57d(app) -->|implementation| va74ad8(core)
+    vd2a57d(app) -->|implementation| v1bc49d(importer)
+ 
+```
+
+- Use `--transitive` to also include transitive dependencies.
 
 ## How DGA works
 

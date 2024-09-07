@@ -2,11 +2,11 @@ package ch.addere.dga.core.model.graph
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import ch.addere.dga.core.domain.DependencyRepositoryImpl
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
 import ch.addere.dga.core.domain.model.graph.ModuleDependencyDag
-import ch.addere.dga.core.domain.service.DependencyRepository
 import ch.addere.dga.core.domain.service.ModuleRepository
 import org.junit.jupiter.api.Test
 
@@ -49,7 +49,7 @@ class ModuleDependencyDagTest {
 
     private fun dag(modules: Set<Module>, dependencies: Set<Dependency>): ModuleDependencyDag {
         val moduleRepository = ModuleRepository()
-        val dependencyRepository = DependencyRepository()
+        val dependencyRepository = DependencyRepositoryImpl()
 
         moduleRepository.addModule(modules)
         dependencyRepository.addDependency(dependencies)
