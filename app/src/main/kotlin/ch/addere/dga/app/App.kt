@@ -1,8 +1,8 @@
 package ch.addere.dga.app
 
+import ch.addere.dga.app.configuration.OutputOptions
 import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.model.FilterConfig
-import ch.addere.dga.app.domain.model.OutputConfig
 import ch.addere.dga.app.domain.service.DependencyCommand
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.importerModule
@@ -14,9 +14,13 @@ import com.github.ajalt.clikt.core.CliktError
 import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.arguments.help
 import com.github.ajalt.clikt.parameters.groups.OptionGroup
+import com.github.ajalt.clikt.parameters.groups.default
+import com.github.ajalt.clikt.parameters.groups.mutuallyExclusiveOptions
 import com.github.ajalt.clikt.parameters.groups.provideDelegate
+import com.github.ajalt.clikt.parameters.groups.single
 import com.github.ajalt.clikt.parameters.options.convert
 import com.github.ajalt.clikt.parameters.options.default
+import com.github.ajalt.clikt.parameters.options.deprecated
 import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
@@ -29,7 +33,7 @@ import org.koin.core.parameter.parametersOf
 import java.io.File
 import kotlin.system.exitProcess
 
-class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle project."),
+private class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle project."),
     KoinComponent {
 
     private val gradleProject: File by argument()
@@ -37,7 +41,28 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
         .help("Path of the Gradle project directory")
 
     private val optionsFilter by OptionsFilter()
-    private val optionsOutput by OptionsOutput()
+    private val outputOption: OutputOptions by mutuallyExclusiveOptions(
+        option("--modules")
+            .flag()
+            .convert { OutputOptions.OutputOptionModules }
+            .help("Shows all modules of the project applying to the specified filters."),
+        option("--configurations")
+            .flag()
+            .convert { OutputOptions.OutputOptionConfigurations }
+            .help("Displays all configurations applying to the specified filters and sorted by frequency of occurrence."),
+        option("--mermaid-graph")
+            .flag()
+            .convert { OutputOptions.OutputOptionMermaid }
+            .help("Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria."),
+        option("--chart-mermaid")
+            .flag()
+            .convert { OutputOptions.OutputOptionMermaid }
+            .help("Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.")
+            .deprecated("Use --mermaid-graph instead"),
+        help = "Options controlling how to output the analysed data. Display options can not be combined.",
+        name = "Display Options",
+    ).single().default(OutputOptions.OutputOptionOverviewOnly)
+
 
     override fun run() {
         val filterConfig = FilterConfig(
@@ -47,19 +72,14 @@ class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle
             optionsFilter.configurations,
             optionsFilter.transitiveModules
         )
-        val outputConfig = OutputConfig(
-            optionsOutput.isAllModules,
-            optionsOutput.isAllConfigurations,
-            optionsOutput.isChartMermaid
-        )
-        val argument = CommandConfig(::echo, gradleProject, filterConfig, outputConfig)
+        val argument = CommandConfig(::echo, gradleProject, filterConfig, outputOption)
         val command: DependencyCommand = get { parametersOf(argument) }
 
         command.run()
     }
 }
 
-class OptionsFilter : OptionGroup(
+private class OptionsFilter : OptionGroup(
     name = "Filter Options",
     help = """
         Filter control what to analyse. If several filters are set, dependencies must fulfill all of them.
@@ -92,25 +112,6 @@ class OptionsFilter : OptionGroup(
     val transitiveModules: Boolean by option("--transitive")
         .flag()
         .help("Also include transitive modules.")
-}
-
-class OptionsOutput : OptionGroup(
-    name = "Display Options",
-    help = """
-        Options controlling how to output the analysed data. Display options can not be combined.
-        """.trimIndent()
-) {
-    val isAllModules: Boolean by option("--modules")
-        .flag()
-        .help("Shows all modules of the project applying to the specified filters.")
-
-    val isAllConfigurations: Boolean by option("--configurations")
-        .flag()
-        .help("Displays all configurations applying to the specified filters and sorted by frequency of occurrence.")
-
-    val isChartMermaid: Boolean by option("--chart-mermaid")
-        .flag()
-        .help("Generate the Mermaid graph chart source for the dependencies fulfilling the filter criteria.")
 }
 
 fun main(args: Array<String>) {

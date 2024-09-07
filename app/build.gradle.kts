@@ -8,7 +8,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":importer"))
 
-    implementation("com.github.ajalt.clikt:clikt:4.0.0")
+    implementation("com.github.ajalt.clikt:clikt:4.4.0")
     implementation("io.insert-koin:koin-core:3.4.2")
 }
 
