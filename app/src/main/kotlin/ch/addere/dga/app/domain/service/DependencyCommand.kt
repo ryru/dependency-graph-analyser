@@ -1,5 +1,9 @@
 package ch.addere.dga.app.domain.service
 
+import ch.addere.dga.app.configuration.OutputOptions.OutputOptionConfigurations
+import ch.addere.dga.app.configuration.OutputOptions.OutputOptionMermaid
+import ch.addere.dga.app.configuration.OutputOptions.OutputOptionModules
+import ch.addere.dga.app.configuration.OutputOptions.OutputOptionOverviewOnly
 import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.service.printer.ConsolePrinter
 import ch.addere.dga.app.domain.service.printer.DependencyPrinter
@@ -72,16 +76,16 @@ class DependencyCommand(
         }
 
         printer.println()
-        overview.printToConsole(overviewDataForOutput)
+        when (config.outputConfig) {
+            OutputOptionOverviewOnly -> overview.printToConsole(overviewDataForOutput)
+            OutputOptionModules -> modulePrinter.printToConsole(extractModules(filteredDependencies))
+            OutputOptionConfigurations -> dependencies.printToConsole(
+                configurationAndCount(
+                    filteredDependencies
+                )
+            )
 
-        if (config.outputConfig.isAllModule) {
-            val uniqueModules = extractModules(filteredDependencies)
-            modulePrinter.printToConsole(uniqueModules)
-        } else if (config.outputConfig.isAllConfigurations) {
-            val countedConfigurations = configurationAndCount(filteredDependencies)
-            dependencies.printToConsole(countedConfigurations)
-        } else if (config.outputConfig.isChartMermaid) {
-            mermaid.printToConsole(filteredDependencies)
+            OutputOptionMermaid -> mermaid.printToConsole(filteredDependencies)
         }
         printer.println()
     }
