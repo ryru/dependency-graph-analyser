@@ -1,12 +1,14 @@
 package ch.addere.dga.app.infrastructure.factory
 
-import ch.addere.dga.app.domain.service.DependencyCommand
-import ch.addere.dga.app.domain.service.OverviewService
+import ch.addere.dga.app.domain.service.DependencyCommandHandler
+import ch.addere.dga.app.domain.service.FilterService
+import ch.addere.dga.app.domain.service.ProjectFilterPrinter
+import ch.addere.dga.app.domain.service.ProjectOutputPrinter
+import ch.addere.dga.app.domain.service.ProjectOverviewPrinter
 import ch.addere.dga.app.domain.service.printer.ConsolePrinter
 import ch.addere.dga.app.domain.service.printer.DependencyPrinter
 import ch.addere.dga.app.domain.service.printer.MermaidPrinter
 import ch.addere.dga.app.domain.service.printer.ModulePrinter
-import ch.addere.dga.app.domain.service.printer.OverviewPrinter
 import ch.addere.dga.core.domain.model.graph.ModuleDependencyDag
 import ch.addere.dga.core.domain.service.ConfigurationService
 import ch.addere.dga.core.domain.service.ConfigurationServiceImpl
@@ -25,7 +27,7 @@ import org.koin.dsl.module
 val dgaModule = module {
     singleOf(::ConfigurationServiceImpl) { bind<ConfigurationService>() }
     singleOf(::ConsolePrinter)
-    singleOf(::DependencyCommand)
+    singleOf(::DependencyCommandHandler)
     singleOf(::DependencyPrinter)
     singleOf(::DependencyRelationServiceImpl) { bind<DependencyRelationService>() }
     singleOf(::DependencyRepository)
@@ -35,6 +37,8 @@ val dgaModule = module {
     singleOf(::ModulePrinter)
     singleOf(::ModuleRepository)
     singleOf(::ModuleServiceImpl) { bind<ModuleService>() }
-    singleOf(::OverviewPrinter)
-    singleOf(::OverviewService)
+    singleOf(::ProjectOverviewPrinter)
+    singleOf(::FilterService)
+    singleOf(::ProjectFilterPrinter)
+    singleOf(::ProjectOutputPrinter)
 }
