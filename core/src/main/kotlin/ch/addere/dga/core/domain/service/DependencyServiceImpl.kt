@@ -1,10 +1,11 @@
 package ch.addere.dga.core.domain.service
 
+import ch.addere.dga.core.domain.DependencyRepositoryImpl
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.FilteredConfiguration
 import ch.addere.dga.core.domain.model.FilteredModules
 
-class DependencyServiceImpl(private val repository: DependencyRepository) : DependencyService {
+class DependencyServiceImpl(private val repository: DependencyRepositoryImpl) : DependencyService {
 
     override fun nofProjectDependencies(): Int {
         return repository.getAllDependencies().size

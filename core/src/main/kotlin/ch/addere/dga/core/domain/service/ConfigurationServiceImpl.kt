@@ -1,5 +1,6 @@
 package ch.addere.dga.core.domain.service
 
+import ch.addere.dga.core.domain.DependencyRepository
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 

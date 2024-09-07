@@ -4,10 +4,10 @@ import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.containsExactlyInAnyOrder
 import assertk.assertions.isEmpty
+import ch.addere.dga.core.domain.DependencyRepositoryImpl
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
-import ch.addere.dga.core.domain.service.DependencyRepository
 import org.junit.jupiter.api.Test
 
 private val M1 = Module("m1")
@@ -19,17 +19,17 @@ private val D1 = Dependency(M1, M2, C1)
 private val D2 = Dependency(M1, M3, C1)
 private val D3 = Dependency(M2, M3, C2)
 
-class DependencyRepositoryTest {
+class DependencyRepositoryImplTest {
     @Test
     fun `test empty repo has 0 dependencies`() {
-        val repository = DependencyRepository()
+        val repository = DependencyRepositoryImpl()
 
         assertThat(repository.getAllDependencies()).isEmpty()
     }
 
     @Test
     fun `test add and get dependencies`() {
-        val repository = DependencyRepository()
+        val repository = DependencyRepositoryImpl()
 
         repository.addDependency(D1)
 
@@ -42,7 +42,7 @@ class DependencyRepositoryTest {
 
     @Test
     fun `test add several and get all dependencies`() {
-        val repository = DependencyRepository()
+        val repository = DependencyRepositoryImpl()
 
         repository.addDependency(setOf(D1, D2, D3))
 

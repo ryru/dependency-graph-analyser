@@ -4,6 +4,7 @@ import ch.addere.dga.app.configuration.OutputOptions
 import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.model.FilterConfig
 import ch.addere.dga.app.domain.service.DependencyCommandHandler
+import ch.addere.dga.app.infrastructure.factory.coreModule
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.importerModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
@@ -70,7 +71,7 @@ private class Dga : CliktCommand(help = "Analyse the module dependency graph of 
             optionsFilter.originModules,
             optionsFilter.destinationModules,
             optionsFilter.configurations,
-            optionsFilter.transitiveModules
+            optionsFilter.includeTransitiveModules
         )
         val argument = CommandConfig(::echo, gradleProject, filterConfig, outputOption)
         val command: DependencyCommandHandler = get { parametersOf(argument) }
@@ -109,9 +110,9 @@ private class OptionsFilter : OptionGroup(
         .convert("configuration,...") { Configuration(it) }.split(",").default(emptyList())
         .help("Configurations used in dependencies. Specify multiple comma-separated configuration names.")
 
-    val transitiveModules: Boolean by option("--transitive")
+    val includeTransitiveModules: Boolean by option("-t", "--transitive")
         .flag()
-        .help("Also include transitive modules.")
+        .help("If set, also include transitive module dependencies. This applies only if a module filter is active.")
 }
 
 fun main(args: Array<String>) {
@@ -121,6 +122,7 @@ fun main(args: Array<String>) {
             modules(userInputModule)
             modules(dgaModule)
             modules(importerModule)
+            modules(coreModule)
         }
 
         dga.parse(args)

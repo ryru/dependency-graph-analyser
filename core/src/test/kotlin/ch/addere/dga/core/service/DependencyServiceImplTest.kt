@@ -4,12 +4,12 @@ import assertk.assertThat
 import assertk.assertions.containsAll
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
+import ch.addere.dga.core.domain.DependencyRepositoryImpl
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.FilteredConfiguration
 import ch.addere.dga.core.domain.model.FilteredModules
 import ch.addere.dga.core.domain.model.Module
-import ch.addere.dga.core.domain.service.DependencyRepository
 import ch.addere.dga.core.domain.service.DependencyService
 import ch.addere.dga.core.domain.service.DependencyServiceImpl
 import org.junit.jupiter.api.Test
@@ -28,7 +28,7 @@ class DependencyServiceImplTest {
 
     @Test
     fun `test empty repo has zero modules`() {
-        val service = DependencyServiceImpl(DependencyRepository())
+        val service = DependencyServiceImpl(DependencyRepositoryImpl())
 
         assertThat(service.nofProjectDependencies()).isEqualTo(0)
         assertThat(service.nofUniqueConfigurations()).isEqualTo(0)
@@ -118,7 +118,7 @@ class DependencyServiceImplTest {
     }
 
     private fun serviceWithModules(): DependencyService {
-        val dependencyRepository = DependencyRepository()
+        val dependencyRepository = DependencyRepositoryImpl()
         dependencyRepository.addDependency(listOf(d1, d2, d3, d4))
         return DependencyServiceImpl(dependencyRepository)
     }
