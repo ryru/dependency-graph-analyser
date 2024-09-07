@@ -3,7 +3,7 @@ package ch.addere.dga.app
 import ch.addere.dga.app.configuration.OutputOptions
 import ch.addere.dga.app.domain.model.CommandConfig
 import ch.addere.dga.app.domain.model.FilterConfig
-import ch.addere.dga.app.domain.service.DependencyCommand
+import ch.addere.dga.app.domain.service.DependencyCommandHandler
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.importerModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
@@ -73,7 +73,7 @@ private class Dga : CliktCommand(help = "Analyse the module dependency graph of 
             optionsFilter.transitiveModules
         )
         val argument = CommandConfig(::echo, gradleProject, filterConfig, outputOption)
-        val command: DependencyCommand = get { parametersOf(argument) }
+        val command: DependencyCommandHandler = get { parametersOf(argument) }
 
         command.run()
     }
