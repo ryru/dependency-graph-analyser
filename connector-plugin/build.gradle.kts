@@ -24,7 +24,7 @@ gradlePlugin {
             description =
                 "Small helper plugin that is injected into existing Gradle projects to analyse the dependency structure."
             tags = listOf("dependencyAnalyser", "gradleBuild", "mermaid")
-            implementationClass = "ch.addere.dga.connectorplugin.ConnectorPlugin.kt"
+            implementationClass = "ch.addere.dga.connectorplugin.ConnectorPlugin"
         }
     }
 }
