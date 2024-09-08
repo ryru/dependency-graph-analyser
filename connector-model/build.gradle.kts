@@ -1,17 +1,12 @@
 plugins {
     id("ch.addere.dga.kotlin-library-conventions")
-    `java-gradle-plugin`
     `maven-publish`
 }
 
-description = "Gradle plugin that is injected into to be analysed Gradle projects"
+description = "Data model of the analysed Gradle project"
 
-group = "ch.addere.dga.plugin"
-version = "0.1.0"
-
-dependencies {
-    implementation(project(":dependency-model"))
-}
+group = "ch.addere.dga.connectormodel"
+version = property("connectorPluginVersion").toString()
 
 publishing {
     repositories {
@@ -26,8 +21,4 @@ publishing {
             }
         }
     }
-}
-
-tasks.withType<PublishToMavenLocal> {
-    dependsOn(tasks.getByPath(":dependency-model:publishToMavenLocal"))
 }

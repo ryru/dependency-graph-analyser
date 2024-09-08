@@ -1,4 +1,4 @@
-package ch.addere.dga.dependencymodel
+package ch.addere.dga.connectormodel
 
 interface ConfigurationModel {
 

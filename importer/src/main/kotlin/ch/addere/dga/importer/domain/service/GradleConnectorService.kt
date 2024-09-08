@@ -1,6 +1,6 @@
 package ch.addere.dga.importer.domain.service
 
-import ch.addere.dga.dependencymodel.DependencyModel
+import ch.addere.dga.connectormodel.DependencyModel
 import java.io.File
 
 interface GradleConnectorService {

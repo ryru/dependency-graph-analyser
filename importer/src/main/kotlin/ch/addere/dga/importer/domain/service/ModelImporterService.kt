@@ -1,11 +1,11 @@
 package ch.addere.dga.importer.domain.service
 
+import ch.addere.dga.connectormodel.DependencyModel
 import ch.addere.dga.core.domain.DependencyRepository
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.Module
 import ch.addere.dga.core.domain.service.ModuleRepository
-import ch.addere.dga.dependencymodel.DependencyModel
 
 class ModelImporterService(
     private val moduleRepository: ModuleRepository,

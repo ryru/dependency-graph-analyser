@@ -13,9 +13,9 @@ individual modules with the help of [Mermaid](https://mermaid.js.org/).
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
     vd2a57d(app) -->|implementation| v1bc49d(importer)
-    v80f88a(dependency-plugin) -->|implementation| v8ebf3d(dependency-model)
+    va02543(connector-plugin) -->|implementation| v91bd8e(connector-model)
+    v1bc49d(importer) -->|implementation| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| va74ad8(core)
-    v1bc49d(importer) -->|implementation| v8ebf3d(dependency-model)
 ```
 
 Features:
@@ -78,7 +78,7 @@ Download and setup this project:
 git clone https://github.com/ryru/dependency-graph-analyser.git
 cd dependency-graph-analyser/
 ./gradlew clean install
-./gradlew :dependency-plugin:publishToMavenLocal
+./gradlew :connector-plugin:publishToMavenLocal
 ```
 
 1. Download the GitHub code repository
@@ -96,6 +96,7 @@ Get an overview of this project by running `dga .`:
 Analyse project "dependency-graph-analyser"
      5 modules
      5 dependency configurations (1 unique dependency configurations)
+ 
 ```
 
 ### Create a Mermaid Chart
@@ -112,9 +113,9 @@ Analyse project "dependency-graph-analyser"
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
     vd2a57d(app) -->|implementation| v1bc49d(importer)
-    v80f88a(dependency-plugin) -->|implementation| v8ebf3d(dependency-model)
+    va02543(connector-plugin) -->|implementation| v91bd8e(connector-model)
+    v1bc49d(importer) -->|implementation| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| va74ad8(core)
-    v1bc49d(importer) -->|implementation| v8ebf3d(dependency-model)
 
 ```
 
@@ -126,7 +127,7 @@ containing the dependencies originating from the module `app`:
 ```
 ./app/build/install/dga/bin/dga . -o app --mermaid-graph
 
-Analyse project "dependency-graph-analyser"
+ Analyse project "dependency-graph-analyser"
      5 modules
      5 dependency configurations (1 unique dependency configurations)
 
@@ -137,7 +138,7 @@ Applying filter on data results in:
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
     vd2a57d(app) -->|implementation| v1bc49d(importer)
- 
+
 ```
 
 - Use `--transitive` to also include transitive dependencies.
