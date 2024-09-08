@@ -1,6 +1,6 @@
 package ch.addere.dga.importer.infrastructure
 
-import ch.addere.dga.dependencymodel.DependencyModel
+import ch.addere.dga.connectormodel.DependencyModel
 import ch.addere.dga.importer.domain.service.GradleConnectorService
 import org.gradle.tooling.GradleConnector
 import java.io.File

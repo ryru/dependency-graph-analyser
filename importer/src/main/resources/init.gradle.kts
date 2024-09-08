@@ -5,10 +5,10 @@ initscript {
     }
 
     dependencies {
-        classpath("ch.addere.dga.plugin:dependency-plugin:0.1.0")
+        classpath("ch.addere.dga.connectorplugin:connector-plugin:@version@")
     }
 }
 
 allprojects {
-    apply<ch.addere.dga.dependencyplugin.ToolingApiCustomModelPlugin>()
+    apply<ch.addere.dga.connectorplugin.ConnectorPlugin>()
 }
