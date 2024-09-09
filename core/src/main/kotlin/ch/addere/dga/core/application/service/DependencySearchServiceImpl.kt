@@ -48,7 +48,6 @@ class DependencySearchServiceImpl(private val dependencyRepository: DependencyRe
         origin: Module,
         withConfigurations: Collection<Configuration>
     ): Set<Dependency> {
-        println("call with origin = $origin")
         val allDependenciesWithSameOrigin: Set<Dependency> =
             dependencyRepository.getAllDependencies()
                 .filter { dependency ->
@@ -57,7 +56,6 @@ class DependencySearchServiceImpl(private val dependencyRepository: DependencyRe
                     )
                 }
                 .toSet()
-        println(allDependenciesWithSameOrigin.joinToString(", "))
 
         return if (allDependenciesWithSameOrigin.isEmpty()) {
             emptySet()

@@ -6,6 +6,7 @@ import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Dependency
 import ch.addere.dga.core.domain.model.FilteredConfiguration
 import ch.addere.dga.core.domain.model.FilteredModules
+import ch.addere.dga.core.domain.model.Module
 import ch.addere.dga.core.domain.service.ConfigurationService
 import ch.addere.dga.core.domain.service.DependencyService
 import ch.addere.dga.core.domain.service.ModuleService
@@ -60,20 +61,15 @@ class FilterService(
             )
 
         if (filterConfig.includeTransitiveDependencies) {
-//            val transitiveDependencies: Set<Dependency> = filteredDependencies
-//                .flatMap { setOf(it.origin, it.destination) }
-//                .toSet()
-//                .flatMap {
-//                    dependencyRelationService.allDependenciesOf(
-//                        it,
-//                        requestedCanonicalConfigurations
-//                    )
-//                }
-//                .toSet()
-            val transitiveDependencies: Set<Dependency> = requestedCanonicalModules.flatMap {
+            val relevantModules: Set<Module> =
+                filteredDependencies.flatMap { setOf(it.origin, it.destination) }.toSet()
+            val relevantConfigs: Set<Configuration> =
+                filteredDependencies.map { it.configuration }.toSet()
+
+            val transitiveDependencies: Set<Dependency> = relevantModules.flatMap {
                 dependencySearchService.findAllDependenciesUsedByModule(
                     it,
-                    requestedCanonicalConfigurations
+                    relevantConfigs
                 )
             }.toSet()
 
