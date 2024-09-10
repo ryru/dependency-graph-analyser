@@ -20,10 +20,12 @@ gradlePlugin {
     plugins {
         create("gradleDgaPlugin") {
             id = "ch.addere.dga.connectorplugin"
-            displayName = "DGA Connector Plugin"
-            description =
-                "Small helper plugin that is injected into existing Gradle projects to analyse the dependency structure."
-            tags = listOf("dependencyAnalyser", "gradleBuild", "mermaid")
+            displayName = "Dependency Graph Analyser (DGA) Connector Plugin"
+            description = """
+                The Dependency Graph Analyser (DGA) Connector Plugin is designed for use with Gradle multi-project builds. It collects module dependency data from all Gradle projects within the build and exports this information in a format compatible with the DGA CLI tool for further analysis and visualisation.
+                The plugin is typically applied using a Gradle init script, making it easy to integrate into existing builds without modifying individual project configurations.
+            """.trimIndent()
+            tags = listOf("dependency", "graph", "analyser", "build", "mermaid")
             implementationClass = "ch.addere.dga.connectorplugin.ConnectorPlugin"
         }
     }
