@@ -22,5 +22,8 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5
 
-      - name: Build and publish connector plugin
-        run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PLUGIN_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PLUGIN_SECRET }}
+      - name: Validate connector plugin
+        run: ./gradlew :connector-plugin:validatePlugins
+
+      - name: Publish connector plugin
+        run: ./gradlew :connector-plugin:publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PLUGIN_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PLUGIN_SECRET }}
