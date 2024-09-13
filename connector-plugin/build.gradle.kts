@@ -8,7 +8,13 @@ group = "ch.addere.dga.connectorplugin"
 version = property("connectorPluginVersion").toString()
 
 dependencies {
-    implementation(project(":connector-model"))
+    compileOnly(project(":connector-model"))
+}
+
+/* Include the :connector-model classes into the plugin jar to make it self-contained */
+tasks.named<Jar>("jar") {
+    from(project.sourceSets["main"].output)
+    from(project(":connector-model").sourceSets["main"].output)
 }
 
 gradlePlugin {

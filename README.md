@@ -13,7 +13,7 @@ individual modules with the help of [Mermaid](https://mermaid.js.org/).
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
     vd2a57d(app) -->|implementation| v1bc49d(importer)
-    va02543(connector-plugin) -->|implementation| v91bd8e(connector-model)
+    va02543(connector-plugin) -->|compileOnly| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| va74ad8(core)
 ```
@@ -78,15 +78,12 @@ Download and setup this project:
 git clone https://github.com/ryru/dependency-graph-analyser.git
 cd dependency-graph-analyser/
 ./gradlew clean install
-./gradlew :connector-plugin:publishToMavenLocal
 ```
 
 1. Download the GitHub code repository
 2. Change into code directory
-3. Make a clean installation of the application (application will be available in the
-   directory `./app/build/install/dga/bin/dga`)
-4. Publish the Gradle tooling API plugin and its data model to Maven local (available in the
-   directory `~/.m2/repository/ch/addere/dga/`)
+3. Make a clean installation of the application (application will be available in the directory
+   `./app/build/install/dga/bin/dga`)
 
 Get an overview of this project by running `dga .`:
 
@@ -95,7 +92,7 @@ Get an overview of this project by running `dga .`:
 
 Analyse project "dependency-graph-analyser"
      5 modules
-     5 dependency configurations (1 unique dependency configurations)
+     5 dependency configurations (2 unique dependency configurations)
  
 ```
 
@@ -108,12 +105,12 @@ Use `dga . --chart-mermaid` to generate a Mermaid chart of this project:
 
 Analyse project "dependency-graph-analyser"
      5 modules
-     5 dependency configurations (1 unique dependency configurations)
+     5 dependency configurations (2 unique dependency configurations)
 
 graph TD
     vd2a57d(app) -->|implementation| va74ad8(core)
     vd2a57d(app) -->|implementation| v1bc49d(importer)
-    va02543(connector-plugin) -->|implementation| v91bd8e(connector-model)
+    va02543(connector-plugin) -->|compileOnly| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| v91bd8e(connector-model)
     v1bc49d(importer) -->|implementation| va74ad8(core)
 
@@ -127,9 +124,9 @@ containing the dependencies originating from the module `app`:
 ```
 ./app/build/install/dga/bin/dga . -o app --mermaid-graph
 
- Analyse project "dependency-graph-analyser"
+Analyse project "dependency-graph-analyser"
      5 modules
-     5 dependency configurations (1 unique dependency configurations)
+     5 dependency configurations (2 unique dependency configurations)
 
 Applying filter on data results in:
      3 modules
