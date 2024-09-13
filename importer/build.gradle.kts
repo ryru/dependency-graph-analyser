@@ -1,7 +1,7 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    id("ch.addere.dga.kotlin-library-conventions")
+    id("dga.library-conventions")
     `java-gradle-plugin`
 }
 

@@ -7,9 +7,9 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/build-logic" name="module-dependency-graph-build-logic">
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
                 <projects>
-                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/buildSrc" />
                 </projects>
               </build>
             </builds>
@@ -21,10 +21,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/connector-model" />
+            <option value="$PROJECT_DIR$/connector-plugin" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/dependency-model" />
-            <option value="$PROJECT_DIR$/dependency-plugin" />
             <option value="$PROJECT_DIR$/importer" />
           </set>
         </option>
