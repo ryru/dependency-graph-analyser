@@ -1,7 +1,5 @@
 plugins {
-    id("ch.addere.dga.kotlin-library-conventions")
-    `java-gradle-plugin`
-    id("com.gradle.plugin-publish") version "1.3.0"
+    id("dga.plugin-conventions")
 }
 
 description = "Gradle plugin that is injected into to be analysed Gradle projects"

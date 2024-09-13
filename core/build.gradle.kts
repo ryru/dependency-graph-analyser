@@ -1,5 +1,5 @@
 plugins {
-    id("ch.addere.dga.kotlin-library-conventions")
+    id("dga.library-conventions")
 }
 
 description = "Core logic for analysing dependency graphs"

@@ -1,5 +1,5 @@
 plugins {
-    id("ch.addere.dga.kotlin-application-conventions")
+    id("dga.application-conventions")
 }
 
 description = "CLI application project"
