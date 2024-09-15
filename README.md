@@ -1,7 +1,6 @@
 # DGA: Dependency Graph Analyser
 
-[![Verify project](https://github.com/ryru/dependency-graph-analyser/actions/workflows/verify.yml/badge.svg)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/verify.yml)
-[![Build project](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml/badge.svg)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml)
+[![Build (assemble & check)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml/badge.svg)](https://github.com/ryru/dependency-graph-analyser/actions/workflows/build.yml)
 
 Analyse and visualise module dependencies in Gradle projects.
 
@@ -140,10 +139,20 @@ graph TD
 
 - Use `--transitive` to also include transitive dependencies.
 
-## How DGA works
+## Documentation
 
-See [HowItWorks.md](HOWITWORKS.md)
+See [docs](docs) for project documentation.
 
 ## Contribution
 
-Pull requests are welcome! Check [CONTRIBUTING.md](CONTRIBUTING.md) before starting any work.
+Contributions are very welcome! Check [CONTRIBUTING](CONTRIBUTING.md) before starting any work.
+
+## Motivation and goal
+
+I started this hobby project primarily to learn and practice Kotlin, while also deepening my
+understanding of Gradle and its build system.
+
+I'm currently working on a medium to large software project consisting of several dozen Gradle
+modules. Having recently discovered Mermaid, I thought it would be useful to create a tool that can
+visualise and analyse dependencies in larger Gradle projects. The goal of this tool, _DGA_, should
+be to help to better understand the relationships between different modules.
