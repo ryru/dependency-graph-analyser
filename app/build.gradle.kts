@@ -1,8 +1,13 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
     id("dga.application-conventions")
 }
 
 description = "CLI application project"
+
+group = "ch.addere.dga.app"
+version = property("cliVersion").toString()
 
 dependencies {
     implementation(project(":core"))
@@ -25,4 +30,19 @@ distributions {
 
 tasks.withType<CreateStartScripts> {
     applicationName = "dga"
+}
+
+val cliVersion = property("cliVersion").toString()
+val connectorPluginVersion = property("connectorPluginVersion").toString()
+
+tasks.withType<Jar> {
+    filesMatching("versions.txt") {
+        filter(
+            ReplaceTokens::class,
+            "tokens" to mapOf(
+                "cliVersion" to cliVersion,
+                "pluginVersion" to connectorPluginVersion
+            )
+        )
+    }
 }

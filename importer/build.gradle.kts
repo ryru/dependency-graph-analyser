@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ch.addere.dga.importer"
-version = "0.1.0"
+version = property("cliVersion").toString()
 
 description = "Imports project information of to be analysed Gradle project"
 

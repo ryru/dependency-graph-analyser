@@ -8,6 +8,7 @@ import ch.addere.dga.app.infrastructure.factory.coreModule
 import ch.addere.dga.app.infrastructure.factory.dgaModule
 import ch.addere.dga.app.infrastructure.factory.importerModule
 import ch.addere.dga.app.infrastructure.factory.userInputModule
+import ch.addere.dga.app.infrastructure.service.AppVersionService
 import ch.addere.dga.core.domain.model.Configuration
 import ch.addere.dga.core.domain.model.Module
 import com.github.ajalt.clikt.core.CliktCommand
@@ -26,6 +27,7 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.help
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.split
+import com.github.ajalt.clikt.parameters.options.versionOption
 import com.github.ajalt.clikt.parameters.types.file
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -36,6 +38,17 @@ import kotlin.system.exitProcess
 
 private class Dga : CliktCommand(help = "Analyse the module dependency graph of a Gradle project."),
     KoinComponent {
+
+    private val appVersionService = AppVersionService()
+
+    init {
+        val appVersion = appVersionService.readVersions()
+        val versionOutput = """
+            ${appVersion.cli}
+            dga connector plugin version ${appVersion.plugin}
+        """.trimIndent()
+        versionOption(versionOutput, names = setOf("--version", "-v"))
+    }
 
     private val gradleProject: File by argument()
         .file()
@@ -63,7 +76,6 @@ private class Dga : CliktCommand(help = "Analyse the module dependency graph of 
         help = "Options controlling how to output the analysed data. Display options can not be combined.",
         name = "Display Options",
     ).single().default(OutputOptions.OutputOptionOverviewOnly)
-
 
     override fun run() {
         val filterConfig = FilterConfig(
