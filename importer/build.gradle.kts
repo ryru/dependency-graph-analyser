@@ -2,7 +2,6 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
     id("dga.library-conventions")
-    `java-gradle-plugin`
 }
 
 group = "ch.addere.dga.importer"
@@ -13,6 +12,9 @@ description = "Imports project information of to be analysed Gradle project"
 dependencies {
     implementation(project(":core"))
     implementation(project(":connector-model"))
+
+    implementation("org.gradle:gradle-tooling-api:8.9")
+    runtimeOnly("org.slf4j:slf4j-simple:1.7.36")
 }
 
 val connectorPluginVersion = property("connectorPluginVersion").toString()
