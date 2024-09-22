@@ -32,17 +32,19 @@ tasks.withType<CreateStartScripts> {
     applicationName = "dga"
 }
 
-val cliVersion = property("cliVersion").toString()
-val connectorPluginVersion = property("connectorPluginVersion").toString()
-
 tasks.withType<Jar> {
-    filesMatching("versions.txt") {
-        filter(
-            ReplaceTokens::class,
-            "tokens" to mapOf(
-                "cliVersion" to cliVersion,
-                "pluginVersion" to connectorPluginVersion
+    val cliVersion = project.findProperty("cliVersion").toString()
+    val connectorPluginVersion = findProperty("connectorPluginVersion").toString()
+
+    doFirst {
+        filesMatching("versions.txt") {
+            filter(
+                ReplaceTokens::class,
+                "tokens" to mapOf(
+                    "cliVersion" to cliVersion,
+                    "pluginVersion" to connectorPluginVersion
+                )
             )
-        )
+        }
     }
 }

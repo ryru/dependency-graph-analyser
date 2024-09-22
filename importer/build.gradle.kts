@@ -17,10 +17,12 @@ dependencies {
     runtimeOnly("org.slf4j:slf4j-simple:1.7.36")
 }
 
-val connectorPluginVersion = property("connectorPluginVersion").toString()
-
 tasks.withType<Jar> {
-    filesMatching("init.gradle.kts") {
-        filter(ReplaceTokens::class, "tokens" to mapOf("version" to connectorPluginVersion))
+    val connectorPluginVersion = project.findProperty("connectorPluginVersion").toString()
+
+    doFirst {
+        filesMatching("init.gradle.kts") {
+            filter(ReplaceTokens::class, "tokens" to mapOf("version" to connectorPluginVersion))
+        }
     }
 }
